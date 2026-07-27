@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deux Guitares · Songbook</title>
+<style>
+  :root{
+    --night:#101820;
+    --night2:#182430;
+    --paper:#F3EAD3;
+    --paper2:#EDE0C1;
+    --ink:#211B12;
+    --ink-soft:#5C513D;
+    --brass:#C9903A;
+    --rust:#A8402C;
+    --line:#3A2F1E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--night);
+    color:var(--paper);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding-bottom:60px;
+  }
+  header{
+    padding:28px 18px 14px;
+    background:linear-gradient(180deg,var(--night2),var(--night));
+  }
+  header h1{
+    font-family:Georgia,"Times New Roman",serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:1.9rem;
+    letter-spacing:.5px;
+  }
+  header p{color:#9AA7B4;font-size:.9rem;margin-top:4px}
+  nav{
+    position:sticky;top:0;z-index:10;
+    display:flex;gap:8px;overflow-x:auto;
+    padding:10px 14px;
+    background:rgba(16,24,32,.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid #223040;
+  }
+  nav a{
+    flex:0 0 auto;
+    color:var(--paper);
+    text-decoration:none;
+    font-size:.85rem;
+    font-weight:600;
+    padding:7px 14px;
+    border:1px solid var(--brass);
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  nav a:active{background:var(--brass);color:var(--night)}
+  main{padding:14px;max-width:640px;margin:0 auto}
+  .section-title{
+    font-family:Georgia,serif;font-style:italic;
+    color:var(--brass);
+    font-size:1.25rem;
+    margin:26px 4px 10px;
+  }
+  /* ---- carte "chart" façon fake book ---- */
+  .chart{
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:10px;
+    padding:16px 14px 12px;
+    margin-bottom:16px;
+    box-shadow:0 4px 14px rgba(0,0,0,.4);
+  }
+  .chart .eyebrow{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:700;
+  }
+  .chart h2{
+    font-family:Georgia,serif;font-style:italic;
+    font-size:1.35rem;margin:2px 0 10px;
+  }
+  .sys-label{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;
+    border:2px solid var(--ink);
+    font-weight:800;font-size:.8rem;
+    margin:8px 0 4px;
+    background:var(--paper2);
+  }
+  .sys-note{font-size:.75rem;color:var(--ink-soft);margin-left:8px;font-style:italic}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-left:3px solid var(--ink);
+    border-right:3px solid var(--ink);
+    margin:6px 0 4px;
+  }
+  .bar{
+    border-right:1.5px solid var(--ink);
+    border-top:1px solid rgba(33,27,18,.18);
+    border-bottom:1px solid rgba(33,27,18,.18);
+    min-height:44px;
+    display:flex;align-items:center;justify-content:center;
+    gap:6px;
+    padding:6px 2px;
+    font-weight:800;
+    font-size:1.02rem;
+    letter-spacing:.01em;
+    text-align:center;
+    flex-wrap:wrap;
+  }
+  .bar:last-child{border-right:none}
+  .bar small{font-weight:700;font-size:.78em;color:var(--ink-soft)}
+  .tip{
+    margin-top:10px;
+    font-size:.86rem;
+    line-height:1.45;
+    padding:8px 10px;
+    background:var(--paper2);
+    border-left:3px solid var(--brass);
+  }
+  .tip b{color:var(--rust)}
+  details{margin-top:10px}
+  summary{
+    cursor:pointer;
+    font-size:.85rem;font-weight:700;
+    color:var(--rust);
+    padding:4px 0;
+    list-style:none;
+  }
+  summary::before{content:"▸ "}
+  details[open] summary::before{content:"▾ "}
+  .diagrams{
+    display:flex;flex-wrap:wrap;gap:10px 14px;
+    padding:10px 2px 4px;
+  }
+  .diag{text-align:center;background:var(--paper);border-radius:6px;padding:4px 6px 2px;color:var(--ink)}
+  .diag .nm{font-weight:800;font-size:.82rem;margin-bottom:2px}
+  .footnote{font-size:.75rem;color:var(--ink-soft);font-style:italic;margin-top:8px}
+  .groove{display:flex;align-items:center;gap:8px;margin:2px 0 8px;flex-wrap:wrap}
+  .meter{
+    font-weight:800;font-size:.8rem;
+    border:2px solid var(--ink);
+    padding:1px 7px;
+    background:var(--paper2);
+    color:var(--ink);text-decoration:none;
+  }
+  .beats{display:flex;gap:3px}
+  .beat{
+    width:20px;height:20px;
+    border:1.5px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-size:.7rem;font-weight:800;color:var(--ink);
+  }
+  .beat.on{background:var(--brass)}
+  .glbl{flex-basis:100%;font-size:.75rem;color:var(--ink-soft);font-style:italic}
+  .tab{
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    background:#0B1118;color:#D8E2EC;
+    padding:10px 12px;border-radius:6px;
+    font-size:.8rem;line-height:1.6;
+    overflow-x:auto;white-space:pre;
+  }
+  .fret-wrap{background:var(--paper);border-radius:8px;padding:10px 8px;overflow-x:auto}
+  .legend{font-size:.75rem;color:#9AA7B4;margin-top:6px}
+  .impro p{margin-bottom:6px}
+  /* carte impro (fond nuit) */
+  .impro{
+    background:var(--night2);
+    border:1px solid #2A3A4A;
+    border-radius:10px;
+    padding:16px 14px;
+    margin-bottom:16px;
+    font-size:.92rem;
+    line-height:1.55;
+  }
+  .impro h3{
+    font-family:Georgia,serif;font-style:italic;
+    color:var(--brass);font-size:1.1rem;margin-bottom:8px;
+  }
+  .impro ul{margin-left:18px}
+  .impro li{margin-bottom:8px}
+  .impro b{color:var(--brass)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Deux Guitares</h1>
+  <p>Blues &amp; jazz pour improviser · grilles, accords, gammes</p>
+</header>
+
+<nav>
+  <a href="#blues">Blues</a>
+  <a href="#jazz">Jazz</a>
+  <a href="#rock">Rock</a>
+  <a href="#gammes">Gammes</a>
+  <a href="#voicings">Voicings</a>
+  <a href="#impro">Impro &amp; pompe</a>
+</nav>
+
+<main>
+  <div class="section-title" id="blues">Blues</div>
+  <div id="zone-blues"></div>
+
+  <div class="section-title" id="jazz">Jazz</div>
+  <div id="zone-jazz"></div>
+
+  <div class="section-title" id="rock">Rock &amp; Groove</div>
+  <div id="zone-rock"></div>
+
+  <div class="section-title" id="gammes">Gammes pour improviser</div>
+
+  <div class="impro">
+    <h3>La carte au trésor : penta mineure de La</h3>
+    <p>Position 1, case 5. Déplace toute la boîte pour changer de tonalité : case 7 = Si m (Thrill Is Gone, Hotel California), case 8 = Do m (Blue Bossa), case 1 = Fa m (Cantaloupe Island), case 12 = Mi m.</p>
+    <div class="fret-wrap" id="penta"></div>
+    <p class="legend">noir = penta · rouge = blue note · doré = tonique (La)</p>
+  </div>
+
+  <div id="zone-gammes"></div>
+
+  <div class="impro">
+    <h3>Quelle gamme sur quel morceau ?</h3>
+    <ul>
+      <li><b>Blues majeurs</b> (Mi, La, Sol, Fa) → penta mineure + blue note. Épice avec la penta majeure ou le mixolydien.</li>
+      <li><b>Blues mineurs, Thrill Is Gone, Watchtower, Ain't No Sunshine, Hotel California</b> → penta mineure de la tonalité.</li>
+      <li><b>Minor Swing, Summertime, boucle andalouse, Angie</b> → penta mineure de La + Sol♯ quand le E7 arrive.</li>
+      <li><b>Autumn Leaves, Knockin', Wish You Were Here</b> → gamme de Sol majeur (+ Ré♯ sur les B7 d'Autumn Leaves).</li>
+      <li><b>Fly Me, All of Me, Black Orpheus</b> → gamme de Do majeur (forme majeure décalée case 8) + tierces des accords 7.</li>
+      <li><b>So What, Oye Como Va</b> → dorien.</li>
+      <li><b>Blue Bossa</b> → Do mineur sur les 8 premières mesures, puis tout monte d'un demi-ton.</li>
+      <li><b>Cantaloupe Island</b> → une penta par accord : Fa m, Si♭ m, Ré m.</li>
+      <li><b>Sweet Home, Sympathy, Cycle de dominantes, Stand By Me</b> → penta majeure / mixolydien.</li>
+      <li><b>Let It Be, No Woman No Cry, La Bamba, anatole, Take the A Train, Satin Doll</b> → gamme majeure de la tonalité.</li>
+      <li><b>Boucles rock</b> (Creep, Zombie, Wicked Game, Wonderful Tonight, Dead Flowers...) → penta de la tonalité, mineure ou majeure selon la couleur du morceau.</li>
+      <li><b>C Jam Blues, All Blues, Honeysuckle Rose</b> → mixolydien / penta mixte + tierces des accords. <b>Caravan, Nature Boy</b> → penta mineure + la note du mineur harmonique sur la dominante.</li>
+    </ul>
+  </div>
+
+  <div class="impro">
+    <h3>Construire un chorus</h3>
+    <ul>
+      <li><b>Chorus 1</b> : sobre. Un motif court, répète-le en le déplaçant dans la grille. L'auditeur retient une phrase, pas une gamme.</li>
+      <li><b>Chorus 2</b> : monte d'un étage. Plus aigu, plus dense, mais garde le fil du motif.</li>
+      <li><b>Chorus 3</b> : climax (bends, doubles cordes, aigus), puis redescends sur deux mesures pour passer la main proprement.</li>
+      <li><b>Respire</b> : une phrase = une respiration. Les silences sont des mesures jouées, pas du vide.</li>
+      <li><b>Vole des phrases</b> : chante une phrase dans ta tête, puis trouve-la sur le manche. C'est comme ça qu'on se fabrique un vocabulaire.</li>
+    </ul>
+  </div>
+
+  <div class="section-title" id="voicings">Voicings : sortir des positions</div>
+  <div id="zone-voicings"></div>
+
+  <div class="section-title" id="impro">Impro &amp; pompe</div>
+  <div class="impro">
+    <h3>La pompe (accompagnement)</h3>
+    <ul>
+      <li>Un temps = un coup vers le bas. <b>Basse sur 1 et 3</b>, accord sec et étouffé sur 2 et 4 (relâche la main gauche juste après l'attaque).</li>
+      <li>Swing : les 2 et 4 claquent, c'est eux qui font groover. Pas besoin de jouer fort, juste régulier.</li>
+      <li>Sur les bossas (Blue Bossa, Black Orpheus) : basse-accord plus legato, pouce sur la basse, doigts sur les 3 cordes aiguës.</li>
+    </ul>
+    <h3 style="margin-top:14px">Improviser sans théorie</h3>
+    <ul>
+      <li><b>Penta mineure + blue note</b> : ta boîte de base couvre tous les blues et tous les morceaux mineurs du carnet.</li>
+      <li>Sur les grilles jazz : <b>vise une note de l'accord sur le temps fort</b> de chaque mesure (fondamentale, tierce ou septième), remplis en penta entre les cibles. C'est 80 % du son "jazz".</li>
+      <li>Respire : une phrase, un silence. Le silence est ce qui fait sonner la phrase d'après.</li>
+      <li><b>Tournez les rôles toutes les deux grilles</b> : pompe / solo. Celui qui accompagne écoute et relance (nuances, stops, montée sur le dernier chorus).</li>
+      <li>Jeu à deux : question-réponse sur 2 mesures chacun ("trading"), très efficace sur les blues.</li>
+    </ul>
+  </div>
+
+  <div class="impro">
+    <h3>Atelier : turnaround &amp; fins</h3>
+    <p>Le turnaround classique en Mi (2 dernières mesures du blues) : la septième descend chromatiquement vers la quinte, Mi aigu à vide en pédale, basse Mi qui sonne.</p>
+    <pre class="tab">e|--0---0---0---0--|
+B|--3---2---1---0--|  → B7</pre>
+    <p>Transposable partout : c'est toujours la 7e de l'accord qui glisse vers la quinte.</p>
+    <p><b>Fin classique</b> : approche l'accord final par le demi-ton au-dessus. En Mi : F9 → E9 sur la dernière mesure. En La : B♭9 → A9.</p>
+    <div class="diagrams" id="ending-diags"></div>
+    <h3 style="margin-top:14px">Deux rythmes de comping</h3>
+    <ul>
+      <li><b>Charleston (jazz)</b> : accord sur le temps 1 et sur le « et » du 2, puis silence. Laisse toute la place au soliste.</li>
+      <li><b>Bossa</b> : pouce sur les basses (temps 1 et 3), les doigts pincent l'accord en syncope. Commence simple : accord sur 1, « et » de 2, et 4.</li>
+    </ul>
+  </div>
+
+  <div class="impro" id="solfege">
+    <h3>Lire le rythme (solfège minimal)</h3>
+    <ul>
+      <li><b>4/4</b> : quatre temps par mesure. Le temps, c'est le battement du pied. La quasi-totalité du carnet est en 4/4.</li>
+      <li><b>Une mesure = une case de la grille.</b> Un accord seul y tient toute la mesure ; deux accords séparés par un point (« C · G ») se la partagent : 2 temps chacun en 4/4.</li>
+      <li><b>Les cases dorées</b> du bandeau de chaque morceau = les temps à accentuer dans l'accompagnement. Le texte en italique dit comment.</li>
+      <li><b>Binaire ou ternaire (shuffle, swing)</b> : binaire = croches égales, « ta-ta ». Ternaire = long-court, « taa-ta », comme un galop. Tous les blues shuffle et tout le jazz se jouent ternaire, même quand la grille ne le dit pas.</li>
+      <li><b>12/8</b> : quatre temps dont chacun se divise en trois. C'est le son du slow blues : compte « 1-et-la, 2-et-la... ».</li>
+      <li><b>6/8</b> : six croches senties comme deux grands temps balancés (la 1 et la 4). Balancement de berceuse.</li>
+      <li><b>3/4</b> : la valse. Trois temps, le 1 porte tout.</li>
+      <li><b>Contretemps</b> : le « et » entre deux temps (« 1 et 2 et... »). Le skank reggae et le charleston jazz vivent là.</li>
+      <li><b>Backbeat</b> : accents sur 2 et 4. C'est le moteur du blues, du jazz et du rock. Taper des mains sur 1 et 3 est le seul vrai crime musical de ce carnet.</li>
+      <li>Astuce : touche le badge de mesure (4/4, 12/8...) sur n'importe quel morceau pour revenir à cette carte.</li>
+    </ul>
+  </div>
+
+</main>
+
+<script>
+/* ============ Dictionnaire d'accords ============ */
+/* frets : corde grave -> aiguë. 'x' = étouffée, 0 = à vide */
+const CHORDS = {
+  "E7":      ["0","2","0","1","0","0"],
+  "A7":      ["x","0","2","0","2","0"],
+  "B7":      ["x","2","1","2","0","2"],
+  "D7":      ["x","x","0","2","1","2"],
+  "G7":      ["3","2","0","0","0","1"],
+  "C7":      ["x","3","2","3","1","0"],
+  "F#7":     ["2","4","2","3","2","2"],
+  "C9":      ["x","3","2","3","3","3"],
+  "D9":      ["x","5","4","5","5","5"],
+  "Bm":      ["x","2","4","4","3","2"],
+  "Em":      ["0","2","2","0","0","0"],
+  "Am":      ["x","0","2","2","1","0"],
+  "Dm":      ["x","x","0","2","3","1"],
+  "C":       ["x","3","2","0","1","0"],
+  "F":       ["x","x","3","2","1","1"],
+  "Gmaj7":   ["3","2","0","0","0","2"],
+  "Cmaj7":   ["x","3","2","0","0","0"],
+  "Fmaj7":   ["x","x","3","2","1","0"],
+  "D♭maj7":  ["x","4","6","5","6","4"],
+  "Am7":     ["x","0","2","0","1","0"],
+  "Dm7":     ["x","x","0","2","1","1"],
+  "Bm7":     ["x","2","4","2","3","2"],
+  "B♭m7":    ["x","1","3","1","2","1"],
+  "Cm7":     ["x","3","5","3","4","3"],
+  "Fm7":     ["1","3","1","1","1","1"],
+  "E♭m7":    ["x","6","8","6","7","6"],
+  "Am6":     ["x","0","2","2","1","2"],
+  "Dm6":     ["x","x","0","2","0","1"],
+  "F#m7♭5":  ["2","x","2","2","1","0"],
+  "Bm7♭5":   ["x","2","3","2","3","x"],
+  "Dm7♭5":   ["x","x","0","1","1","1"],
+  "A♭7":     ["4","6","4","5","4","4"],
+  "D♭7":     ["x","4","6","4","6","4"],
+  "E♭7":     ["x","6","8","6","8","6"],
+  "A":       ["x","0","2","2","2","0"],
+  "G":       ["3","2","0","0","0","3"],
+  "Fm":      ["x","x","3","1","1","1"],
+  "F7":      ["1","3","1","2","1","1"],
+  "B♭7":     ["x","1","3","1","3","1"],
+  "B°7":     ["x","2","3","1","3","1"],
+  "Am7♭5":   ["x","0","1","0","1","x"],
+  "Gm7":     ["3","5","3","3","3","3"],
+  "F9":      ["1","3","1","2","1","3"],
+  "E9":      ["0","2","0","1","0","2"],
+  "E":       ["0","2","2","1","0","0"],
+  "D":       ["x","x","0","2","3","2"],
+  "B":       ["x","2","4","4","4","2"],
+  "Em7":     ["0","2","2","0","3","3"],
+  "A7sus4":  ["x","0","2","0","3","0"],
+  "Am/G":    ["3","0","2","2","1","0"],
+  "D/F#":    ["2","x","0","2","3","2"],
+  "F#m":     ["2","4","4","2","2","2"],
+  "Gm":      ["3","5","5","3","3","3"],
+  "Cm":      ["x","3","5","5","4","3"],
+  "C#m7":    ["x","4","6","4","5","4"],
+  "A♭m7":    ["4","6","4","4","4","4"],
+  "G♭7":     ["2","4","2","3","2","2"],
+  "F#°7":    ["2","x","1","2","1","x"],
+  "Em7♭5":   ["x","x","2","3","3","3"],
+  "B♭":      ["x","1","3","3","3","1"],
+  "E♭maj7":  ["x","6","8","7","8","6"],
+  "A♭maj7":  ["4","6","5","5","4","4"],
+  "C#m":     ["x","4","6","6","5","4"]
+};
+
+/* ============ Morceaux ============ */
+/* bars : "·" sépare deux accords dans la même mesure */
+const SONGS = [
+  {
+    zone:"blues", title:"Blues shuffle en Mi", key:"Mi · shuffle, ternaire",
+    systems:[{bars:["E7","E7","E7","E7"]},{bars:["A7","A7","E7","E7"]},{bars:["B7","A7","E7","B7"]}],
+    chords:["E7","A7","B7"],
+    tip:"<b>Penta mineure de Mi + blue note</b> (Mi Sol La Si♭ Si Ré). Mélange avec la penta majeure (Sol♯) pour le son BB King. Variante : mesure 2 en A7 (quick change).",
+  },
+  {
+    zone:"blues", title:"Blues en La", key:"La · médium",
+    systems:[{bars:["A7","A7","A7","A7"]},{bars:["D7","D7","A7","A7"]},{bars:["E7","D7","A7","E7"]}],
+    chords:["A7","D7","E7"],
+    tip:"Penta mineure de La. Position confortable : case 5. Bon terrain pour le trading 2 mesures / 2 mesures.",
+  },
+  {
+    zone:"blues", title:"Slow blues en Sol", key:"Sol · lent, 12/8",
+    systems:[{bars:["G7","C7","G7","G7"]},{bars:["C7","C7","G7","G7"]},{bars:["D7","C7","G7","D7"]}],
+    chords:["G7","C7","D7"],
+    tip:"Penta mineure de Sol, phrasé lent, bends. Sur un slow, moins de notes = plus de poids.",
+  },
+  {
+    zone:"blues", title:"The Thrill Is Gone", key:"Si mineur · lent, façon BB King",
+    systems:[{bars:["Bm","Bm","Bm","Bm"]},{bars:["Em","Em","Bm","Bm"]},{bars:["Gmaj7","F#7","Bm","Bm · F#7"]}],
+    chords:["Bm","Em","Gmaj7","F#7"],
+    tip:"<b>Penta mineure de Si</b> partout, ça sonne tout de suite. Si tu veux la couleur en plus : joue le La♯ sur le F#7 (mineur harmonique).",
+  },
+  {
+    zone:"blues", title:"Stormy Monday", key:"Sol · lent, changes simplifiés (T-Bone / Allman)",
+    systems:[{bars:["G7","C9","G7","G7"]},{bars:["C9","C9","G7 · Am7","Bm7 · B♭m7"]},{bars:["Am7","Cm7","G7 · C9","G7 · D9"]}],
+    chords:["G7","C9","D9","Am7","Bm7","B♭m7","Cm7"],
+    tip:"Le pont entre blues et jazz : la montée Am7 → Bm7 → B♭m7 → Am7 fait tout le charme. Penta mineure de Sol comme base, écoute les accords passer.",
+    note:"Grille simplifiée, il existe plein de variantes de ce morceau.",
+  },
+  {
+    zone:"jazz", title:"Minor Swing", key:"La mineur · swing manouche (Django)",
+    systems:[{bars:["Am6","Am6","Dm6","Dm6"]},{bars:["E7","E7","Am6","Am6"]},{bars:["Dm6","Dm6","Am6","Am6"]},{bars:["E7","E7","Am6","E7"]}],
+    chords:["Am6","Dm6","E7"],
+    tip:"LE morceau pour deux acoustiques. <b>Arpèges de Am et E7</b> suffisent à sonner manouche. Sur E7, ajoute le Sol♯ (La mineur harmonique). Pompe stricte à 4 temps.",
+  },
+  {
+    zone:"jazz", title:"Autumn Leaves", key:"Mi mineur · swing médium · forme A A B C",
+    systems:[
+      {label:"A", note:"jouer 2 fois", bars:["Am7","D7","Gmaj7","Cmaj7"]},
+      {bars:["F#m7♭5","B7","Em","Em"]},
+      {label:"B", bars:["F#m7♭5","B7","Em","Em"]},
+      {bars:["Am7","D7","Gmaj7","Gmaj7"]},
+      {label:"C", bars:["F#m7♭5","B7","Em · E♭7","Dm7 · D♭7"]},
+      {bars:["Cmaj7","B7","Em","Em"]}
+    ],
+    chords:["Am7","D7","Gmaj7","Cmaj7","F#m7♭5","B7","Em","E♭7","Dm7","D♭7"],
+    tip:"<b>La gamme de Sol majeur (= Mi mineur naturel) couvre presque tout.</b> Ajoute le Ré♯ sur les B7. La descente chromatique de la section C peut se jouer Em tout du long si elle gêne.",
+  },
+  {
+    zone:"jazz", title:"Summertime", key:"La mineur · lent, moite",
+    systems:[{bars:["Am","E7","Am","E7"]},{bars:["Am","E7","Am","A7"]},{bars:["Dm","Dm","F","E7"]},{bars:["Am · C","F · E7","Am","E7"]}],
+    chords:["Am","E7","A7","Dm","F","C"],
+    tip:"Penta mineure de La, bends, chromatismes. Marche aussi très bien en question-réponse chant/guitare.",
+    note:"Version jam simplifiée, les variantes sont innombrables.",
+  },
+  {
+    zone:"jazz", title:"Blue Bossa", key:"Do mineur · bossa / latin",
+    systems:[{bars:["Cm7","Cm7","Fm7","Fm7"]},{bars:["Dm7♭5","G7","Cm7","Cm7"]},{bars:["E♭m7","A♭7","D♭maj7","D♭maj7"]},{bars:["Dm7♭5","G7","Cm7","Dm7♭5 · G7"]}],
+    chords:["Cm7","Fm7","Dm7♭5","G7","E♭m7","A♭7","D♭maj7"],
+    tip:"Deux zones : <b>Do mineur</b> sur les 8 premières mesures, puis tout <b>monte d'un demi-ton</b> (penta de Mi♭m sur E♭m7-A♭7-D♭maj7). Le contraste fait le morceau.",
+  },
+  {
+    zone:"jazz", title:"Black Orpheus", key:"La mineur · bossa · boucle simplifiée",
+    systems:[{bars:["Am7","Bm7♭5 · E7","Am7","Bm7♭5 · E7"]},{bars:["Am7","Dm7 · G7","Cmaj7","Fmaj7"]},{bars:["Bm7♭5","E7","Am7","Bm7♭5 · E7"]}],
+    chords:["Am7","Bm7♭5","E7","Dm7","G7","Cmaj7","Fmaj7"],
+    tip:"Penta mineure de La comme colonne vertébrale. Sur Dm7-G7-Cmaj7, laisse chanter la gamme de Do majeur.",
+    note:"Section A simplifiée en boucle, la grille complète est plus longue.",
+  },
+  {
+    zone:"jazz", title:"Cantaloupe Island", key:"Fa mineur · groove funk, tempo posé",
+    systems:[{bars:["Fm7","Fm7","Fm7","Fm7"]},{bars:["D♭7","D♭7","D♭7","D♭7"]},{bars:["Dm7","Dm7","Dm7","Dm7"]},{bars:["Fm7","Fm7","Fm7","Fm7"]}],
+    chords:["Fm7","D♭7","Dm7"],
+    tip:"Trois zones, une penta par zone : <b>Fa m</b> sur Fm7, <b>Si♭ m</b> sur D♭7, <b>Ré m</b> sur Dm7. Boucle hypnotique, parfaite pour les longs chorus.",
+  },
+  {
+    zone:"jazz", title:"So What", key:"Ré dorien · modal, médium · forme A A B A",
+    systems:[
+      {label:"A", note:"8 mesures, jouer 2 fois", bars:["Dm7","Dm7","Dm7","Dm7"]},
+      {label:"B", note:"8 mesures", bars:["E♭m7","E♭m7","E♭m7","E♭m7"]},
+      {label:"A", note:"8 mesures", bars:["Dm7","Dm7","Dm7","Dm7"]}
+    ],
+    chords:["Dm7","E♭m7"],
+    tip:"Deux accords, zéro excuse : tout est dans le phrasé. <b>Penta de Ré m + la note Si</b> (dorien) sur les A, tout monte d'un demi-ton sur le B. Travaille le silence et les motifs répétés.",
+  },
+  {
+    zone:"blues", title:"Key to the Highway", key:"La · 8 mesures, médium",
+    systems:[{bars:["A","E7","D7","D7"]},{bars:["A","E7","A","E7"]}],
+    chords:["A","E7","D7"],
+    tip:"Le blues en 8 mesures, grand classique du duo acoustique (Big Bill Broonzy, Clapton Unplugged). Penta de La, phrasé chantant.",
+  },
+  {
+    zone:"blues", title:"Blues mineur en La", key:"La mineur · médium lent",
+    systems:[{bars:["Am","Am","Am","Am"]},{bars:["Dm","Dm","Am","Am"]},{bars:["F","E7","Am","E7"]}],
+    chords:["Am","Dm","F","E7"],
+    tip:"Le squelette de tous les blues mineurs. La cadence <b>F → E7</b> des mesures 9-10 est le moment fort : garde ta meilleure phrase pour elle.",
+  },
+  {
+    zone:"blues", title:"Blues jazz en Fa", key:"Fa · swing · les « vraies » changes",
+    systems:[{bars:["F7","B♭7","F7","Cm7 · F7"]},{bars:["B♭7","B°7","F7","Am7♭5 · D7"]},{bars:["Gm7","C7","F7 · D7","Gm7 · C7"]}],
+    chords:["F7","B♭7","B°7","Cm7","Am7♭5","D7","Gm7","C7"],
+    tip:"LA passerelle blues → jazz : même squelette de 12 mesures, accords enrichis. Base penta de Fa, et <b>vise la tierce de chaque accord</b> sur le temps 1 pour faire sonner les changes.",
+  },
+  {
+    zone:"blues", title:"Boucle andalouse", key:"La mineur · lent ou nerveux, au choix",
+    systems:[{bars:["Am","G","F","E7"]}],
+    chords:["Am","G","F","E7"],
+    tip:"Hit the Road Jack, Stray Cat Strut, flamenco... Boucle infinie. Penta de La m partout ; pour la couleur espagnole, insiste sur le Fa naturel au moment du E7.",
+  },
+  {
+    zone:"jazz", title:"All of Me", key:"Do · swing médium · 32 mesures",
+    systems:[
+      {bars:["C","C","E7","E7"]},{bars:["A7","A7","Dm","Dm"]},
+      {bars:["E7","E7","Am","Am"]},{bars:["D7","D7","Dm7","G7"]},
+      {bars:["C","C","E7","E7"]},{bars:["A7","A7","Dm","Dm"]},
+      {bars:["F","Fm","C","A7"]},{bars:["Dm7","G7","C","C · G7"]}
+    ],
+    chords:["C","E7","A7","Dm","D7","Dm7","G7","F","Fm","Am"],
+    tip:"Le standard qui se chante tout seul. Gamme de Do majeur comme base ; sur chaque accord 7 (E7, A7, D7), joue sa tierce majeure : c'est elle qui raconte l'histoire. Le passage <b>F → Fm</b> est le frisson du morceau.",
+    note:"Version jam courante.",
+  },
+  {
+    zone:"jazz", title:"Fly Me to the Moon", key:"La m / Do · swing · boucle 16 mesures",
+    systems:[
+      {bars:["Am7","Dm7","G7","Cmaj7"]},{bars:["Fmaj7","Bm7♭5","E7","Am7 · A7"]},
+      {bars:["Dm7","G7","Cmaj7","Am7"]},{bars:["Dm7 · G7","Cmaj7","Bm7♭5","E7"]}
+    ],
+    chords:["Am7","Dm7","G7","Cmaj7","Fmaj7","Bm7♭5","E7","A7"],
+    tip:"L'anatole par excellence : les accords descendent en quintes, tout coule. Gamme de Do majeur partout, ajoute le Sol♯ sur les E7. Idéal pour travailler les cibles de tierces.",
+    note:"Boucle simplifiée du standard.",
+  },
+  {
+    zone:"jazz", title:"Oye Como Va (groove)", key:"La dorien · latin rock, médium",
+    systems:[{bars:["Am7","D9","Am7","D9"]}],
+    chords:["Am7","D9"],
+    tip:"Le vamp Santana. <b>La dorien = penta de La m + le Fa♯</b>. Deux accords, un groove : parfait pour les longs échanges question-réponse.",
+  },
+  {
+    zone:"jazz", title:"Cycle de dominantes", key:"Fa · swing rapide (inspiré de Sweet Georgia Brown)",
+    systems:[{bars:["D7","D7","G7","G7"]},{bars:["C7","C7","F","F"]}],
+    chords:["D7","G7","C7","F"],
+    tip:"Chaque accord 7 appelle le suivant en cascade jusqu'à la maison (Fa). Sur chaque dominante : son arpège ou sa penta majeure. Excellent exercice déguisé en morceau.",
+    note:"Boucle très simplifiée pour improviser.",
+  },
+  {
+    zone:"rock", title:"Sympathy for the Devil", key:"Mi · groove samba (Stones)",
+    systems:[{note:"boucle", bars:["E","D","A","E"]}],
+    chords:["E","D","A"],
+    tip:"Tout le morceau tient sur cette boucle. L'un joue percussif et étouffé (le groove samba fait le morceau), l'autre improvise en Mi : penta majeure, son clair et nerveux.",
+  },
+  {
+    zone:"rock", title:"Angie", key:"La mineur · ballade (Stones)",
+    systems:[{note:"progression principale", bars:["Am","E7","G · F","C"]}],
+    chords:["Am","E7","G","F","C"],
+    tip:"Se joue en arpèges. Le charme vient des ornements sus4 : Gsus4 → G, Fsus4 → F, Csus4 → C (ajoute l'auriculaire une case au-dessus de la tierce, puis relâche).",
+    note:"Progression principale simplifiée ; le pont (« don't you weep ») tourne autour de Dm, Am et C-F-G.",
+  },
+  {
+    zone:"rock", title:"Hey Joe", key:"Mi · médium (Hendrix)",
+    systems:[{note:"boucle", bars:["C · G","D · A","E","E"]}],
+    chords:["C","G","D","A","E"],
+    tip:"Montée en quintes jusqu'au Mi : la tension grimpe, puis deux mesures pour phraser. Penta mineure de Mi (ou majeure pour le côté doux). Terrain de solo infini.",
+  },
+  {
+    zone:"rock", title:"All Along the Watchtower", key:"La mineur · nerveux (Dylan / Hendrix)",
+    systems:[{note:"boucle", bars:["Am · G","F · G","Am · G","F · G"]}],
+    chords:["Am","G","F"],
+    tip:"Trois accords, une urgence. Penta mineure de La, phrasé Hendrix : bends, doubles cordes, dynamique qui monte à chaque tour.",
+  },
+  {
+    zone:"rock", title:"Knockin' on Heaven's Door", key:"Sol · lent (Dylan)",
+    systems:[{note:"boucle", bars:["G","D","Am","Am"]},{bars:["G","D","C","C"]}],
+    chords:["G","D","Am","C"],
+    tip:"Quatre accords, parfaite pour chanter à deux. Gamme de Sol majeur, solos épurés : c'est la respiration entre les phrases qui la rend belle.",
+  },
+  {
+    zone:"rock", title:"Sweet Home Alabama", key:"Sol / Ré mixolydien · médium (Lynyrd Skynyrd)",
+    systems:[{note:"boucle", bars:["D · C","G","D · C","G"]}],
+    chords:["D","C","G"],
+    tip:"Penta majeure de Sol (= penta mineure de Mi) sonne parfaitement. Débat célèbre sur la tonalité (Ré ou Sol) : jouez ce qui sonne, les deux mondes se croisent.",
+  },
+  {
+    zone:"rock", title:"Wish You Were Here", key:"Sol / Mi mineur (Pink Floyd)",
+    systems:[
+      {note:"intro", bars:["Em7","G","Em7","G"]},
+      {bars:["Em7","A7sus4","Em7","A7sus4"]},
+      {note:"couplet", bars:["C","D","Am","G"]},
+      {bars:["D","C","Am","G"]}
+    ],
+    chords:["Em7","G","A7sus4","C","D","Am"],
+    tip:"Le duo acoustique par excellence : l'un tient les accords, l'autre fait le solo de l'intro en penta de Mi m / gamme de Sol. Puis on chante le couplet ensemble.",
+    note:"Enchaînement complet : intro → couplet ×2 → retour à l'intro pour le solo, fin sur Em7-G.",
+  },
+  {
+    zone:"rock", title:"While My Guitar Gently Weeps", key:"La mineur · lent (Beatles)",
+    systems:[
+      {note:"couplet", bars:["Am","Am/G","D/F#","Fmaj7"]},
+      {bars:["Am","G","D","E"]},
+      {note:"pont (La majeur)", bars:["A","C#m","F#m","C#m"]},
+      {bars:["Bm","Bm","E","E"]}
+    ],
+    chords:["Am","Am/G","D/F#","Fmaj7","G","D","E","A","C#m","F#m","Bm"],
+    tip:"La descente de basse La → Sol → Fa♯ → Fa porte le couplet, puis le pont bascule en La majeur : le soleil entre deux averses. Penta mineure de La qui pleure sur le couplet, gamme de La majeur sur le pont.",
+    note:"Découpage du pont approximatif ; on retombe ensuite sur le couplet.",
+  },
+  {
+    zone:"rock", title:"Cocaine", key:"Mi · blues rock (J.J. Cale / Clapton)",
+    systems:[{bars:["E · D","E · D","E · D","E · D"]},{bars:["E · D","E · D","C · B","E"]}],
+    chords:["E","D","C","B"],
+    tip:"Vamp Mi ↔ Ré au médiator, sec et carré, puis la descente Mi-Ré-Do-Si qui fait le hook. Penta mineure de Mi, gros son même en acoustique.",
+    note:"Structure simplifiée.",
+  },
+  {
+    zone:"rock", title:"Ain't No Sunshine", key:"La mineur · lent, groove (Bill Withers)",
+    systems:[
+      {note:"couplet · riff, jouer 2 fois", bars:["Am7","Em7 · G","Am7","Am7"]},
+      {note:"fin de couplet", bars:["Em7","Em7","Dm7","Am7"]}
+    ],
+    chords:["Am7","Em7","G","Dm7"],
+    tip:"Le morceau tient sur le silence et le groove. Penta mineure de La, phrases courtes, laisse respirer. La fin de couplet (Em7 → Dm7 → Am7) est la vraie couleur du morceau. Le pont « I know, I know... » reste sur le riff de Am7 en boucle.",
+    note:"Version courante, variantes possibles.",
+  },
+  {
+    zone:"rock", title:"Stand By Me", key:"La · médium (Ben E. King)",
+    systems:[{note:"boucle", bars:["A","A","F#m","F#m"]},{bars:["D","E","A","A"]}],
+    chords:["A","F#m","D","E"],
+    tip:"LA progression des années 50, immanquable pour chanter à deux. L'un fait la ligne de basse sur les graves, l'autre les accords. Solo : gamme de La majeur ou penta majeure.",
+  },
+  {
+    zone:"rock", title:"Hotel California", key:"Si mineur · médium (Eagles)",
+    systems:[{note:"couplet = grille du solo final", bars:["Bm","F#7","A","E"]},{bars:["G","D","Em","F#7"]}],
+    chords:["Bm","F#7","A","E","G","D","Em"],
+    tip:"La boucle du couplet est aussi celle des solos de fin : penta mineure de Si (case 7) + arpèges des accords. Au capo 7, tout se joue en accords ouverts : Em, B7, D, A, C, G, Am, B7.",
+    note:"Le refrain (« Welcome to the Hotel California ») reprend les mêmes couleurs autour de G, D, Em et F♯7 ; vérifie le découpage exact sur une partition si vous chantez.",
+  },
+  {
+    zone:"blues", title:"Blues en Do", key:"Do · médium",
+    systems:[{bars:["C7","C7","C7","C7"]},{bars:["F7","F7","C7","C7"]},{bars:["G7","F7","C7","G7"]}],
+    chords:["C7","F7","G7"],
+    tip:"Le 12 mesures en Do, pour changer de tonalité et de position : penta mineure de Do case 8, la même boîte que toujours.",
+  },
+  {
+    zone:"blues", title:"Boogie sur un accord", key:"La · un seul accord, tout dans le groove",
+    systems:[{note:"boucle", bars:["A7","A7","A7","A7"]}],
+    chords:["A7"],
+    tip:"Façon John Lee Hooker ou ZZ Top : l'un tient la basse boogie (aller-retour La, Mi, Fa♯, Sol sur les graves), l'autre improvise en penta de La sans jamais être bousculé par un changement d'accord. Hypnotique.",
+  },
+  {
+    zone:"blues", title:"Sweet Home Chicago", key:"Mi · shuffle, quick change",
+    systems:[{bars:["E7","A7","E7","E7"]},{bars:["A7","A7","E7","E7"]},{bars:["B7","A7","E7","B7"]}],
+    chords:["E7","A7","B7"],
+    tip:"Le blues de Robert Johnson version jam : votre 12 mesures en Mi avec le quick change (A7 dès la mesure 2). L'hymne de toutes les jams du monde.",
+  },
+  {
+    zone:"blues", title:"St. James Infirmary", key:"Ré mineur · lent, Nouvelle-Orléans (traditionnel)",
+    systems:[{bars:["Dm","Gm","Dm","A7"]},{bars:["Dm","Gm","Dm · A7","Dm"]}],
+    chords:["Dm","Gm","A7"],
+    tip:"8 mesures sombres et magnifiques. Penta mineure de Ré, phrasé vocal, tempo funèbre. Superbe en fingerpicking pour l'accompagnateur.",
+    note:"Version courante d'un traditionnel, les variantes sont légion.",
+  },
+  {
+    zone:"blues", title:"Folsom Prison Blues", key:"Mi · train beat (Johnny Cash)",
+    systems:[{bars:["E","E","E","E"]},{bars:["A","A","E","E"]},{bars:["B7","B7","E","E"]}],
+    chords:["E","A","B7"],
+    tip:"Forme country du 12 mesures : le B7 dure deux mesures et pas de IV à la mesure 10. Rythme « train » : basses alternées étouffées, régulières comme des rails. Penta de Mi, mélange majeur/mineur.",
+  },
+  {
+    zone:"jazz", title:"Take the A Train", key:"Do · swing · forme A A B A",
+    systems:[
+      {label:"A", note:"jouer 2 fois", bars:["C","C","D7","D7"]},
+      {bars:["Dm7","G7","C","Dm7 · G7"]},
+      {label:"B", bars:["F","F","F","F"]},
+      {bars:["D7","D7","Dm7","G7"]}
+    ],
+    chords:["C","D7","Dm7","G7","F"],
+    tip:"L'hymne d'Ellington. La surprise, c'est le D7 aux mesures 3-4 : vise son Fa♯. Le reste : gamme de Do majeur. Après le B, on rejoue un A.",
+    note:"Version jam simplifiée.",
+  },
+  {
+    zone:"jazz", title:"Satin Doll", key:"Do · swing feutré · A + pont",
+    systems:[
+      {label:"A", note:"jouer 2 fois", bars:["Dm7 · G7","Dm7 · G7","Em7 · A7","Em7 · A7"]},
+      {bars:["Am7 · D7","A♭m7 · D♭7","C","C"]},
+      {label:"B", bars:["Gm7 · C7","Gm7 · C7","F","F"]},
+      {bars:["Am7 · D7","Am7 · D7","G7","G7"]}
+    ],
+    chords:["Dm7","G7","Em7","A7","Am7","D7","A♭m7","D♭7","C","Gm7","C7","F"],
+    tip:"Que des paires ii-V qui montent puis glissent en chromatique (A♭m7 · D♭7) : le morceau parfait pour entendre les cadences. Forme A A B A.",
+    note:"Version jam simplifiée.",
+  },
+  {
+    zone:"jazz", title:"Sunny", key:"La mineur · soul jazz, médium",
+    systems:[{note:"boucle", bars:["Am7","C7","Fmaj7","Bm7♭5 · E7"]}],
+    chords:["Am7","C7","Fmaj7","Bm7♭5","E7"],
+    tip:"Quatre accords qui tournent, groove irrésistible. Penta mineure de La + Sol♯ sur le E7. Le morceau original monte d'un demi-ton à chaque couplet : tentez-le si vous êtes chauds.",
+    note:"Boucle simplifiée.",
+  },
+  {
+    zone:"jazz", title:"Watermelon Man", key:"Fa · funk (Herbie Hancock) · 16 mesures",
+    systems:[
+      {bars:["F7","F7","F7","F7"]},{bars:["B♭7","B♭7","F7","F7"]},
+      {bars:["C7","B♭7","C7","B♭7"]},{bars:["C7","B♭7","F7","F7"]}
+    ],
+    chords:["F7","B♭7","C7"],
+    tip:"Un blues étiré à 16 mesures avec l'appel-réponse C7 / B♭7 qui fait tout le sel. Penta de Fa (mineure et majeure mélangées), groove avant tout.",
+  },
+  {
+    zone:"jazz", title:"Song for My Father", key:"Fa mineur · bossa-funk (Horace Silver)",
+    systems:[{note:"boucle (section A)", bars:["Fm7","Fm7","E♭7","E♭7"]},{bars:["D♭7","C7","Fm7","Fm7"]}],
+    chords:["Fm7","E♭7","D♭7","C7"],
+    tip:"La descente de basse Fa → Mi♭ → Ré♭ → Do porte tout le morceau. Penta mineure de Fa, phrasé posé, groove têtu.",
+  },
+  {
+    zone:"jazz", title:"The Girl from Ipanema", key:"Fa · bossa · section A",
+    systems:[{note:"section A", bars:["Fmaj7","Fmaj7","G7","G7"]},{bars:["Gm7","G♭7","Fmaj7","G♭7"]}],
+    chords:["Fmaj7","G7","Gm7","G♭7"],
+    tip:"La bossa la plus jouée au monde. Le G♭7 qui glisse sous le Fmaj7 fait tout le charme. Gamme de Fa majeur, phrasé legato, jamais pressé. Le pont complet est ardu : restez sur le A en jam.",
+  },
+  {
+    zone:"jazz", title:"Isn't She Lovely", key:"Mi · groove Stevie Wonder",
+    systems:[{note:"boucle · 2 mesures par accord", bars:["C#m7","F#7","B7","E"]}],
+    chords:["C#m7","F#7","B7","E"],
+    tip:"Le vi-II-V-I qui tourne sans fin. Gamme de Mi majeur, penta majeure de Mi, et le F♯7 appelle une jolie note : son La♯. Groove avant vélocité.",
+  },
+  {
+    zone:"jazz", title:"L'anatole en Do", key:"Do · la boucle universelle (I-vi-ii-V)",
+    systems:[{note:"boucle", bars:["C","Am7","Dm7","G7"]}],
+    chords:["C","Am7","Dm7","G7"],
+    tip:"Blue Moon, Heart and Soul et mille chansons tiennent là-dessus. Gamme de Do majeur, et c'est le terrain idéal pour s'entraîner à viser les tierces. Version rapide : deux accords par mesure.",
+  },
+  {
+    zone:"rock", title:"Rock'n'roll 12 mesures", key:"La · croches droites (Chuck Berry)",
+    systems:[{bars:["A","A","A","A"]},{bars:["D","D","A","A"]},{bars:["E","D","A","E"]}],
+    chords:["A","D","E"],
+    tip:"Le même squelette que le blues, mais en croches droites, pas swinguées. Doubles cordes à la Chuck Berry, penta mixte, énergie avant tout.",
+  },
+  {
+    zone:"rock", title:"La Bamba / Twist and Shout", key:"Do · uptempo",
+    systems:[{note:"boucle", bars:["C · F","G","C · F","G"]}],
+    chords:["C","F","G"],
+    tip:"Trois accords, la boucle la plus contagieuse du rock. Gamme de Do majeur pour les solos, et montée collective sur le G final façon Twist and Shout.",
+  },
+  {
+    zone:"rock", title:"Bad Moon Rising", key:"Ré · médium (CCR)",
+    systems:[{note:"couplet", bars:["D","A · G","D","D"]},{note:"refrain", bars:["G","G","D","D"]},{bars:["A","G","D","D"]}],
+    chords:["D","A","G"],
+    tip:"Le petit tour A-G éclair de la mesure 2 fait tout le morceau. Penta majeure de Ré, twang country-rock.",
+  },
+  {
+    zone:"rock", title:"House of the Rising Sun", key:"La mineur · 6/8 (traditionnel / Animals)",
+    systems:[
+      {bars:["Am","C","D","F"]},{bars:["Am","C","E","E"]},
+      {bars:["Am","C","D","F"]},{bars:["Am","E","Am","E"]}
+    ],
+    chords:["Am","C","D","F","E"],
+    tip:"L'arpège en 6/8 le plus célèbre du monde : une corde après l'autre, laisser sonner. Penta mineure de La pour le solo, dramatique à souhait.",
+  },
+  {
+    zone:"rock", title:"Let It Be", key:"Do · ballade (Beatles)",
+    systems:[{note:"couplet", bars:["C","G","Am","F"]},{bars:["C","G","F","C"]},{note:"refrain", bars:["Am","G","F","C"]},{bars:["C","G","F","C"]}],
+    chords:["C","G","Am","F"],
+    tip:"Quatre accords, un hymne. Parfaite pour chanter à deux, et le solo original se joue en penta de La m / gamme de Do : vos deux mondes réunis.",
+  },
+  {
+    zone:"rock", title:"Wonderful Tonight", key:"Sol · lent (Clapton)",
+    systems:[{note:"boucle du couplet", bars:["G","D","C","D"]}],
+    chords:["G","D","C"],
+    tip:"Le slow de Clapton : bends doux et vibrato, penta majeure de Sol. Le motif d'intro se retrouve à l'oreille en visant les notes de chaque accord sur les cordes aiguës.",
+    note:"Le refrain (« do I look all right ») : C, D, puis la descente G → D/F♯ → Em, et C-D-G pour conclure.",
+  },
+  {
+    zone:"rock", title:"Creep", key:"Sol · lent, intense (Radiohead)",
+    systems:[{note:"boucle", bars:["G","B","C","Cm"]}],
+    chords:["G","B","C","Cm"],
+    tip:"Quatre accords dont deux étranges : le B majeur qui surprend, le Do mineur qui serre la gorge. Tout est dans la dynamique : couplets murmurés, refrains déchirés.",
+  },
+  {
+    zone:"rock", title:"Zombie", key:"Mi mineur · martelé (Cranberries)",
+    systems:[{note:"boucle", bars:["Em","C","G","D"]}],
+    chords:["Em","C","G","D"],
+    tip:"Une seule boucle du début à la fin. Penta mineure de Mi (position ouverte ou case 12), gros aller-retour au médiator.",
+  },
+  {
+    zone:"rock", title:"Wicked Game", key:"Si mineur · lent, hypnotique (Chris Isaak)",
+    systems:[{note:"boucle · 2 mesures par accord", bars:["Bm","A","E","E"]}],
+    chords:["Bm","A","E"],
+    tip:"Trois accords et une ambiance. Penta mineure de Si (case 7), notes tenues, vibrato lent : c'est le morceau où celui qui joue le moins gagne.",
+  },
+  {
+    zone:"rock", title:"Stir It Up", key:"La · reggae (Bob Marley)",
+    systems:[{note:"boucle", bars:["A","D · E","A","D · E"]}],
+    chords:["A","D","E"],
+    tip:"Le skank reggae : accords brefs sur les contretemps (2 et 4), étouffés aussitôt, basse ronde en dessous. Penta majeure de La pour le solo, phrasé paresseux.",
+  },
+  {
+    zone:"rock", title:"Feelin' Alright", key:"Do · deux accords, groove (Traffic / Joe Cocker)",
+    systems:[{note:"boucle", bars:["C7","F7","C7","F7"]}],
+    chords:["C7","F7"],
+    tip:"Deux accords 7 qui se balancent, terrain d'impro sans fin : penta de Do mineure ou majeure, mixolydien, tout passe. Le groove fait le morceau.",
+  },
+  {
+    zone:"rock", title:"No Woman No Cry", key:"Do · reggae lent (Bob Marley)",
+    systems:[{note:"boucle", bars:["C · G","Am · F","C · F","C · G"]}],
+    chords:["C","G","Am","F"],
+    tip:"La boucle qui fait chanter les stades. Skank doux, chant à deux. Solo : gamme de Do majeur, simple et chantant.",
+    note:"Le passage « everything's gonna be alright » alterne simplement C et F.",
+  },
+  {
+    zone:"rock", title:"Dead Flowers", key:"Ré · country-rock (Stones)",
+    systems:[{note:"boucle du couplet", bars:["D","A","G","D"]}],
+    chords:["D","A","G"],
+    tip:"Les Stones en mode country : gros son de gratte ouverte, penta majeure de Ré, doubles cordes twang. Chœurs approximatifs vivement encouragés.",
+    note:"Boucle simplifiée.",
+  },
+  {
+    zone:"rock", title:"Proud Mary", key:"Ré · médium (CCR)",
+    systems:[
+      {note:"intro (simplifiée)", bars:["C · A","C · A","G · F","D"]},
+      {note:"couplet", bars:["D","D","D","D"]},
+      {note:"refrain", bars:["A","Bm","D","D"]}
+    ],
+    chords:["C","A","G","F","D","Bm"],
+    tip:"L'intro descendante C-A-G-F-D est la signature du morceau, à jouer en accords pleins et carrés. Couplet sur un seul accord : tout est dans le rythme. Penta majeure de Ré, et accélération finale, tradition oblige.",
+    note:"Intro et structure légèrement simplifiées.",
+  },
+  {
+    zone:"jazz", title:"C Jam Blues", key:"Do · swing · blues jazz (Ellington)",
+    systems:[{bars:["C7","F7","C7","Gm7 · C7"]},{bars:["F7","F#°7","C7","Em7♭5 · A7"]},{bars:["Dm7","G7","C7 · A7","Dm7 · G7"]}],
+    chords:["C7","F7","F#°7","Gm7","Em7♭5","A7","Dm7","G7"],
+    tip:"Le thème original tient sur deux notes, la grille sur les vraies changes. C'est la transposition en Do de votre blues jazz en Fa : comparez-les, même squelette. Le F♯°7 de la mesure 6 est la couleur à viser.",
+    note:"Changes jazz courantes.",
+  },
+  {
+    zone:"jazz", title:"All Blues", key:"Sol · 6/8 balancé (Miles Davis)",
+    systems:[{bars:["G7","G7","G7","G7"]},{bars:["C7","C7","G7","G7"]},{bars:["D7","E♭7 · D7","G7","G7"]}],
+    chords:["G7","C7","D7","E♭7"],
+    tip:"Le blues qui roule en 6/8. Sol mixolydien ou penta mixte, jeu doux et rond, et le frisson de la mesure 10 : le E♭7 qui glisse sur le D7. Basse en balancement continu pour l'accompagnateur.",
+  },
+  {
+    zone:"jazz", title:"Caravan", key:"Fa mineur · exotique, tendu (Ellington / Tizol)",
+    systems:[
+      {note:"section A · 16 mesures", bars:["C7","C7","C7","C7"]},
+      {bars:["C7","C7","C7","C7"]},
+      {bars:["C7","C7","C7","C7"]},
+      {bars:["Fm","Fm","Fm","Fm"]}
+    ],
+    chords:["C7","Fm"],
+    tip:"Douze mesures de tension sur un seul C7, quatre de détente sur Fm. Sur le C7 : <b>penta de Fa m + le Mi naturel</b> (mineur harmonique de Fa), le son « charmeur de serpent ». Pompe sèche et menaçante.",
+    note:"Section A simplifiée, le pont complet est plus riche.",
+  },
+  {
+    zone:"jazz", title:"Honeysuckle Rose", key:"Fa · swing médium (Fats Waller) · A A B A",
+    systems:[
+      {label:"A", note:"jouer 2 fois", bars:["Gm7 · C7","Gm7 · C7","Gm7 · C7","Gm7 · C7"]},
+      {bars:["F","F","F","F"]},
+      {label:"B", bars:["F7","F7","B♭","B♭"]},
+      {bars:["G7","G7","C7","C7"]}
+    ],
+    chords:["Gm7","C7","F","F7","B♭","G7"],
+    tip:"Le ii-V qui tourne quatre mesures avant de retomber sur Fa : parfait pour ancrer le réflexe Gm7 → C7 dans les doigts. Après le pont, on rejoue un A. Grand classique manouche aussi.",
+    note:"Version jam.",
+  },
+  {
+    zone:"jazz", title:"Lady Bird", key:"Do · bop médium (Tadd Dameron) · 16 mesures",
+    systems:[
+      {bars:["Cmaj7","Cmaj7","Fm7","B♭7"]},
+      {bars:["Cmaj7","Cmaj7","B♭m7","E♭7"]},
+      {bars:["Am7","D7","Dm7","G7"]},
+      {bars:["Cmaj7","E♭maj7","A♭maj7","D♭maj7"]}
+    ],
+    chords:["Cmaj7","Fm7","B♭7","B♭m7","E♭7","Am7","D7","Dm7","G7","E♭maj7","A♭maj7","D♭maj7"],
+    tip:"Les 4 dernières mesures sont le fameux « turnaround Tadd Dameron » : quatre maj7 qui glissent en parallèle. Joue-les en drop 2 (section Voicings), c'est fait pour. Gamme de Do majeur comme fil, oreille sur les emprunts.",
+    note:"Version jam simplifiée.",
+  },
+  {
+    zone:"jazz", title:"Nature Boy", key:"Ré mineur · valse lente 3/4 (eden ahbez)",
+    systems:[{note:"boucle · 3 temps par mesure", bars:["Dm","Em7♭5 · A7","Dm","Em7♭5 · A7"]}],
+    chords:["Dm","Em7♭5","A7"],
+    tip:"Une valse mineure hypnotique, beaucoup d'espace. Penta de Ré m + Do♯ sur le A7 (mineur harmonique de Ré). Le morceau où une seule note bien placée vaut un chorus entier.",
+    note:"Boucle simplifiée du couplet.",
+  }
+];
+
+/* ============ Rendu SVG des diagrammes ============ */
+function chordSVG(frets){
+  const nums = frets.filter(f=>f!=="x").map(Number).filter(n=>n>0);
+  const maxF = nums.length?Math.max(...nums):1;
+  const minF = nums.length?Math.min(...nums):1;
+  const base = maxF<=4 ? 1 : minF;
+  const W=74,H=92,left=10,top=22,cw=10.5,rh=13,nStr=6,nFr=4;
+  let s = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  // sillet ou barre de position
+  if(base===1){
+    s += `<rect x="${left-1}" y="${top-3}" width="${cw*(nStr-1)+2}" height="3.4" fill="#211B12"/>`;
+  } else {
+    s += `<text x="${left+cw*(nStr-1)+4}" y="${top+rh-4}" font-size="8.5" font-weight="700" fill="#5C513D">${base}fr</text>`;
+  }
+  // cordes
+  for(let i=0;i<nStr;i++){
+    s += `<line x1="${left+i*cw}" y1="${top}" x2="${left+i*cw}" y2="${top+rh*nFr}" stroke="#211B12" stroke-width="1"/>`;
+  }
+  // frettes
+  for(let j=0;j<=nFr;j++){
+    s += `<line x1="${left}" y1="${top+j*rh}" x2="${left+cw*(nStr-1)}" y2="${top+j*rh}" stroke="#211B12" stroke-width="1"/>`;
+  }
+  // doigts / x / o
+  frets.forEach((f,i)=>{
+    const x = left+i*cw;
+    if(f==="x"){
+      s += `<text x="${x}" y="${top-6}" font-size="8.5" font-weight="700" text-anchor="middle" fill="#A8402C">×</text>`;
+    } else if(Number(f)===0){
+      s += `<circle cx="${x}" cy="${top-9}" r="3" fill="none" stroke="#211B12" stroke-width="1.2"/>`;
+    } else {
+      const rel = Number(f)-base;  // 0..3
+      const y = top + rel*rh + rh/2;
+      s += `<circle cx="${x}" cy="${y}" r="4" fill="#211B12"/>`;
+    }
+  });
+  return s+"</svg>";
+}
+
+/* ============ Rythme : mesure, temps, accents ============ */
+const GROOVE_DEFAULTS = {
+  blues:{m:"4/4", n:4, acc:[2,4], lbl:"Shuffle (ternaire) : basse sur 1 et 3, frappe sèche et étouffée sur 2 et 4."},
+  jazz:{m:"4/4", n:4, acc:[2,4], lbl:"Swing : pompe à 4 temps égaux, les 2 et 4 claquent un peu plus."},
+  rock:{m:"4/4", n:4, acc:[2,4], lbl:"Binaire : croches droites, accents sur 2 et 4."}
+};
+const GROOVE_BY_TITLE = {
+  "Slow blues en Sol":{m:"12/8", n:4, acc:[2,4], lbl:"12/8 : 4 temps divisés chacun en 3 (« 1-et-la »), le balancement du slow blues. Accents 2 et 4."},
+  "The Thrill Is Gone":{m:"12/8", n:4, acc:[2,4], lbl:"12/8 lent : chaque temps se divise en 3, laisse traîner. Accents 2 et 4."},
+  "St. James Infirmary":{m:"4/4", n:4, acc:[1,3], lbl:"Marche lente Nouvelle-Orléans : basse grave et solennelle sur 1 et 3."},
+  "Boogie sur un accord":{m:"4/4", n:4, acc:[1,2,3,4], lbl:"Boogie : la basse martèle chaque temps, égale et têtue, légèrement étouffée."},
+  "Folsom Prison Blues":{m:"4/4", n:4, acc:[1,3], lbl:"Train beat : basses alternées étouffées sur 1 et 3, « tchika » léger sur 2 et 4."},
+  "Minor Swing":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."},
+  "All Blues":{m:"6/8", n:6, acc:[1,4], lbl:"6/8 : 6 croches senties comme 2 grands temps balancés (1 et 4)."},
+  "Nature Boy":{m:"3/4", n:3, acc:[1], lbl:"Valse lente : 3 temps, basse sur 1, accords légers sur 2 et 3."},
+  "Blue Bossa":{m:"4/4", n:4, acc:[1,3], lbl:"Bossa : basse au pouce sur 1 et 3, accords pincés en syncope entre les temps."},
+  "Black Orpheus":{m:"4/4", n:4, acc:[1,3], lbl:"Bossa : basse au pouce sur 1 et 3, accords en syncope au-dessus."},
+  "The Girl from Ipanema":{m:"4/4", n:4, acc:[1,3], lbl:"Bossa : basse ronde sur 1 et 3, accords courts entre les temps, jamais pressé."},
+  "Song for My Father":{m:"4/4", n:4, acc:[1,3], lbl:"Bossa-funk : basse têtue sur 1 et 3, accords brefs entre."},
+  "Cantaloupe Island":{m:"4/4", n:4, acc:[1], lbl:"Funk posé : le 1 est sacré, jeu étouffé et discret entre les temps."},
+  "Watermelon Man":{m:"4/4", n:4, acc:[1], lbl:"Funk : cale le riff sur le 1, frappes sèches et étouffées ailleurs."},
+  "Oye Como Va (groove)":{m:"4/4", n:4, acc:[2,4], lbl:"Latin rock : accords courts sur les contretemps, groove régulier et fier."},
+  "Sympathy for the Devil":{m:"4/4", n:4, acc:[2,4], lbl:"Samba-rock : jeu percussif étouffé et continu, accents légers sur 2 et 4."},
+  "Stir It Up":{m:"4/4", n:4, acc:[2,4], lbl:"Skank reggae : rien sur 1 et 3, accords brefs et étouffés sur 2 et 4."},
+  "No Woman No Cry":{m:"4/4", n:4, acc:[2,4], lbl:"Skank doux : accords courts sur 2 et 4, basse ronde en dessous."},
+  "House of the Rising Sun":{m:"6/8", n:6, acc:[1,4], lbl:"6/8 arpégé : une corde par croche, appuie la 1 et la 4, laisse sonner."},
+  "Rock'n'roll 12 mesures":{m:"4/4", n:4, acc:[2,4], lbl:"Croches droites, pas swinguées. Backbeat 2 et 4 bien marqué."},
+  "Angie":{m:"4/4", n:4, acc:[1], lbl:"Ballade arpégée : basse sur 1, laisse sonner les cordes."},
+  "Wonderful Tonight":{m:"4/4", n:4, acc:[2,4], lbl:"Slow : accords ronds, caisse claire imaginaire sur 2 et 4."},
+  "Wicked Game":{m:"4/4", n:4, acc:[1], lbl:"Lent, hypnotique : arpèges qui sonnent, basse posée sur 1."},
+  "Ain't No Sunshine":{m:"4/4", n:4, acc:[1], lbl:"Groove lent : pose le 1, puis laisse le silence travailler."}
+};
+function grooveHTML(s){
+  const g = GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone];
+  let cells = "";
+  for(let i=1;i<=g.n;i++){
+    cells += `<div class="beat${g.acc.includes(i)?" on":""}">${i}</div>`;
+  }
+  return `<div class="groove"><a class="meter" href="#solfege">${g.m}</a><div class="beats">${cells}</div><span class="glbl">${g.lbl}</span></div>`;
+}
+
+/* ============ Rendu des cartes ============ */
+function barHTML(b){
+  const parts = b.split("·").map(p=>p.trim());
+  if(parts.length===1) return `<div class="bar">${parts[0]}</div>`;
+  return `<div class="bar">${parts[0]}${parts.slice(1).map(p=>` <small>${p}</small>`).join("")}</div>`;
+}
+function songHTML(s){
+  let systems = s.systems.map(sys=>{
+    let head = "";
+    if(sys.label) head = `<span class="sys-label">${sys.label}</span>` + (sys.note?`<span class="sys-note">${sys.note}</span>`:"");
+    else if(sys.note) head = `<span class="sys-note" style="margin-left:0">${sys.note}</span>`;
+    return head + `<div class="grid">` + sys.bars.map(barHTML).join("") + `</div>`;
+  }).join("");
+  const diags = s.chords.map(c=>{
+    const fr = CHORDS[c];
+    if(!fr) return "";
+    return `<div class="diag"><div class="nm">${c}</div>${chordSVG(fr)}</div>`;
+  }).join("");
+  return `<div class="chart">
+    <div class="eyebrow"><span>${s.key}</span></div>
+    <h2>${s.title}</h2>
+    ${grooveHTML(s)}
+    ${systems}
+    <div class="tip">Pour improviser : ${s.tip}</div>
+    <details><summary>Accords du morceau</summary><div class="diagrams">${diags}</div></details>
+    ${s.note?`<div class="footnote">${s.note}</div>`:""}
+  </div>`;
+}
+document.getElementById("zone-blues").innerHTML = SONGS.filter(s=>s.zone==="blues").map(songHTML).join("");
+document.getElementById("zone-jazz").innerHTML  = SONGS.filter(s=>s.zone==="jazz").map(songHTML).join("");
+document.getElementById("zone-rock").innerHTML  = SONGS.filter(s=>s.zone==="rock").map(songHTML).join("");
+
+/* ============ Manche : penta mineure de La, position 1 ============ */
+function pentaSVG(){
+  const left=30,top=18,fw=46,sh=17;
+  const W=left+fw*4+12,H=top+sh*5+30;
+  const names=["e","B","G","D","A","E"];
+  const penta=[[5,8],[5,8],[5,7],[5,7],[5,7],[5,8]];
+  const blue=[[],[],[8],[],[6],[]];
+  const roots=[[0,5],[3,7],[5,5]];
+  const isRoot=(i,f)=>roots.some(r=>r[0]===i&&r[1]===f);
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  for(let j=0;j<=4;j++){
+    s+=`<line x1="${left+j*fw}" y1="${top}" x2="${left+j*fw}" y2="${top+sh*5}" stroke="#211B12" stroke-width="${j===0?2.4:1}"/>`;
+  }
+  for(let i=0;i<6;i++){
+    const y=top+i*sh;
+    s+=`<line x1="${left}" y1="${y}" x2="${left+fw*4}" y2="${y}" stroke="#211B12" stroke-width="1"/>`;
+    s+=`<text x="${left-12}" y="${y+3.5}" font-size="10" font-weight="700" fill="#5C513D" text-anchor="middle">${names[i]}</text>`;
+  }
+  for(let j=0;j<4;j++){
+    s+=`<text x="${left+(j+0.5)*fw}" y="${H-10}" font-size="10" font-weight="700" fill="#5C513D" text-anchor="middle">${5+j}</text>`;
+  }
+  for(let i=0;i<6;i++){
+    penta[i].forEach(f=>{
+      const cx=left+(f-5+0.5)*fw, cy=top+i*sh;
+      if(isRoot(i,f)) s+=`<circle cx="${cx}" cy="${cy}" r="6" fill="#C9903A" stroke="#211B12" stroke-width="1.5"/>`;
+      else s+=`<circle cx="${cx}" cy="${cy}" r="5.5" fill="#211B12"/>`;
+    });
+    blue[i].forEach(f=>{
+      s+=`<circle cx="${left+(f-5+0.5)*fw}" cy="${top+i*sh}" r="5.5" fill="#A8402C"/>`;
+    });
+  }
+  return s+"</svg>";
+}
+document.getElementById("penta").innerHTML = pentaSVG();
+document.getElementById("ending-diags").innerHTML = ["F9","E9"]
+  .map(c=>`<div class="diag"><div class="nm">${c}</div>${chordSVG(CHORDS[c])}</div>`).join("");
+
+/* ============ Manches génériques : gammes & arpèges ============ */
+/* dots : [corde (0=e aigu … 5=Mi grave), case, type] — type "r"=tonique, "a"=note couleur */
+function fretSVG(start,count,dots){
+  const left=30,top=18,fw=42,sh=17;
+  const W=left+fw*count+12,H=top+sh*5+30;
+  const names=["e","B","G","D","A","E"];
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  for(let j=0;j<=count;j++){
+    s+=`<line x1="${left+j*fw}" y1="${top}" x2="${left+j*fw}" y2="${top+sh*5}" stroke="#211B12" stroke-width="${j===0?2.4:1}"/>`;
+  }
+  for(let i=0;i<6;i++){
+    const y=top+i*sh;
+    s+=`<line x1="${left}" y1="${y}" x2="${left+fw*count}" y2="${y}" stroke="#211B12" stroke-width="1"/>`;
+    s+=`<text x="${left-12}" y="${y+3.5}" font-size="10" font-weight="700" fill="#5C513D" text-anchor="middle">${names[i]}</text>`;
+  }
+  for(let j=0;j<count;j++){
+    s+=`<text x="${left+(j+0.5)*fw}" y="${H-10}" font-size="10" font-weight="700" fill="#5C513D" text-anchor="middle">${start+j}</text>`;
+  }
+  dots.forEach(d=>{
+    const cx=left+(d[1]-start+0.5)*fw, cy=top+d[0]*sh;
+    if(d[2]==="r") s+=`<circle cx="${cx}" cy="${cy}" r="6" fill="#C9903A" stroke="#211B12" stroke-width="1.5"/>`;
+    else if(d[2]==="a") s+=`<circle cx="${cx}" cy="${cy}" r="5.5" fill="#A8402C"/>`;
+    else s+=`<circle cx="${cx}" cy="${cy}" r="5.5" fill="#211B12"/>`;
+  });
+  return s+"</svg>";
+}
+
+const SCALES=[
+  {
+    title:"Penta majeure de La (la boîte glissée)",
+    use:"Blues majeurs (couleur BB King), Sweet Home, Stand By Me, Key to the Highway",
+    desc:"La même forme que ta penta mineure, glissée 3 cases vers le sillet : mêmes doigts, son totalement différent, solaire. Seules les toniques dorées changent de place. Le truc de BB King : alterner majeure et mineure sur un même blues.",
+    start:2,count:4,
+    dots:[[0,2],[0,5,"r"],[1,2],[1,5],[2,2,"r"],[2,4],[3,2],[3,4],[4,2],[4,4],[5,2],[5,5,"r"]]
+  },
+  {
+    title:"Mixolydien de La",
+    use:"Accords 7 : blues, Sympathy (en Mi), Sweet Home (en Ré), cycle de dominantes",
+    desc:"La gamme majeure avec une 7e mineure (ici le Sol) : LA gamme des accords 7. Forme déplaçable : case 12 pour Mi (Sympathy), case 10 pour Ré (Sweet Home). Sur un blues, une gamme mixo par accord, ou reste en penta et laisse tourner.",
+    start:4,count:5,
+    dots:[[0,5,"r"],[0,7],[1,5],[1,7],[1,8],[2,4],[2,6],[2,7],[3,4],[3,5],[3,7,"r"],[4,4],[4,5],[4,7],[5,5,"r"],[5,7]]
+  },
+  {
+    title:"Dorien de La",
+    use:"Oye Como Va · So What (même forme en Ré, case 10)",
+    desc:"Le mineur qui groove : ta penta mineure + le Si et le Fa♯. C'est tout le son Santana. Repère le Fa♯ : c'est lui qui fait la différence avec le mineur classique, appuie dessus.",
+    start:4,count:5,
+    dots:[[0,5,"r"],[0,7],[0,8],[1,5],[1,7],[1,8],[2,4],[2,5],[2,7],[3,4],[3,5],[3,7,"r"],[4,5],[4,7],[5,5,"r"],[5,7],[5,8]]
+  },
+  {
+    title:"La couleur mineur harmonique : penta + Sol♯",
+    use:"Minor Swing, Summertime, boucle andalouse, Angie — dès que le E7 arrive",
+    desc:"Pas une nouvelle gamme à apprendre : ta penta de La m, plus le Sol♯ (points rouges) quand l'accord E7 arrive. Vise le Sol♯ sur le E7, résous sur le La : c'est la couleur manouche et espagnole en une seule note.",
+    start:4,count:5,
+    dots:[[0,4,"a"],[0,5,"r"],[0,8],[1,5],[1,8],[2,5],[2,7],[3,5],[3,6,"a"],[3,7,"r"],[4,5],[4,7],[5,4,"a"],[5,5,"r"],[5,8]]
+  },
+  {
+    title:"Gamme majeure (forme de Sol)",
+    use:"Autumn Leaves, Knockin', Wish You Were Here · case 8 = Do majeur (Fly Me, All of Me)",
+    desc:"Une seule forme pour la moitié du carnet. Ici en Sol (= Mi mineur naturel). La même forme décalée case 8 donne Do majeur pour Fly Me, All of Me et Black Orpheus. Ajoute le Ré♯ sur les B7 d'Autumn Leaves.",
+    start:2,count:4,
+    dots:[[0,2],[0,3,"r"],[0,5],[1,3],[1,5],[2,2],[2,4],[2,5],[3,2],[3,4],[3,5,"r"],[4,2],[4,3],[4,5],[5,2],[5,3,"r"],[5,5]]
+  },
+  {
+    title:"Arpèges : le GPS des grilles",
+    use:"Blues jazz en Fa, Autumn Leaves, Blue Bossa, Fly Me, All of Me",
+    desc:"Un arpège = uniquement les notes de l'accord. Le jeu : une note d'arpège sur le temps 1 de chaque mesure, remplissage en penta entre les cibles, et tout sonne juste. Priorité aux tierces : c'est la note qui dit si l'accord est majeur ou mineur. Formes déplaçables (tonique La, case 5).",
+    groups:[
+      {label:"m7", start:4,count:5, dots:[[0,5,"r"],[0,8],[1,5],[1,8],[2,5],[3,5],[3,7,"r"],[4,7],[5,5,"r"],[5,8]]},
+      {label:"7",  start:4,count:5, dots:[[0,5,"r"],[1,5],[1,8],[2,6],[3,5],[3,7,"r"],[4,4],[4,7],[5,5,"r"]]},
+      {label:"maj7", start:4,count:5, dots:[[0,4],[0,5,"r"],[1,5],[2,6],[3,6],[3,7,"r"],[4,4],[4,7],[5,4],[5,5,"r"]]}
+    ]
+  }
+];
+
+document.getElementById("zone-gammes").innerHTML = SCALES.map(sc=>{
+  let body;
+  if(sc.groups){
+    body = `<div class="diagrams">` + sc.groups.map(g=>
+      `<div class="diag"><div class="nm">${g.label}</div>${fretSVG(g.start,g.count,g.dots)}</div>`).join("") + `</div>`;
+  } else {
+    body = `<div class="fret-wrap">${fretSVG(sc.start,sc.count,sc.dots)}</div>`;
+  }
+  return `<div class="impro"><h3>${sc.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${sc.use}</p>${body}<p>${sc.desc}</p><p class="legend">noir = gamme · doré = tonique · rouge = note couleur</p></div>`;
+}).join("");
+
+/* ============ Voicings : alternatives aux positions standards ============ */
+const VOICINGS=[
+  {
+    title:"Shell voicings : la pompe Freddie Green",
+    use:"Blues jazz, C Jam, Satin Doll, Take the A Train, All of Me, Honeysuckle Rose",
+    chips:[
+      {n:"G7",   f:["3","x","3","4","x","x"]},
+      {n:"Gmaj7",f:["3","x","4","4","x","x"]},
+      {n:"Gm7",  f:["3","x","3","3","x","x"]},
+      {n:"C7",   f:["x","3","2","3","x","x"]},
+      {n:"Cmaj7",f:["x","3","2","4","x","x"]},
+      {n:"Cm7",  f:["x","3","1","3","x","x"]}
+    ],
+    desc:"L'accord réduit à l'essentiel : fondamentale + septième + tierce, rien d'autre — la quinte ne sert à rien. Étouffe les cordes non jouées avec le gras des doigts. Formes 100 % déplaçables : la basse te donne le nom (ici Sol grave et Do). C'est le son de la pompe jazz : sec, précis, et ça laisse toute la place au soliste."
+  },
+  {
+    title:"Drop 2 : la famille magique",
+    use:"Lady Bird (le turnaround est fait pour), Blue Bossa, tous les standards",
+    chips:[
+      {n:"Cmaj7", f:["x","x","5","5","5","7"]},
+      {n:"C7",    f:["x","x","5","5","5","6"]},
+      {n:"Cm7",   f:["x","x","5","5","4","6"]},
+      {n:"Cm7♭5", f:["x","x","4","5","4","6"]}
+    ],
+    desc:"Quatre qualités d'accord dans la même zone du manche : <b>un seul doigt bouge à chaque fois</b>. Fondamentale sur la corde de Sol (case 5 = Do) : déplace tout le bloc pour transposer (case 7 = Ré, case 10 = Fa). Enchaîne les quatre dans l'ordre pour entendre les qualités passer. Idéal dans l'aigu, au-dessus de la pompe de l'autre."
+  },
+  {
+    title:"Triades renversées sur les chanterelles",
+    use:"Accompagnement léger pendant le solo de l'autre, montées de manche",
+    chips:[
+      {n:"Do (fond.)",     f:["x","x","x","5","5","3"]},
+      {n:"Do (1er renv.)", f:["x","x","x","9","8","8"]},
+      {n:"Do (2e renv.)",  f:["x","x","x","12","13","12"]}
+    ],
+    desc:"La même triade de Do à trois endroits du manche : fondamentale, premier renversement, deuxième renversement. Trois cordes, son clair et aigu, parfait pour accompagner sans écraser le soliste, ou pour grimper le manche accord par accord. <b>Version mineure : baisse la tierce d'une case</b> (c'est la seule note qui change dans chaque forme). Toutes déplaçables."
+  },
+  {
+    title:"Basses étrangères : relier les accords",
+    use:"Let It Be, Wonderful Tonight, Knockin', toutes les ballades",
+    chips:[
+      {n:"C/E", f:["0","3","2","0","1","0"]},
+      {n:"G/B", f:["x","2","0","0","3","3"]},
+      {n:"F/A", f:["x","0","3","2","1","1"]},
+      {n:"C/G", f:["3","3","2","0","1","0"]}
+    ],
+    desc:"Le même accord avec une autre note à la basse (renversement) : au lieu de sauter d'accord en accord, la basse descend ou monte en escalier. Essaie <b>C → G/B → Am → Am/G → F</b> : la ligne chante toute seule. Règle simple : entre deux accords voisins, cherche la basse intermédiaire qui fait le pont."
+  }
+];
+
+document.getElementById("zone-voicings").innerHTML = VOICINGS.map(v=>
+  `<div class="impro"><h3>${v.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${v.use}</p><div class="diagrams">${
+    v.chips.map(c=>`<div class="diag"><div class="nm">${c.n}</div>${chordSVG(c.f)}</div>`).join("")
+  }</div><p>${v.desc}</p></div>`
+).join("");
+</script>
+</body>
+</html>
