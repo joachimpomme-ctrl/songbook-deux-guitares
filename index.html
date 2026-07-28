@@ -198,6 +198,7 @@
   <a href="#rock">Rock</a>
   <a href="#gammes">Gammes</a>
   <a href="#voicings">Voicings</a>
+  <a href="#basses">Basses</a>
   <a href="#impro">Impro &amp; pompe</a>
 </nav>
 
@@ -253,6 +254,15 @@
 
   <div class="section-title" id="voicings">Voicings : sortir des positions</div>
   <div id="zone-voicings"></div>
+
+  <div class="section-title" id="basses">Basses : tenir le grave</div>
+  <div class="impro">
+    <h3>Guitare sèche ou basse : la même main</h3>
+    <p>Toutes les tablatures de cette section sont écrites sur les <b>quatre cordes graves</b> (Mi&nbsp;·&nbsp;La&nbsp;·&nbsp;Ré&nbsp;·&nbsp;Sol). Ces cordes ont exactement les mêmes notes qu'une basse&nbsp;: <b>le doigté se transpose tel quel</b> de la guitare acoustique à la basse électro-acoustique.</p>
+    <p>Cinq patrons couvrent presque tout le carnet. Chacun est une <b>forme déplaçable</b>&nbsp;: repère la fondamentale (case indiquée), puis glisse toute la forme pour changer d'accord — comme la boîte de penta.</p>
+    <p class="legend">Lecture&nbsp;: corde Sol en haut, corde Mi grave en bas. Chiffre = case. 0 = corde à vide.</p>
+  </div>
+  <div id="zone-basses"></div>
 
   <div class="section-title" id="impro">Impro &amp; pompe</div>
   <div class="impro">
@@ -486,6 +496,12 @@ const SONGS = [
     systems:[{bars:["Am","G","F","E7"]}],
     chords:["Am","G","F","E7"],
     tip:"Hit the Road Jack, Stray Cat Strut, flamenco... Boucle infinie. Penta de La m partout ; pour la couleur espagnole, insiste sur le Fa naturel au moment du E7.",
+    bass:{tab:
+`G|----------------|
+D|----------------|
+A|--0-------------|
+E|------3---1---0-|`,
+      note:"La → Sol → Fa → Mi : le tétracorde andalou qui descend, une fondamentale par accord (Am-G-F-E7). Insiste sur le Mi grave, c'est la maison."},
   },
   {
     zone:"jazz", title:"All of Me", key:"Do · swing médium · 32 mesures",
@@ -581,6 +597,12 @@ const SONGS = [
     ],
     chords:["Am","Am/G","D/F#","Fmaj7","G","D","E","A","C#m","F#m","Bm"],
     tip:"La descente de basse La → Sol → Fa♯ → Fa porte le couplet, puis le pont bascule en La majeur : le soleil entre deux averses. Penta mineure de La qui pleure sur le couplet, gamme de La majeur sur le pont.",
+    bass:{tab:
+`G|----------------|
+D|----------------|
+A|--0-------------|
+E|------3---2---1-|`,
+      note:"La → Sol → Fa♯ → Fa : la descente chromatique qui fait tout le couplet, une note par accord (Am, Am/G, D/F♯, Fmaj7)."},
     note:"Découpage du pont approximatif ; on retombe ensuite sur le couplet.",
   },
   {
@@ -605,6 +627,12 @@ const SONGS = [
     systems:[{note:"boucle", bars:["A","A","F#m","F#m"]},{bars:["D","E","A","A"]}],
     chords:["A","F#m","D","E"],
     tip:"LA progression des années 50, immanquable pour chanter à deux. L'un fait la ligne de basse sur les graves, l'autre les accords. Solo : gamme de La majeur ou penta majeure.",
+    bass:{tab:
+`G|----------------|
+D|----------0-----|
+A|--0-----------2-|
+E|------2---------|`,
+      note:"Les fondamentales La · Fa♯ · Ré · Mi, une par accord (A-F♯m-D-E). La ligne originale brode autour avec sa célèbre rythmique pointée ; ces quatre notes en sont le squelette."},
   },
   {
     zone:"rock", title:"Hotel California", key:"Si mineur · médium (Eagles)",
@@ -624,18 +652,36 @@ const SONGS = [
     systems:[{note:"boucle", bars:["A7","A7","A7","A7"]}],
     chords:["A7"],
     tip:"Façon John Lee Hooker ou ZZ Top : l'un tient la basse boogie (aller-retour La, Mi, Fa♯, Sol sur les graves), l'autre improvise en penta de La sans jamais être bousculé par un changement d'accord. Hypnotique.",
+    bass:{tab:
+`G|----------------|
+D|--2---4---5---4-|
+A|0---0---0---0---|
+E|----------------|`,
+      note:"Le boogie type : fondamentale La sur chaque temps, 5-6-♭7-6 (Mi-Fa♯-Sol-Fa♯) entre les temps. Étouffe à la paume et ne t'arrête jamais."},
   },
   {
     zone:"blues", title:"Sweet Home Chicago", key:"Mi · shuffle, quick change",
     systems:[{bars:["E7","A7","E7","E7"]},{bars:["A7","A7","E7","E7"]},{bars:["B7","A7","E7","B7"]}],
     chords:["E7","A7","B7"],
     tip:"Le blues de Robert Johnson version jam : votre 12 mesures en Mi avec le quick change (A7 dès la mesure 2). L'hymne de toutes les jams du monde.",
+    bass:{tab:
+`G|----------------|
+D|----------------|
+A|--2---4---5---4-|
+E|0---0---0---0---|`,
+      note:"Boogie shuffle en Mi : fondamentale Mi sur les temps, 5-6-♭7 (Si-Do♯-Ré) entre. Le même moule glisse en La (corde de La à vide) sur le A7, et en Si sur le B7."},
   },
   {
     zone:"blues", title:"St. James Infirmary", key:"Ré mineur · lent, Nouvelle-Orléans (traditionnel)",
     systems:[{bars:["Dm","Gm","Dm","A7"]},{bars:["Dm","Gm","Dm · A7","Dm"]}],
     chords:["Dm","Gm","A7"],
     tip:"8 mesures sombres et magnifiques. Penta mineure de Ré, phrasé vocal, tempo funèbre. Superbe en fingerpicking pour l'accompagnateur.",
+    bass:{tab:
+`G|----------------|
+D|--0-------0-----|
+A|----------------|
+E|------3-------5-|`,
+      note:"Les fondamentales Ré · Sol · Ré · La (Dm-Gm-Dm-A7), tempo funèbre. Laisse chaque basse sonner très longtemps, comme un glas."},
     note:"Version courante d'un traditionnel, les variantes sont légion.",
   },
   {
@@ -643,6 +689,12 @@ const SONGS = [
     systems:[{bars:["E","E","E","E"]},{bars:["A","A","E","E"]},{bars:["B7","B7","E","E"]}],
     chords:["E","A","B7"],
     tip:"Forme country du 12 mesures : le B7 dure deux mesures et pas de IV à la mesure 10. Rythme « train » : basses alternées étouffées, régulières comme des rails. Penta de Mi, mélange majeur/mineur.",
+    bass:{tab:
+`G|----------------|
+D|----------------|
+A|------2-------2-|
+E|--0-------0-----|`,
+      note:"Le « train beat » : fondamentale / quinte alternées (Mi-Si), étouffées à la paume. Sur A7 : La-Mi ; sur B7 : Si-Fa♯. La même forme deux cases plus haut."},
   },
   {
     zone:"jazz", title:"Take the A Train", key:"Do · swing · forme A A B A",
@@ -689,6 +741,12 @@ const SONGS = [
     systems:[{note:"boucle (section A)", bars:["Fm7","Fm7","E♭7","E♭7"]},{bars:["D♭7","C7","Fm7","Fm7"]}],
     chords:["Fm7","E♭7","D♭7","C7"],
     tip:"La descente de basse Fa → Mi♭ → Ré♭ → Do porte tout le morceau. Penta mineure de Fa, phrasé posé, groove têtu.",
+    bass:{tab:
+`G|----------------|
+D|--3---1---------|
+A|----------4---3-|
+E|----------------|`,
+      note:"Fa → Mi♭ → Ré♭ → Do : la descente de basse EST le morceau (Fm7-E♭7-D♭7-C7). Une fondamentale par accord, ronde et posée."},
   },
   {
     zone:"jazz", title:"The Girl from Ipanema", key:"Fa · bossa · section A",
@@ -771,6 +829,12 @@ const SONGS = [
     systems:[{note:"boucle", bars:["A","D · E","A","D · E"]}],
     chords:["A","D","E"],
     tip:"Le skank reggae : accords brefs sur les contretemps (2 et 4), étouffés aussitôt, basse ronde en dessous. Penta majeure de La pour le solo, phrasé paresseux.",
+    bass:{tab:
+`G|----------------|
+D|------7-------7-|
+A|----------------|
+E|--5-------5-----|`,
+      note:"Reggae : peu de notes, beaucoup de silence. La fondamentale grave (La, corde de Mi case 5) rebondit sur son octave (corde de Ré case 7). Suis les accords : D → corde de La case 5, E → case 7."},
   },
   {
     zone:"rock", title:"Feelin' Alright", key:"Do · deux accords, groove (Traffic / Joe Cocker)",
@@ -815,6 +879,12 @@ const SONGS = [
     systems:[{bars:["G7","G7","G7","G7"]},{bars:["C7","C7","G7","G7"]},{bars:["D7","E♭7 · D7","G7","G7"]}],
     chords:["G7","C7","D7","E♭7"],
     tip:"Le blues qui roule en 6/8. Sol mixolydien ou penta mixte, jeu doux et rond, et le frisson de la mesure 10 : le E♭7 qui glisse sur le D7. Basse en balancement continu pour l'accompagnateur.",
+    bass:{tab:
+`G|--------------------|
+D|------------------0-|
+A|----------1---2-----|
+E|--3---5-------------|`,
+      note:"Le riff signature en 6/8 : Sol-La-Si♭-Si qui grimpe vers le Ré, puis balance. Le cœur du morceau de Miles ; répète-le en boucle sous les solos."},
   },
   {
     zone:"jazz", title:"Caravan", key:"Fa mineur · exotique, tendu (Ellington / Tizol)",
@@ -965,6 +1035,7 @@ function songHTML(s){
     ${systems}
     <div class="tip">Pour improviser : ${s.tip}</div>
     <details><summary>Accords du morceau</summary><div class="diagrams">${diags}</div></details>
+    ${s.bass?`<details><summary>Ligne de basse</summary><pre class="tab">${s.bass.tab}</pre><div class="footnote">${s.bass.note}</div></details>`:""}
     ${s.note?`<div class="footnote">${s.note}</div>`:""}
   </div>`;
 }
@@ -1148,6 +1219,62 @@ document.getElementById("zone-voicings").innerHTML = VOICINGS.map(v=>
   `<div class="impro"><h3>${v.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${v.use}</p><div class="diagrams">${
     v.chips.map(c=>`<div class="diag"><div class="nm">${c.n}</div>${chordSVG(c.f)}</div>`).join("")
   }</div><p>${v.desc}</p></div>`
+).join("");
+
+/* ============ Basses : patrons transposables ============ */
+const BASSES=[
+  {
+    title:"Boogie / shuffle",
+    use:"Tous les blues, Boogie sur un accord, Sweet Home Chicago, rock'n'roll",
+    tab:
+`G|----------------|
+D|--2---4---5---4-|
+A|0---0---0---0---|
+E|----------------|`,
+    desc:"La basse la plus rentable du carnet (ici en La). <b>Fondamentale sur chaque temps</b> (La, corde à vide), et entre les temps la ligne monte 5-6-♭7-6 (Mi-Fa♯-Sol-Fa♯). Étouffe à la paume pour le côté sec et bondissant. Déplace la fondamentale sur la corde grave&nbsp;: en Mi, la même forme part de la corde de Mi à vide."
+  },
+  {
+    title:"Walking bass (jazz)",
+    use:"Autumn Leaves, All of Me, Take the A Train, blues jazz, tous les ii-V-I",
+    tab:
+`Dm7 | Ré  · Fa · La · Fa♯→
+G7  | Sol · Si · Ré · Ré♭→
+C   | Do  ·  ·  ·  ·`,
+    desc:"Pas une forme mais une <b>recette</b>, en noires régulières&nbsp;: <b>fondamentale sur le temps 1</b>, notes de l'accord sur les temps 2-3, puis sur le temps 4 une <b>note d'approche à un demi-ton</b> de la fondamentale suivante (la flèche «&nbsp;→&nbsp;»). C'est elle qui aimante l'oreille vers l'accord d'après et fait «&nbsp;marcher&nbsp;» la basse. Approche par en dessous ou par au-dessus, au choix."
+  },
+  {
+    title:"Basses alternées (train / country)",
+    use:"Folsom Prison, Key to the Highway, Dead Flowers, rockabilly",
+    tab:
+`G|----------------|
+D|----------------|
+A|------2-------2-|
+E|--0-------0-----|`,
+    desc:"Fondamentale et quinte qui se répondent (ici Mi-Si), étouffées à la paume, régulières comme des rails. La quinte est toujours <b>sur la corde du dessus, deux cases plus haut</b> que la fondamentale&nbsp;: la forme ne change jamais, seule la case de départ bouge."
+  },
+  {
+    title:"Bossa (pouce, fondamentale-quinte)",
+    use:"Blue Bossa, Black Orpheus, The Girl from Ipanema, Song for My Father",
+    tab:
+`G|----------------|
+D|----------------|
+A|--3-------------|
+E|----------3-----|`,
+    desc:"Au pouce, legato&nbsp;: <b>fondamentale sur le temps 1</b> (ici Do, corde de La case 3), <b>quinte sur le temps 3</b> (Sol, corde du dessous, même case). Rond et posé, jamais pressé&nbsp;; les doigts pincent l'accord en syncope au-dessus. Forme déplaçable telle quelle."
+  },
+  {
+    title:"Reggae (one drop)",
+    use:"Stir It Up, No Woman No Cry, Feelin' Alright",
+    tab:
+`G|----------------|
+D|------7-------7-|
+A|----------------|
+E|--5-------5-----|`,
+    desc:"Le contraire de la vélocité&nbsp;: <b>peu de notes, beaucoup de silence</b>. La fondamentale grave (La, corde de Mi case 5) rebondit sur son octave (corde de Ré case 7), rien sur le vrai «&nbsp;1&nbsp;». C'est le creux qui fait groover — laisse la place à la batterie imaginaire."
+  }
+];
+document.getElementById("zone-basses").innerHTML = BASSES.map(b=>
+  `<div class="impro"><h3>${b.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${b.use}</p><pre class="tab">${b.tab}</pre><p>${b.desc}</p></div>`
 ).join("");
 </script>
 </body>
