@@ -196,6 +196,7 @@
   <a href="#blues">Blues</a>
   <a href="#jazz">Jazz</a>
   <a href="#rock">Rock</a>
+  <a href="#pop">Pop</a>
   <a href="#gammes">Gammes</a>
   <a href="#voicings">Voicings</a>
   <a href="#basses">Basses</a>
@@ -211,6 +212,9 @@
 
   <div class="section-title" id="rock">Rock &amp; Groove</div>
   <div id="zone-rock"></div>
+
+  <div class="section-title" id="pop">Pop</div>
+  <div id="zone-pop"></div>
 
   <div class="section-title" id="gammes">Gammes pour improviser</div>
 
@@ -237,6 +241,7 @@
       <li><b>Sweet Home, Sympathy, Cycle de dominantes, Stand By Me</b> → penta majeure / mixolydien.</li>
       <li><b>Let It Be, No Woman No Cry, La Bamba, anatole, Take the A Train, Satin Doll</b> → gamme majeure de la tonalité.</li>
       <li><b>Boucles rock</b> (Creep, Zombie, Wicked Game, Wonderful Tonight, Dead Flowers...) → penta de la tonalité, mineure ou majeure selon la couleur du morceau.</li>
+      <li><b>Rhythm changes, Misty, I Will Survive, boucle I-V-vi-IV</b> → gamme majeure de la tonalité + tierces des accords. <b>My Favorite Things, Scarborough Fair, Horse With No Name</b> → dorien. <b>Dark Eyes</b> → penta mineure de Ré + Do♯ sur les A7.</li>
       <li><b>C Jam Blues, All Blues, Honeysuckle Rose</b> → mixolydien / penta mixte + tierces des accords. <b>Caravan, Nature Boy</b> → penta mineure + la note du mineur harmonique sur la dominante.</li>
     </ul>
   </div>
@@ -381,7 +386,9 @@ const CHORDS = {
   "B♭":      ["x","1","3","3","3","1"],
   "E♭maj7":  ["x","6","8","7","8","6"],
   "A♭maj7":  ["4","6","5","5","4","4"],
-  "C#m":     ["x","4","6","6","5","4"]
+  "C#m":     ["x","4","6","6","5","4"],
+  "E♭":      ["x","6","8","8","8","6"],
+  "D6add9":  ["2","0","0","2","0","0"]
 };
 
 /* ============ Morceaux ============ */
@@ -928,6 +935,129 @@ E|--3---5-------------|`,
     chords:["Dm","Em7♭5","A7"],
     tip:"Une valse mineure hypnotique, beaucoup d'espace. Penta de Ré m + Do♯ sur le A7 (mineur harmonique de Ré). Le morceau où une seule note bien placée vaut un chorus entier.",
     note:"Boucle simplifiée du couplet.",
+  },
+  {
+    zone:"jazz", title:"Rhythm changes en Si♭", key:"Si♭ · swing rapide · forme A A B A",
+    systems:[
+      {label:"A", note:"jouer 2 fois", bars:["B♭ · Gm7","Cm7 · F7","B♭ · Gm7","Cm7 · F7"]},
+      {bars:["B♭7","E♭","B♭ · G7","Cm7 · F7"]},
+      {label:"B", note:"le pont, 8 mesures", bars:["D7","D7","G7","G7"]},
+      {bars:["C7","C7","F7","F7"]}
+    ],
+    chords:["B♭","Gm7","Cm7","F7","B♭7","E♭","G7","D7","C7"],
+    tip:"La deuxième forme du jazz après le blues : des centaines de thèmes tournent dessus. Sur les A, gamme de Si♭ majeur, vise les tierces. <b>Le pont est un pur cycle de dominantes</b> (Ré → Sol → Do → Fa), deux mesures chacun : le terrain d'entraînement idéal.",
+    note:"Version simplifiée d'une forme qui compte mille variantes. Enchaînement : A, A, B, A.",
+  },
+  {
+    zone:"jazz", title:"My Favorite Things (vamp)", key:"Mi mineur puis Mi majeur · valse jazz",
+    systems:[
+      {note:"vamp mineur", bars:["Em","Em","Em","Em"]},
+      {note:"bascule en majeur", bars:["E","E","E","E"]}
+    ],
+    chords:["Em","E"],
+    tip:"Une valse, et surtout <b>la même fondamentale qui bascule du mineur au majeur</b> : Mi dorien sur la première partie, gamme de Mi majeur sur la seconde. Le contraste fait tout, c'est ce que Coltrane étirait pendant des minutes.",
+    note:"Réduit au vamp modal ; la forme complète est plus longue.",
+  },
+  {
+    zone:"jazz", title:"Misty", key:"Mi♭ · ballade lente (Erroll Garner)",
+    systems:[
+      {label:"A", bars:["E♭maj7","B♭m7 · E♭7","A♭maj7","A♭m7 · D♭7"]},
+      {bars:["E♭maj7 · Cm7","Fm7 · B♭7","Gm7 · C7","Fm7 · B♭7"]}
+    ],
+    chords:["E♭maj7","B♭m7","E♭7","A♭maj7","A♭m7","D♭7","Cm7","Fm7","B♭7","Gm7","C7"],
+    tip:"Une chaîne de ii-V, presque un par mesure : le morceau qui apprend à entendre les cadences. Gamme de Mi♭ majeur comme fil, et sur chaque paire vise la tierce du deuxième accord. Accords tenus, beaucoup d'air.",
+    note:"Section A ; le pont est plus touffu.",
+  },
+  {
+    zone:"jazz", title:"Dark Eyes (Les Yeux Noirs)", key:"Ré mineur · swing manouche (traditionnel)",
+    systems:[
+      {bars:["A7","A7","Dm","Dm"]},
+      {bars:["A7","A7","Dm","Dm"]},
+      {bars:["Gm","Gm","Dm","Dm"]},
+      {bars:["A7","A7","Dm","Dm"]}
+    ],
+    chords:["A7","Dm","Gm"],
+    tip:"Le deuxième morceau manouche à deux guitares après Minor Swing, et le plus spectaculaire pour ce qu'il demande. Penta mineure de Ré, plus le <b>Do♯ sur les A7</b> (ré mineur harmonique). Accélère à chaque reprise, c'est la tradition.",
+    note:"Version jam d'un traditionnel : les variantes sont nombreuses.",
+  },
+  {
+    zone:"rock", title:"Scarborough Fair", key:"La mineur · valse folk (traditionnel)",
+    systems:[
+      {bars:["Am","Am","G","Am"]},
+      {bars:["Am","C","D","Am"]},
+      {bars:["Am","G","Am","Am"]}
+    ],
+    chords:["Am","G","C","D"],
+    tip:"Modal, pas mineur classique : le <b>Ré majeur</b> au milieu d'un morceau en La mineur, c'est la couleur dorienne, la même que sur Oye Como Va. Arpèges qui sonnent, l'un tient la valse pendant que l'autre chante le thème.",
+    note:"Version simplifiée d'un traditionnel : les variantes sont légion.",
+  },
+  {
+    zone:"rock", title:"A Horse With No Name", key:"Mi mineur · deux accords (America)",
+    systems:[{note:"boucle", bars:["Em","D6add9","Em","D6add9"]}],
+    chords:["Em","D6add9"],
+    tip:"Deux accords et rien d'autre du début à la fin : le laboratoire idéal pour travailler le discours plutôt que les doigts. Penta mineure de Mi, ou Mi dorien pour la couleur. Le D6add9 est un Ré auquel on laisse sonner deux cordes à vide.",
+  },
+  {
+    zone:"rock", title:"Heart of Gold", key:"Mi mineur · folk-rock médium (Neil Young)",
+    systems:[
+      {note:"couplet", bars:["Em","Em","C","D"]},
+      {bars:["Em","Em","C","D"]},
+      {note:"refrain", bars:["G","C","G","G"]},
+      {bars:["C","D","Em","Em"]}
+    ],
+    chords:["Em","C","D","G"],
+    tip:"Le folk-rock à basses alternées : l'un tient le va-et-vient grave, l'autre chante ou brode en penta mineure de Mi. Le refrain bascule en Sol majeur, plus lumineux : change de couleur au moment où il arrive.",
+    note:"Structure simplifiée.",
+  },
+  {
+    zone:"rock", title:"Brown Eyed Girl", key:"Sol · médium ensoleillé (Van Morrison)",
+    systems:[
+      {note:"couplet", bars:["G","C","G","D"]},
+      {note:"refrain", bars:["C","D","G","Em"]},
+      {bars:["C","D","G","G"]}
+    ],
+    chords:["G","C","D","Em"],
+    tip:"Le riff d'intro se joue en tierces sur les cordes aiguës : parfait à deux, l'un le riff, l'autre les accords. Penta majeure de Sol pour les solos, esprit léger, jamais sombre.",
+    note:"Structure simplifiée.",
+  },
+  {
+    zone:"pop", title:"La boucle des mille chansons (I-V-vi-IV)", key:"Do · toutes vitesses",
+    systems:[{note:"boucle", bars:["C","G","Am","F"]}],
+    chords:["C","G","Am","F"],
+    tip:"Cette boucle porte une part énorme de la pop des cinquante dernières années. <b>Apprends-la dans quatre tonalités</b> et tu accompagnes presque n'importe quoi à l'oreille : en Sol (G-D-Em-C), en Ré (D-A-Bm-G), en La (A-E-F♯m-D), en Mi (E-B-C♯m-A). Gamme majeure de la tonalité, et vise la tierce de chaque accord.",
+    note:"Grille générique, pas un morceau : c'est le moule.",
+  },
+  {
+    zone:"pop", title:"I Will Survive", key:"La mineur · disco (Gloria Gaynor)",
+    systems:[
+      {bars:["Am","Dm","G","Cmaj7"]},
+      {bars:["Fmaj7","Bm7♭5","E7","E7"]}
+    ],
+    chords:["Am","Dm","G","Cmaj7","Fmaj7","Bm7♭5","E7"],
+    tip:"<b>Le cycle de quintes complet, en tube de dancefloor</b> : chaque accord descend d'une quinte vers le suivant, exactement comme la carte Cycle de dominantes. Reste en gamme de Do majeur du début à la fin, en ajoutant le Sol♯ sur le E7.",
+  },
+  {
+    zone:"pop", title:"Hallelujah", key:"Do · 6/8 lent (Leonard Cohen)",
+    systems:[
+      {note:"couplet", bars:["C","Am","C","Am"]},
+      {bars:["F","G","C","G"]},
+      {note:"refrain", bars:["F","Am","F","C · G"]},
+      {bars:["C","G","C","C"]}
+    ],
+    chords:["C","Am","F","G"],
+    tip:"Six croches par mesure, senties comme deux balancements : arpèges lents, laisse tout sonner. Quatre accords, et le morceau parfait pour chanter à deux voix. Solo : gamme de Do majeur, très peu de notes.",
+    note:"Version simplifiée du couplet et du refrain.",
+  },
+  {
+    zone:"pop", title:"Every Breath You Take", key:"La · médium (The Police)",
+    systems:[
+      {note:"couplet", bars:["A","A","F#m","F#m"]},
+      {bars:["D","E","A","A"]},
+      {note:"pont", bars:["F#m","F#m","D","E"]}
+    ],
+    chords:["A","F#m","D","E"],
+    tip:"Mêmes accords que Stand By Me, autre monde : tout tient dans l'arpège obsédant. <b>Répartissez les rôles</b>, l'un tourne l'arpège sans jamais s'arrêter, l'autre pose les accords et chante. Gamme de La majeur pour broder.",
+    note:"Structure simplifiée.",
   }
 ];
 
@@ -973,7 +1103,8 @@ function chordSVG(frets){
 const GROOVE_DEFAULTS = {
   blues:{m:"4/4", n:4, acc:[2,4], lbl:"Shuffle (ternaire) : basse sur 1 et 3, frappe sèche et étouffée sur 2 et 4."},
   jazz:{m:"4/4", n:4, acc:[2,4], lbl:"Swing : pompe à 4 temps égaux, les 2 et 4 claquent un peu plus."},
-  rock:{m:"4/4", n:4, acc:[2,4], lbl:"Binaire : croches droites, accents sur 2 et 4."}
+  rock:{m:"4/4", n:4, acc:[2,4], lbl:"Binaire : croches droites, accents sur 2 et 4."},
+  pop:{m:"4/4", n:4, acc:[2,4], lbl:"Binaire : accords réguliers, accents sur 2 et 4."}
 };
 const GROOVE_BY_TITLE = {
   "Slow blues en Sol":{m:"12/8", n:4, acc:[2,4], lbl:"12/8 : 4 temps divisés chacun en 3 (« 1-et-la »), le balancement du slow blues. Accents 2 et 4."},
@@ -999,7 +1130,14 @@ const GROOVE_BY_TITLE = {
   "Angie":{m:"4/4", n:4, acc:[1], lbl:"Ballade arpégée : basse sur 1, laisse sonner les cordes."},
   "Wonderful Tonight":{m:"4/4", n:4, acc:[2,4], lbl:"Slow : accords ronds, caisse claire imaginaire sur 2 et 4."},
   "Wicked Game":{m:"4/4", n:4, acc:[1], lbl:"Lent, hypnotique : arpèges qui sonnent, basse posée sur 1."},
-  "Ain't No Sunshine":{m:"4/4", n:4, acc:[1], lbl:"Groove lent : pose le 1, puis laisse le silence travailler."}
+  "Ain't No Sunshine":{m:"4/4", n:4, acc:[1], lbl:"Groove lent : pose le 1, puis laisse le silence travailler."},
+  "My Favorite Things (vamp)":{m:"3/4", n:3, acc:[1], lbl:"Valse jazz : 3 temps, appui franc sur le 1, accompagnement léger sur 2 et 3."},
+  "Misty":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade lente : accords tenus, basse sur 1 et 3, laisse tout sonner."},
+  "Dark Eyes (Les Yeux Noirs)":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."},
+  "Scarborough Fair":{m:"3/4", n:3, acc:[1], lbl:"Valse folk : 3 temps, arpèges qui sonnent, basse sur le 1."},
+  "I Will Survive":{m:"4/4", n:4, acc:[2,4], lbl:"Disco : accords secs et réguliers, backbeat marqué sur 2 et 4."},
+  "Hallelujah":{m:"6/8", n:6, acc:[1,4], lbl:"6/8 : six croches senties comme deux balancements (1 et 4), arpèges qui sonnent."},
+  "Every Breath You Take":{m:"4/4", n:4, acc:[2,4], lbl:"Médium : l'un tourne l'arpège sans s'arrêter, l'autre pose les accords. Backbeat 2 et 4."}
 };
 function grooveHTML(s){
   const g = GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone];
@@ -1015,7 +1153,7 @@ function grooveHTML(s){
 const _ROWS=["G","D","A","E"];      // affichage haut -> bas
 const _ROWPC=[7,2,9,4];             // hauteur des cordes à vide (do=0)
 const _PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal"};
+const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5"};
 function _rootPC(tok){
   tok=tok.trim();
   if(tok.indexOf("/")>-1) tok=tok.split("/")[1].trim();  // slash : la basse est la note d'après
@@ -1146,6 +1284,7 @@ function songHTML(s){
 document.getElementById("zone-blues").innerHTML = SONGS.filter(s=>s.zone==="blues").map(songHTML).join("");
 document.getElementById("zone-jazz").innerHTML  = SONGS.filter(s=>s.zone==="jazz").map(songHTML).join("");
 document.getElementById("zone-rock").innerHTML  = SONGS.filter(s=>s.zone==="rock").map(songHTML).join("");
+document.getElementById("zone-pop").innerHTML   = SONGS.filter(s=>s.zone==="pop").map(songHTML).join("");
 
 /* ============ Manche : penta mineure de La, position 1 ============ */
 function pentaSVG(){
