@@ -1010,6 +1010,79 @@ function grooveHTML(s){
   return `<div class="groove"><a class="meter" href="#solfege">${g.m}</a><div class="beats">${cells}</div><span class="glbl">${g.lbl}</span></div>`;
 }
 
+/* ============ Générateur de lignes de basse ============ */
+/* Déduit une basse jouable de la grille + du groove. Cordes graves E-A-D-G. */
+const _ROWS=["G","D","A","E"];      // affichage haut -> bas
+const _ROWPC=[7,2,9,4];             // hauteur des cordes à vide (do=0)
+const _PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie"};
+function _rootPC(tok){
+  tok=tok.trim();
+  if(tok.indexOf("/")>-1) tok=tok.split("/")[1].trim();  // slash : la basse est la note d'après
+  let p=_PC[tok[0]]; if(p===undefined) return null;
+  if(tok[1]==="#") p+=1; else if(tok[1]==="♭") p-=1;
+  return ((p%12)+12)%12;
+}
+function _place(pc,rows){          // pose la note sur la corde qui donne la case la plus basse
+  let best=null;
+  rows.forEach(r=>{ const f=(((pc-_ROWPC[r])%12)+12)%12; if(best===null||f<best.fret) best={row:r,fret:f}; });
+  return best;
+}
+function grooveOf(s){ return GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone]; }
+function feelOf(s){
+  const g=grooveOf(s), lbl=(g.lbl||"").toLowerCase();
+  if(/bossa|latin/.test(lbl)) return "bossa";
+  if(s.zone==="jazz" && g.m==="4/4" && !/funk|bossa|latin/.test(lbl)) return "walk";
+  if(s.zone==="blues" && g.m==="4/4" && /shuffle|médium|boogie/.test(lbl)) return "boogie";
+  return "root5";
+}
+function autoBass(s){
+  const g=grooveOf(s), n=g.n, feel=BASS_FEEL[s.title]||feelOf(s);
+  const bars=s.systems[0].bars.map(b=>b.split("·").map(_rootPC).filter(x=>x!==null)).filter(a=>a.length);
+  if(!bars.length) return null;
+  const put=(ev,col,pc,rows)=>{ const p=_place(pc,rows); ev.push({col,row:p.row,fret:p.fret}); };
+  function walkBar(chs,next){
+    const ev=[], R1=chs[0], R2=chs.length>1?chs[1]:chs[0];
+    put(ev,0,R1,[1,2,3]);
+    put(ev,2,(R1+7)%12,[0,1,2,3]);
+    put(ev,4,R2,[1,2,3]);
+    put(ev,6,(next+11)%12,[0,1,2,3]);            // approche chromatique de l'accord suivant
+    return ev;
+  }
+  function boogieBar(chs){
+    if(chs.length>1) return root5Bar(chs);
+    const ev=[], rp=_place(chs[0],[1,2,3]), up=rp.row-1, offs=[2,4,5,4];
+    [0,2,4,6].forEach(c=>ev.push({col:c,row:rp.row,fret:rp.fret}));
+    [1,3,5,7].forEach((c,i)=>ev.push({col:c,row:up,fret:rp.fret+offs[i]}));
+    return ev;
+  }
+  function root5Bar(chs){
+    const ev=[], mid=n>=4?4:2;
+    if(chs.length>1){ put(ev,0,chs[0],[1,2,3]); put(ev,mid,chs[1],[1,2,3]); }
+    else { put(ev,0,chs[0],[1,2,3]); if(n>=4) put(ev,mid,(chs[0]+7)%12,[0,1,2,3]); }
+    return ev;
+  }
+  const events=bars.map((chs,i)=>{
+    const next=bars[(i+1)%bars.length][0];
+    return feel==="walk"?walkBar(chs,next):feel==="boogie"?boogieBar(chs):root5Bar(chs);
+  });
+  const w=2*n;
+  const tab=[0,1,2,3].map(r=>{
+    return _ROWS[r]+"|"+events.map(ev=>{
+      const cells=Array(w).fill("-");
+      ev.forEach(e=>{ if(e.row===r) cells[e.col]=String(e.fret); });
+      return cells.join("");
+    }).join("|")+"|";
+  }).join("\n");
+  const note={
+    walk:"Walking : une noire par temps — fondamentale sur le 1, quinte, puis une note qui glisse d'un demi-ton vers l'accord suivant. Vise la fondamentale à chaque changement.",
+    boogie:"Boogie shuffle : fondamentale sur chaque temps, 5-6-♭7 entre les temps, sur chaque accord. Étouffe à la paume.",
+    bossa:"Bossa au pouce : fondamentale sur le 1, quinte sur le 3, legato. Une fondamentale par accord de la grille.",
+    root5:"Fondamentale-quinte : la fondamentale de chaque accord sur le temps fort, la quinte pour respirer. Suis la grille."
+  }[feel];
+  return {tab,note,auto:true};
+}
+
 /* ============ Rendu des cartes ============ */
 function barHTML(b){
   const parts = b.split("·").map(p=>p.trim());
@@ -1035,7 +1108,7 @@ function songHTML(s){
     ${systems}
     <div class="tip">Pour improviser : ${s.tip}</div>
     <details><summary>Accords du morceau</summary><div class="diagrams">${diags}</div></details>
-    ${s.bass?`<details><summary>Ligne de basse</summary><pre class="tab">${s.bass.tab}</pre><div class="footnote">${s.bass.note}</div></details>`:""}
+    ${(()=>{const b=s.bass||autoBass(s);return b?`<details><summary>Ligne de basse</summary><pre class="tab">${b.tab}</pre><div class="footnote">${b.note}</div></details>`:"";})()}
     ${s.note?`<div class="footnote">${s.note}</div>`:""}
   </div>`;
 }
