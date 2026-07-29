@@ -214,6 +214,35 @@
   }
   .idx-empty{color:#7c8894;font-size:.85rem;font-style:italic;padding:8px 2px}
   .chart,.impro{scroll-margin-top:60px}
+  /* ---- masquer / réafficher des morceaux ---- */
+  .chart .eyebrow .hide-btn{
+    background:none;border:none;cursor:pointer;font:inherit;
+    font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);padding:0 0 0 8px;flex:0 0 auto;
+  }
+  .chart .eyebrow .hide-btn:active{color:var(--rust)}
+  .chart.removed{display:none}
+  details.masques{margin:8px 0 2px}
+  details.masques[hidden]{display:none}
+  .masques>summary{
+    cursor:pointer;color:var(--rust);font-weight:700;font-size:.85rem;
+    padding:8px 2px 4px;list-style:none;
+  }
+  .masques>summary::before{content:"▸ "}
+  .masques[open]>summary::before{content:"▾ "}
+  .masq-item{
+    display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+    padding:5px 2px;border-bottom:1px solid #223040;font-size:.85rem;color:var(--paper);
+  }
+  .masq-item .restore{
+    background:none;border:1px solid var(--brass);color:var(--brass);
+    border-radius:999px;font:inherit;font-size:.72rem;padding:2px 10px;cursor:pointer;flex:0 0 auto;
+  }
+  .masq-item .restore:active{background:var(--brass);color:var(--night)}
+  .masq-all{
+    margin-top:8px;background:none;border:1px solid var(--rust);color:var(--rust);
+    border-radius:8px;padding:6px 12px;font:inherit;font-size:.8rem;cursor:pointer;
+  }
 </style>
 </head>
 <body>
@@ -240,6 +269,11 @@
     <summary class="idx-summary">📖 Répertoire — <span id="idx-count"></span> morceaux</summary>
     <div id="song-index"></div>
     <div class="idx-empty" id="idx-empty" hidden>Aucun morceau trouvé.</div>
+  </details>
+  <details class="masques" id="masques" hidden>
+    <summary>🗑 Morceaux masqués — <span id="masq-count">0</span></summary>
+    <div class="masq-list" id="masq-list"></div>
+    <button class="masq-all" id="masq-all">Tout réafficher</button>
   </details>
 </div>
 
@@ -1682,7 +1716,7 @@ function songHTML(s){
     return `<div class="diag"><div class="nm">${c}</div>${chordSVG(fr)}</div>`;
   }).join("");
   return `<div class="chart" id="${slug(s.title)}">
-    <div class="eyebrow"><span>${s.key}</span></div>
+    <div class="eyebrow"><span>${s.key}</span><button class="hide-btn" data-slug="${slug(s.title)}" title="Retirer ce morceau de ma liste">✕ retirer</button></div>
     <h2>${s.title}</h2>
     ${grooveHTML(s)}
     ${systems}
@@ -1697,32 +1731,74 @@ document.getElementById("zone-jazz").innerHTML  = SONGS.filter(s=>s.zone==="jazz
 document.getElementById("zone-rock").innerHTML  = SONGS.filter(s=>s.zone==="rock").map(songHTML).join("");
 document.getElementById("zone-pop").innerHTML   = SONGS.filter(s=>s.zone==="pop").map(songHTML).join("");
 
-/* ============ Répertoire : index alphabétique + recherche ============ */
+/* ============ Répertoire : index, recherche, masquage ============ */
 function _norm(t){ return t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
 function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
 (function buildIndex(){
   const ZL={blues:"Blues",jazz:"Jazz",rock:"Rock",pop:"Pop"};
+  const ZONES=["blues","jazz","rock","pop"];
+  const KEY="songbook-hidden";
+  let HIDDEN;
+  try{ HIDDEN=new Set(JSON.parse(localStorage.getItem(KEY)||"[]")); }catch(e){ HIDDEN=new Set(); }
+  const save=function(){ try{ localStorage.setItem(KEY, JSON.stringify(Array.from(HIDDEN))); }catch(e){} };
+
   const sorted=[...SONGS].sort((a,b)=>_norm(a.title).localeCompare(_norm(b.title)));
-  document.getElementById("song-index").innerHTML = sorted.map(s=>
-    `<a href="#${slug(s.title)}" data-n="${_norm(s.title)}">${s.title}<span class="z">${ZL[s.zone]||s.zone}</span></a>`
-  ).join("");
+  const bySlug={};
+  sorted.forEach(function(s){ bySlug[slug(s.title)]=s; });
+  document.getElementById("song-index").innerHTML = sorted.map(function(s){
+    return `<a href="#${slug(s.title)}" data-n="${_norm(s.title)}">${s.title}<span class="z">${ZL[s.zone]||s.zone}</span></a>`;
+  }).join("");
   document.getElementById("idx-count").textContent = SONGS.length;
+
   const search=document.getElementById("song-search");
   const details=document.getElementById("idx-details");
   const empty=document.getElementById("idx-empty");
   const links=[].slice.call(document.querySelectorAll("#song-index a"));
-  search.addEventListener("input",function(){
+  const masques=document.getElementById("masques");
+  const masqList=document.getElementById("masq-list");
+  const masqCount=document.getElementById("masq-count");
+  const slugOf=function(a){ return a.getAttribute("href").slice(1); };
+
+  function filterIndex(){
     const q=_norm(search.value.trim());
-    if(q && !details.open) details.open=true;
     let shown=0;
-    links.forEach(function(a){ const m=a.dataset.n.indexOf(q)>-1; a.hidden=!m; if(m) shown++; });
+    links.forEach(function(a){
+      const m = !HIDDEN.has(slugOf(a)) && a.dataset.n.indexOf(q)>-1;
+      a.hidden=!m; if(m) shown++;
+    });
     empty.hidden = shown>0;
+  }
+
+  function applyHidden(){
+    SONGS.forEach(function(s){ const c=document.getElementById(slug(s.title)); if(c) c.classList.toggle("removed", HIDDEN.has(slug(s.title))); });
+    ZONES.forEach(function(z){
+      const zone=document.getElementById("zone-"+z), title=document.getElementById(z);
+      const vis = zone ? zone.querySelectorAll(".chart:not(.removed)").length : 0;
+      if(zone) zone.style.display = vis ? "" : "none";
+      if(title) title.style.display = vis ? "" : "none";
+    });
+    const hid=Array.from(HIDDEN).map(function(sl){ return bySlug[sl]; }).filter(Boolean)
+      .sort(function(a,b){ return _norm(a.title).localeCompare(_norm(b.title)); });
+    masqCount.textContent = hid.length;
+    masques.hidden = hid.length===0;
+    masqList.innerHTML = hid.map(function(s){
+      return `<div class="masq-item"><span>${s.title}</span><button class="restore" data-slug="${slug(s.title)}">↩ réafficher</button></div>`;
+    }).join("");
+    [].slice.call(masqList.querySelectorAll(".restore")).forEach(function(btn){
+      btn.addEventListener("click",function(){ HIDDEN.delete(btn.dataset.slug); save(); applyHidden(); });
+    });
+    filterIndex();
+  }
+
+  [].slice.call(document.querySelectorAll(".chart .hide-btn")).forEach(function(btn){
+    btn.addEventListener("click",function(e){ e.preventDefault(); HIDDEN.add(btn.dataset.slug); save(); applyHidden(); });
   });
+  search.addEventListener("input",function(){ if(search.value.trim() && !details.open) details.open=true; filterIndex(); });
   search.addEventListener("focus",function(){ if(!details.open) details.open=true; });
-  links.forEach(function(a){ a.addEventListener("click",function(){
-    details.open=false; search.value=""; empty.hidden=true;
-    links.forEach(function(x){ x.hidden=false; });
-  }); });
+  links.forEach(function(a){ a.addEventListener("click",function(){ details.open=false; search.value=""; filterIndex(); }); });
+  document.getElementById("masq-all").addEventListener("click",function(){ HIDDEN.clear(); save(); applyHidden(); });
+
+  applyHidden();
 })();
 
 /* ============ Manche : penta mineure de La, position 1 ============ */
