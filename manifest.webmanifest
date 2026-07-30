@@ -1,0 +1,13 @@
+{
+  "name": "Deux Guitares · Songbook",
+  "short_name": "Songbook",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#101820",
+  "theme_color": "#101820",
+  "description": "Songbook pour deux guitares : blues, jazz, rock et pop.",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

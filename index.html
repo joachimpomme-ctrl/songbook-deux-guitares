@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Songbook pour deux guitares : blues, jazz, rock et pop. Grilles d'accords, gammes, lignes de basse et conseils d'impro.">
+<meta name="theme-color" content="#101820">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Deux Guitares · Songbook</title>
 <style>
   :root{
@@ -243,13 +247,30 @@
     margin-top:8px;background:none;border:1px solid var(--rust);color:var(--rust);
     border-radius:8px;padding:6px 12px;font:inherit;font-size:.8rem;cursor:pointer;
   }
+  /* ---- impression ---- */
+  @media print{
+    body{background:#fff;color:#000;padding:0}
+    nav,.repertoire,.hide-btn{display:none !important}
+    header{background:none;padding:0 0 8px}
+    header h1{color:#000}
+    header p{color:#333}
+    .section-title{color:#000;page-break-after:avoid}
+    .chart{box-shadow:none;border:1px solid #888;page-break-inside:avoid}
+    .impro{background:#fff;color:#000;border:1px solid #888;page-break-inside:avoid}
+    .impro h3,.impro b,.tip b{color:#000}
+    .impro p[style]{color:#333 !important}
+    .tab{background:#fff;color:#000;border:1px solid #888}
+    .legend,.glbl{color:#333}
+    summary{color:#000}
+    a{color:#000;text-decoration:none}
+  }
 </style>
 </head>
 <body>
 
 <header>
   <h1>Deux Guitares</h1>
-  <p>Blues &amp; jazz pour improviser · grilles, accords, gammes</p>
+  <p>Blues, jazz, rock &amp; pop pour jouer à deux · grilles, accords, gammes, basses</p>
 </header>
 
 <nav>
@@ -264,7 +285,7 @@
 </nav>
 
 <div class="repertoire">
-  <input id="song-search" type="search" placeholder="Chercher un morceau…" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <input id="song-search" type="search" placeholder="Chercher un morceau…" aria-label="Chercher un morceau" autocomplete="off" autocapitalize="off" spellcheck="false">
   <details id="idx-details">
     <summary class="idx-summary">📖 Répertoire — <span id="idx-count"></span> morceaux</summary>
     <div id="song-index"></div>
@@ -273,7 +294,7 @@
   <details class="masques" id="masques" hidden>
     <summary>🗑 Morceaux masqués — <span id="masq-count">0</span></summary>
     <div class="masq-list" id="masq-list"></div>
-    <button class="masq-all" id="masq-all">Tout réafficher</button>
+    <button type="button" class="masq-all" id="masq-all">Tout réafficher</button>
   </details>
 </div>
 
@@ -462,6 +483,7 @@ const CHORDS = {
   "E♭maj7":  ["x","6","8","7","8","6"],
   "A♭maj7":  ["4","6","5","5","4","4"],
   "C#m":     ["x","4","6","6","5","4"],
+  "G#7":     ["4","6","4","5","4","4"],
   "E♭":      ["x","6","8","8","8","6"],
   "D6add9":  ["2","0","0","2","0","0"]
 };
@@ -1128,20 +1150,20 @@ E|--3---5-------------|`,
     systems:[
       {note:"couplet", bars:["A","A","F#m","F#m"]},
       {bars:["D","E","A","A"]},
-      {note:"pont", bars:["F#m","F#m","D","E"]}
+      {note:"pont (« Since you've been gone »)", bars:["F","F","G","G"]}
     ],
-    chords:["A","F#m","D","E"],
-    tip:"Mêmes accords que Stand By Me, autre monde : tout tient dans l'arpège obsédant. <b>Répartissez les rôles</b>, l'un tourne l'arpège sans jamais s'arrêter, l'autre pose les accords et chante. Gamme de La majeur pour broder.",
+    chords:["A","F#m","D","E","F","G"],
+    tip:"Mêmes accords que Stand By Me, autre monde : tout tient dans l'arpège obsédant. Le pont bascule sur <b>Fa et Sol, deux accords étrangers à la tonalité</b> — le frisson du morceau. Répartissez les rôles : l'un tourne l'arpège sans s'arrêter, l'autre pose les accords et chante.",
     note:"Structure simplifiée.",
   },
   {
-    zone:"pop", title:"Perfect", key:"Sol · valse lente 6/8 (Ed Sheeran)",
+    zone:"pop", title:"Perfect", key:"Sol · 6/8 lent (Ed Sheeran)",
     systems:[
       {note:"couplet", bars:["G","Em","C","D"]},
       {note:"refrain", bars:["G","D","Em","C"]}
     ],
     chords:["G","Em","C","D"],
-    tip:"Une valse lente à 6/8. Gamme de Sol majeur, très peu de notes : sur une ballade, c'est le silence entre les phrases qui émeut. À deux, l'un arpège, l'autre chante la mélodie sur les cordes aiguës.",
+    tip:"Un 6/8 lent et balancé (deux grands temps par mesure, pas une valse). Gamme de Sol majeur, très peu de notes : sur une ballade, c'est le silence entre les phrases qui émeut. À deux, l'un arpège, l'autre chante la mélodie sur les cordes aiguës.",
     note:"Structure simplifiée.",
   },
   {
@@ -1233,19 +1255,21 @@ E|--3---5-------------|`,
     note:"Version simplifiée du couplet.",
   },
   {
-    zone:"pop", title:"Dernière danse", key:"La mineur · médium (Indila)",
-    systems:[{note:"boucle", bars:["Am","F","C","G"]}],
-    chords:["Am","F","C","G"],
-    tip:"La i-VI-III-VII qui tourne (Am-Fa-Do-Sol), moteur de la pop mélancolique. Penta de La mineur, phrasé simple et dramatique.",
+    zone:"pop", title:"Dernière danse", key:"Do mineur · médium (Indila)",
+    systems:[{note:"boucle", bars:["Cm","Fm","E♭","G"]}],
+    chords:["Cm","Fm","E♭","G"],
+    tip:"La boucle réelle du morceau : i-iv-III-V en Do mineur, et c'est le <b>Sol majeur</b> (la dominante) qui crée le drame à chaque tour. Penta mineure de Do, case 8 — la même boîte que Blue Bossa.",
   },
   {
     zone:"pop", title:"Les Champs-Élysées", key:"Mi · médium ensoleillé (Joe Dassin)",
     systems:[
-      {note:"couplet", bars:["E","A","E","B7"]},
-      {note:"refrain", bars:["E","A","B7","E"]}
+      {note:"couplet", bars:["E","G#7","C#m","E7"]},
+      {bars:["A","B7","E","B7"]},
+      {note:"refrain", bars:["E","G#7","C#m","E7"]},
+      {bars:["A","B7","E","E"]}
     ],
-    chords:["E","A","B7"],
-    tip:"Trois accords, l'hymne de fin de soirée. Gamme de Mi majeur, penta majeure ; le B7 qui appelle le retour au Mi, encore et encore.",
+    chords:["E","G#7","C#m","E7","A","B7"],
+    tip:"L'hymne de fin de soirée, avec sa vraie couleur : le <b>G♯7 qui tombe sur le C♯m</b> (« au soleil, sous la pluie... »), puis le E7 qui ouvre vers le La. Gamme de Mi majeur, et vise le Si♯ (=Do) du G♯7, c'est lui qui fait sourire.",
     note:"Structure simplifiée.",
   },
   {
@@ -1255,20 +1279,19 @@ E|--3---5-------------|`,
     tip:"Les changements des années 50 (Do-Lam-Fa-Sol), la ronde du slow. Gamme de Do majeur, penta majeure ; parfait pour un premier solo mélodique.",
   },
   {
-    zone:"pop", title:"Toi + Moi", key:"Do · médium (Grégoire)",
-    systems:[{note:"boucle", bars:["C","G","Am","F"]}],
-    chords:["C","G","Am","F"],
-    tip:"La I-V-vi-IV pur sucre. Gamme de Do majeur, vise les tierces ; le morceau idéal pour faire chanter tout le monde.",
+    zone:"pop", title:"Toi + Moi", key:"Ré · médium (Grégoire)",
+    systems:[{note:"boucle", bars:["D","A","Bm","G"]}],
+    chords:["D","A","Bm","G"],
+    tip:"La I-V-vi-IV en Ré — et c'est <b>exactement la boucle de With or Without You</b> : deux chansons, un même moteur. Bon exercice à deux : enchaînez l'une puis l'autre sans vous arrêter. Gamme de Ré majeur, vise les tierces.",
   },
   {
-    zone:"pop", title:"Je veux", key:"Do · swing pop (Zaz)",
+    zone:"pop", title:"Je veux", key:"La mineur · swing pop (Zaz)",
     systems:[
-      {note:"couplet", bars:["C","C","F","G"]},
-      {note:"refrain", bars:["F","C","G","C"]}
+      {note:"couplet", bars:["Am","G","F","Dm · E7"]}
     ],
-    chords:["C","F","G"],
-    tip:"Le swing pop de Zaz : pompe légère, esprit manouche. Gamme de Do majeur, ou penta majeure façon guinguette. Les 2 et 4 font tout le groove.",
-    note:"Version jam simplifiée.",
+    chords:["Am","G","F","Dm","E7"],
+    tip:"Le swing pop de Zaz, mineur et manouche : pompe légère, les 2 et 4 qui claquent. <b>Penta de La mineur + Sol♯ sur le E7</b> (mineur harmonique), exactement comme sur Minor Swing.",
+    note:"Le refrain tourne sur les mêmes couleurs ; version jam simplifiée.",
   },
   {
     zone:"pop", title:"La vie en rose", key:"Do · swing musette lent (Édith Piaf)",
@@ -1388,11 +1411,11 @@ E|--3---5-------------|`,
   {
     zone:"pop", title:"Take On Me", key:"La · synthpop uptempo (a-ha)",
     systems:[
-      {note:"couplet", bars:["A","D","E","A"]},
-      {note:"refrain", bars:["F#m","D","A","E"]}
+      {note:"couplet · le riff", bars:["Bm","E","A","D"]},
+      {note:"refrain", bars:["A","E","F#m","D"]}
     ],
-    chords:["A","D","E","F#m"],
-    tip:"Le tube synthpop transposé à la gratte. Gamme de La majeur, penta majeure ; énergie nerveuse, croches régulières, refrain aigu.",
+    chords:["Bm","E","A","D","F#m"],
+    tip:"Le riff célèbre tourne sur un <b>ii-V-I-IV</b> (Bm-E-A-D) : le moteur harmonique le plus jazz de la pop 80s. Gamme de La majeur, croches nerveuses ; le refrain descend A-E-F♯m-D pendant que la voix grimpe.",
     note:"Structure simplifiée.",
   },
   {
@@ -1435,7 +1458,7 @@ E|--3---5-------------|`,
     zone:"pop", title:"On écrit sur les murs", key:"Do · médium rassembleur (Kids United)",
     systems:[{note:"boucle", bars:["C","G","Am","F"]}],
     chords:["C","G","Am","F"],
-    tip:"La I-V-vi-IV en français, faite pour les grands chœurs. Gamme de Do majeur, vise les tierces ; simple, direct, rassembleur.",
+    tip:"La I-V-vi-IV en français, faite pour les grands chœurs — c'est la carte-moule ci-dessus, appliquée telle quelle en Do. Gamme de Do majeur, vise les tierces ; simple, direct, rassembleur.",
   },
   {
     zone:"pop", title:"Une belle histoire", key:"Ré · insouciant (Michel Fugain)",
@@ -1455,14 +1478,14 @@ E|--3---5-------------|`,
     note:"Structure simplifiée.",
   },
   {
-    zone:"pop", title:"Belle", key:"Do · ballade (Notre-Dame de Paris)",
+    zone:"pop", title:"Belle", key:"Ré mineur · ballade (Notre-Dame de Paris)",
     systems:[
-      {bars:["C","Em","Am","Em"]},
-      {bars:["F","G","C","C"]}
+      {bars:["Dm","Gm","C","F"]},
+      {bars:["B♭","Gm","A7","Dm"]}
     ],
-    chords:["C","Em","Am","F","G"],
-    tip:"La ballade de Notre-Dame de Paris. Gamme de Do majeur, arpèges amples ; c'est la mélodie qui commande, joue peu et juste.",
-    note:"Version jam simplifiée.",
+    chords:["Dm","Gm","C","F","B♭","A7"],
+    tip:"En ré mineur comme l'original : une <b>descente en quintes</b> (Ré → Sol → Do → Fa → Si♭) puis le A7 qui ramène au Ré m — le même squelette que Comme toi. Penta mineure de Ré, arpèges amples, joue peu et juste.",
+    note:"Dans la comédie musicale, la tonalité monte au fil des couplets ; version jam stable en Ré m.",
   },
   {
     zone:"pop", title:"Osez Joséphine", key:"Mi · riff hypnotique (Bashung)",
@@ -1716,7 +1739,7 @@ function songHTML(s){
     return `<div class="diag"><div class="nm">${c}</div>${chordSVG(fr)}</div>`;
   }).join("");
   return `<div class="chart" id="${slug(s.title)}">
-    <div class="eyebrow"><span>${s.key}</span><button class="hide-btn" data-slug="${slug(s.title)}" title="Retirer ce morceau de ma liste">✕ retirer</button></div>
+    <div class="eyebrow"><span>${s.key}</span><button type="button" class="hide-btn" data-slug="${slug(s.title)}" title="Retirer ce morceau de ma liste">✕ retirer</button></div>
     <h2>${s.title}</h2>
     ${grooveHTML(s)}
     ${systems}
@@ -1782,7 +1805,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     masqCount.textContent = hid.length;
     masques.hidden = hid.length===0;
     masqList.innerHTML = hid.map(function(s){
-      return `<div class="masq-item"><span>${s.title}</span><button class="restore" data-slug="${slug(s.title)}">↩ réafficher</button></div>`;
+      return `<div class="masq-item"><span>${s.title}</span><button type="button" class="restore" data-slug="${slug(s.title)}">↩ réafficher</button></div>`;
     }).join("");
     [].slice.call(masqList.querySelectorAll(".restore")).forEach(function(btn){
       btn.addEventListener("click",function(){ HIDDEN.delete(btn.dataset.slug); save(); applyHidden(); });
@@ -1972,6 +1995,11 @@ const VOICINGS=[
     desc:"Le même accord avec une autre note à la basse (renversement) : au lieu de sauter d'accord en accord, la basse descend ou monte en escalier. Essaie <b>C → G/B → Am → Am/G → F</b> : la ligne chante toute seule. Règle simple : entre deux accords voisins, cherche la basse intermédiaire qui fait le pont."
   }
 ];
+
+/* ============ Hors-ligne (service worker) ============ */
+if("serviceWorker" in navigator && location.protocol==="https:"){
+  navigator.serviceWorker.register("sw.js").catch(function(){});
+}
 
 document.getElementById("zone-voicings").innerHTML = VOICINGS.map(v=>
   `<div class="impro"><h3>${v.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${v.use}</p><div class="diagrams">${
