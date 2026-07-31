@@ -338,6 +338,7 @@
       <li><b>Boucles rock</b> (Creep, Zombie, Wicked Game, Wonderful Tonight, Dead Flowers...) → penta de la tonalité, mineure ou majeure selon la couleur du morceau.</li>
       <li><b>Rhythm changes, Misty, I Will Survive, boucle I-V-vi-IV</b> → gamme majeure de la tonalité + tierces des accords. <b>My Favorite Things, Scarborough Fair, Horse With No Name</b> → dorien. <b>Dark Eyes</b> → penta mineure de Ré + Do♯ sur les A7.</li>
       <li><b>Pop en boucle</b> (Perfect, With or Without You, Toi + Moi, Aline, Il est où le bonheur, Les Champs-Élysées, Fast Car...) → gamme majeure de la tonalité, penta majeure, vise la tierce de chaque accord. <b>Riptide, Dernière danse, Emmenez-moi, Santiano, The Scientist</b> → penta mineure de la tonalité.</li>
+      <li><b>Red House (Si), Everyday (Si♭), Statesboro (Ré), Crossroads, Boom Boom, Hoochie Coochie</b> → penta mineure de la tonalité + blue note, comme tous les blues. <b>Blues mineur jazz, Parisienne Walkways</b> → penta mineure (Do case 8 / La case 5). <b>Nobody Knows, San Francisco Bay</b> → gamme majeure + tierces des accords 7.</li>
       <li><b>Softly, Beautiful Love, Bésame Mucho, Fever</b> → penta mineure + la note du mineur harmonique sur la dominante. <b>Moondance</b> → dorien de La. <b>St. Thomas, Mack the Knife, Bye Bye Blackbird, Georgia, Nuages</b> → gamme majeure + tierces. <b>Sultans of Swing, Seven Nation Army, Losing My Religion</b> → penta mineure de la tonalité. <b>Tennessee Whiskey, Simple Man, Wild Horses</b> → penta majeure/mineure mélangées.</li>
       <li><b>C Jam Blues, All Blues, Honeysuckle Rose</b> → mixolydien / penta mixte + tierces des accords. <b>Caravan, Nature Boy</b> → penta mineure + la note du mineur harmonique sur la dominante.</li>
     </ul>
@@ -651,10 +652,14 @@ E|------3---1---0-|`,
   },
   {
     zone:"rock", title:"Angie", key:"La mineur · ballade (Stones)",
-    systems:[{note:"progression principale", bars:["Am","E7","G · F","C"]}],
-    chords:["Am","E7","G","F","C"],
+    systems:[
+      {note:"progression principale", bars:["Am","E7","G · F","C"]},
+      {note:"pont (« don't you weep »)", bars:["Dm","Am","Dm","Am"]},
+      {bars:["C","F","G","G"]}
+    ],
+    chords:["Am","E7","G","F","C","Dm"],
     tip:"Se joue en arpèges. Le charme vient des ornements sus4 : Gsus4 → G, Fsus4 → F, Csus4 → C (ajoute l'auriculaire une case au-dessus de la tierce, puis relâche).",
-    note:"Progression principale simplifiée ; le pont (« don't you weep ») tourne autour de Dm, Am et C-F-G.",
+    note:"Structure simplifiée.",
   },
   {
     zone:"rock", title:"Hey Joe", key:"Mi · médium (Hendrix)",
@@ -906,10 +911,14 @@ E|----------------|`,
   },
   {
     zone:"rock", title:"Wonderful Tonight", key:"Sol · lent (Clapton)",
-    systems:[{note:"boucle du couplet", bars:["G","D","C","D"]}],
-    chords:["G","D","C"],
-    tip:"Le slow de Clapton : bends doux et vibrato, penta majeure de Sol. Le motif d'intro se retrouve à l'oreille en visant les notes de chaque accord sur les cordes aiguës.",
-    note:"Le refrain (« do I look all right ») : C, D, puis la descente G → D/F♯ → Em, et C-D-G pour conclure.",
+    systems:[
+      {note:"couplet", bars:["G","D","C","D"]},
+      {note:"refrain (« do I look all right »)", bars:["C","D","G · D/F#","Em"]},
+      {bars:["C","D","G","D"]}
+    ],
+    chords:["G","D","C","D/F#","Em"],
+    tip:"Le slow de Clapton : bends doux et vibrato, penta majeure de Sol. La descente <b>G → D/F♯ → Em</b> du refrain est le moment à soigner : la basse marche, l'accord glisse. Le motif d'intro se retrouve à l'oreille sur les cordes aiguës.",
+    note:"Structure simplifiée.",
   },
   {
     zone:"rock", title:"Creep", key:"Sol · lent, intense (Radiohead)",
@@ -949,10 +958,12 @@ E|--5-------5-----|`,
   },
   {
     zone:"rock", title:"No Woman No Cry", key:"Do · reggae lent (Bob Marley)",
-    systems:[{note:"boucle", bars:["C · G","Am · F","C · F","C · G"]}],
+    systems:[
+      {note:"boucle", bars:["C · G","Am · F","C · F","C · G"]},
+      {note:"« everything's gonna be alright »", bars:["C","F","C","F"]}
+    ],
     chords:["C","G","Am","F"],
     tip:"La boucle qui fait chanter les stades. Skank doux, chant à deux. Solo : gamme de Do majeur, simple et chantant.",
-    note:"Le passage « everything's gonna be alright » alterne simplement C et F.",
   },
   {
     zone:"rock", title:"Dead Flowers", key:"Ré · country-rock (Stones)",
@@ -1274,10 +1285,10 @@ E|--3---5-------------|`,
     note:"Structure simplifiée.",
   },
   {
-    zone:"pop", title:"Aline", key:"Do · slow années 50 (Christophe)",
-    systems:[{note:"boucle", bars:["C","Am","F","G"]}],
-    chords:["C","Am","F","G"],
-    tip:"Les changements des années 50 (Do-Lam-Fa-Sol), la ronde du slow. Gamme de Do majeur, penta majeure ; parfait pour un premier solo mélodique.",
+    zone:"pop", title:"Aline", key:"Do · slow dramatique (Christophe)",
+    systems:[{note:"couplet & refrain, même ronde", bars:["C","E7","F","G7"]}],
+    chords:["C","E7","F","G7"],
+    tip:"Pas la ronde des années 50 : le <b>E7 majeur</b> à la deuxième mesure, c'est lui le drame d'Aline (la dominante de La mineur, qui ne résout jamais). Gamme de Do majeur + le Sol♯ du E7 ; le refrain crie sur les mêmes accords.",
   },
   {
     zone:"pop", title:"Toi + Moi", key:"Ré · médium (Grégoire)",
@@ -1462,10 +1473,13 @@ E|--3---5-------------|`,
     tip:"La I-V-vi-IV en français, faite pour les grands chœurs — c'est la carte-moule ci-dessus, appliquée telle quelle en Do. Gamme de Do majeur, vise les tierces ; simple, direct, rassembleur.",
   },
   {
-    zone:"pop", title:"Une belle histoire", key:"Ré · insouciant (Michel Fugain)",
-    systems:[{note:"boucle", bars:["D","G","A","D"]}],
-    chords:["D","G","A"],
-    tip:"Le soleil de Michel Fugain. Trois accords majeurs (Ré-Sol-La), énergie insouciante. Gamme de Ré majeur, penta majeure ; jamais sombre.",
+    zone:"pop", title:"Une belle histoire", key:"La mineur / Do · médium (Michel Fugain)",
+    systems:[
+      {note:"couplet & refrain, même ronde", bars:["Am","Dm7","G","Cmaj7"]},
+      {bars:["Fmaj7","Fmaj7","E","E"]}
+    ],
+    chords:["Am","Dm7","G","Cmaj7","Fmaj7","E"],
+    tip:"Encore le <b>cycle de quintes</b> (Am→Dm7→G→Cmaj7→Fmaj7), conclu par le Mi majeur qui relance la ronde — la famille de I Will Survive et Wild World, version bord de route. Gamme de Do majeur + Sol♯ sur le E.",
     note:"Structure simplifiée.",
   },
   {
@@ -1693,6 +1707,82 @@ E|0--0--3-0-------|`,
     chords:["D","G","A"],
     tip:"Le stop-start le plus efficace du rock : accords secs, silences nets, énergie de garage. Penta de Ré (majeure ou mineure, les deux passent). Le refrain double le tempo — tenez-le à deux, c'est le jeu.",
     note:"Structure simplifiée.",
+  },
+  {
+    zone:"blues", title:"Red House", key:"Si · slow blues 12/8 (Hendrix)",
+    systems:[{bars:["B7","B7","B7","B7"]},{bars:["E7","E7","B7","B7"]},{bars:["F#7","E7","B7","F#7"]}],
+    chords:["B7","E7","F#7"],
+    tip:"Le slow blues de Hendrix, en Si — la tonalité qui muscle : <b>penta mineure de Si case 7</b>, la même boîte que Thrill Is Gone. Phrasé parlé, doubles cordes, et laisse des trous immenses.",
+  },
+  {
+    zone:"blues", title:"Hoochie Coochie Man", key:"La · stop-time (Muddy Waters)",
+    systems:[
+      {note:"couplet · stop-time, 8 mesures : le riff répond à la voix", bars:["A7","A7","A7","A7"]},
+      {bars:["A7","A7","A7","A7"]},
+      {note:"puis le shuffle repart", bars:["D7","D7","A7","A7"]},
+      {bars:["E7","D7","A7","E7"]}
+    ],
+    chords:["A7","D7","E7"],
+    tip:"L'école du <b>stop-time</b> : tout le monde frappe le 1, silence, et le riff répond à la voix. Huit mesures arrêtées, huit relancées — la tension-détente à l'état pur. Penta de La mineure, riff à l'unisson.",
+  },
+  {
+    zone:"blues", title:"Everyday I Have the Blues", key:"Si♭ · jump blues (B.B. King)",
+    systems:[{bars:["B♭7","B♭7","B♭7","B♭7"]},{bars:["E♭7","E♭7","B♭7","B♭7"]},{bars:["F7","E♭7","B♭7","F7"]}],
+    chords:["B♭7","E♭7","F7"],
+    tip:"Le jump blues des grands orchestres, en Si♭ — la tonalité des cuivres, à connaître pour jammer avec un saxophoniste. Swing rapide et léger, walking bass. Penta de Si♭ case 6, mixe majeur/mineur façon B.B.",
+  },
+  {
+    zone:"blues", title:"Statesboro Blues", key:"Ré · shuffle slide (Blind Willie McTell / Allman Brothers)",
+    systems:[{bars:["D7","D7","D7","D7"]},{bars:["G7","G7","D7","D7"]},{bars:["A7","G7","D7","A7"]}],
+    chords:["D7","G7","A7"],
+    tip:"Le blues slide des Allman, en Ré. Sans bottleneck : <b>bends + vibrato large</b> sur les cordes aiguës imitent le slide. Penta de Ré case 10 ou position ouverte, shuffle têtu et roulant.",
+  },
+  {
+    zone:"blues", title:"Nobody Knows You When You're Down and Out", key:"Do · 8 mesures, lent (Bessie Smith / Clapton Unplugged)",
+    systems:[
+      {note:"8 mesures", bars:["C · E7","A7","Dm · A7","Dm"]},
+      {bars:["F · F#°7","C · A7","D7","G7"]}
+    ],
+    chords:["C","E7","A7","Dm","F","F#°7","D7","G7"],
+    tip:"La leçon d'harmonie du carnet en huit mesures : <b>chaque accord 7 appelle le suivant</b> (E7→A7→Dm, puis D7→G7→C). Vise la tierce de chacun, phrasé parlé, ternaire à l'ancienne. Le sommet du Clapton Unplugged.",
+    note:"Version courante, variantes nombreuses.",
+  },
+  {
+    zone:"blues", title:"San Francisco Bay Blues", key:"Do · ragtime enjoué (Jesse Fuller / Clapton)",
+    systems:[
+      {bars:["C","F","C","C7"]},
+      {bars:["F","F","C","A7"]},
+      {bars:["D7","G7","C · F","C · G7"]}
+    ],
+    chords:["C","F","C7","A7","D7","G7"],
+    tip:"Le 12 mesures ragtime : la fin passe par le <b>cycle A7 → D7 → G7 → C</b> au lieu du V-IV classique. Pompe alternée énergique, sourire obligatoire. Gamme de Do + tierces des accords 7.",
+  },
+  {
+    zone:"blues", title:"Blues mineur jazz en Do", key:"Do mineur · swing (façon Mr. P.C.)",
+    systems:[{bars:["Cm","Cm","Cm","Cm"]},{bars:["Fm","Fm","Cm","Cm"]},{bars:["A♭7","G7","Cm","G7"]}],
+    chords:["Cm","Fm","A♭7","G7"],
+    tip:"Le 12 mesures mineur du jazz (Mr. P.C. de Coltrane ; ralenti, c'est Since I've Been Loving You). La cadence <b>A♭7 → G7</b> remplace le F → E7 du blues mineur en La : même moment fort, couleur plus jazz. Penta de Do m case 8.",
+  },
+  {
+    zone:"blues", title:"Boom Boom", key:"Mi · riff et stops (John Lee Hooker)",
+    systems:[{note:"riff en boucle, avec stops", bars:["E7","E7","E7","E7"]}],
+    chords:["E7"],
+    tip:"Le riff, des stops, et le groove qui hypnotise. Penta de Mi mineure position ouverte, réponses en doubles cordes graves. Cousin urbain du Boogie sur un accord — comparez-les, c'est le même moteur, une autre ville.",
+  },
+  {
+    zone:"blues", title:"Crossroads", key:"La · shuffle quick change (Robert Johnson / Cream)",
+    systems:[{bars:["A7","D7","A7","A7"]},{bars:["D7","D7","A7","A7"]},{bars:["E7","D7","A7","E7"]}],
+    chords:["A7","D7","E7"],
+    tip:"Robert Johnson électrifié par Cream : le 12 mesures en La avec <b>quick change</b> (D7 dès la mesure 2) — comparez avec le Blues en La, c'est la seule différence. Penta de La mixte, énergie devant, turnaround marqué.",
+  },
+  {
+    zone:"blues", title:"Parisienne Walkways", key:"La mineur · ballade blues (Gary Moore)",
+    systems:[
+      {bars:["Am","Dm","G","C"]},
+      {bars:["F","Dm","E7","Am · E7"]}
+    ],
+    chords:["Am","Dm","G","C","F","E7"],
+    tip:"Le cycle de quintes en mineur (le squelette de Comme toi), et par-dessus <b>UNE note tenue qui pleure</b>. Penta de La mineure, bends lents, vibrato énorme : le concours de la note la plus longue est officiellement ouvert.",
   }
 ];
 
@@ -1795,7 +1885,15 @@ const GROOVE_BY_TITLE = {
   "Wild Horses":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade : arpèges amples, basse sur 1 et 3, laisse sonner."},
   "Simple Man":{m:"4/4", n:4, acc:[1], lbl:"Arpèges qui tournent : pose le 1, égrène le reste, jamais pressé."},
   "Tennessee Whiskey":{m:"12/8", n:4, acc:[2,4], lbl:"12/8 soul lent : chaque temps se divise en 3, laisse traîner. Accents 2 et 4."},
-  "Seven Nation Army":{m:"4/4", n:4, acc:[1], lbl:"Riff martelé : le 1 est sacré, silence entre les notes, gros son."}
+  "Seven Nation Army":{m:"4/4", n:4, acc:[1], lbl:"Riff martelé : le 1 est sacré, silence entre les notes, gros son."},
+  "Red House":{m:"12/8", n:4, acc:[2,4], lbl:"12/8 lent : chaque temps se divise en 3, laisse pleurer les bends. Accents 2 et 4."},
+  "Hoochie Coochie Man":{m:"4/4", n:4, acc:[1], lbl:"Stop-time : frappe le 1, silence, le riff répond à la voix. Le shuffle ne repart qu'en fin de grille."},
+  "Everyday I Have the Blues":{m:"4/4", n:4, acc:[2,4], lbl:"Jump blues : swing rapide et léger, walking bass, 2 et 4 claqués."},
+  "Nobody Knows You When You're Down and Out":{m:"4/4", n:4, acc:[1,3], lbl:"Lent et chaloupé : basse sur 1 et 3, ternaire, à l'ancienne."},
+  "San Francisco Bay Blues":{m:"4/4", n:4, acc:[2,4], lbl:"Ragtime : pompe alternée énergique, 2 et 4 marqués, ça avance."},
+  "Blues mineur jazz en Do":{m:"4/4", n:4, acc:[2,4], lbl:"Swing mineur : pompe feutrée, 2 et 4 marqués."},
+  "Boom Boom":{m:"4/4", n:4, acc:[1], lbl:"Riff + stops : frappe le 1, laisse des trous — c'est le silence qui groove."},
+  "Parisienne Walkways":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade blues lente : basse sur 1 et 3, bends chantés, vibrato large."}
 };
 function grooveHTML(s){
   const g = GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone];
@@ -1811,7 +1909,7 @@ function grooveHTML(s){
 const _ROWS=["G","D","A","E"];      // affichage haut -> bas
 const _ROWPC=[7,2,9,4];             // hauteur des cordes à vide (do=0)
 const _PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5"};
+const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5"};
 function _rootPC(tok){
   tok=tok.trim();
   if(tok.indexOf("/")>-1) tok=tok.split("/")[1].trim();  // slash : la basse est la note d'après
