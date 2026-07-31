@@ -337,7 +337,7 @@
       <li><b>Let It Be, No Woman No Cry, La Bamba, anatole, Take the A Train, Satin Doll</b> → gamme majeure de la tonalité.</li>
       <li><b>Boucles rock</b> (Creep, Zombie, Wicked Game, Wonderful Tonight, Dead Flowers...) → penta de la tonalité, mineure ou majeure selon la couleur du morceau.</li>
       <li><b>Rhythm changes, Misty, I Will Survive, boucle I-V-vi-IV</b> → gamme majeure de la tonalité + tierces des accords. <b>My Favorite Things, Scarborough Fair, Horse With No Name</b> → dorien. <b>Dark Eyes</b> → penta mineure de Ré + Do♯ sur les A7.</li>
-      <li><b>Pop en boucle</b> (Perfect, With or Without You, Toi + Moi, Aline, Il est où le bonheur, Les Champs-Élysées, Fast Car...) → gamme majeure de la tonalité, penta majeure, vise la tierce de chaque accord. <b>Riptide, Dernière danse, Emmenez-moi, Santiano, The Scientist</b> → penta mineure de la tonalité.</li>
+      <li><b>Pop en boucle</b> (Perfect, With or Without You, Toi + Moi, Aline, Les Champs-Élysées, Fast Car...) → gamme majeure de la tonalité, penta majeure, vise la tierce de chaque accord. <b>Riptide, Dernière danse, Emmenez-moi, Santiano, The Scientist, Il est où le bonheur, Manhattan-Kaboul, Comme toi, Mistral gagnant</b> → penta mineure de la tonalité.</li>
       <li><b>Red House (Si), Everyday (Si♭), Statesboro (Ré), Crossroads, Boom Boom, Hoochie Coochie</b> → penta mineure de la tonalité + blue note, comme tous les blues. <b>Blues mineur jazz, Parisienne Walkways</b> → penta mineure (Do case 8 / La case 5). <b>Nobody Knows, San Francisco Bay</b> → gamme majeure + tierces des accords 7.</li>
       <li><b>Softly, Beautiful Love, Bésame Mucho, Fever</b> → penta mineure + la note du mineur harmonique sur la dominante. <b>Moondance</b> → dorien de La. <b>St. Thomas, Mack the Knife, Bye Bye Blackbird, Georgia, Nuages</b> → gamme majeure + tierces. <b>Sultans of Swing, Seven Nation Army, Losing My Religion</b> → penta mineure de la tonalité. <b>Tennessee Whiskey, Simple Man, Wild Horses</b> → penta majeure/mineure mélangées.</li>
       <li><b>C Jam Blues, All Blues, Honeysuckle Rose</b> → mixolydien / penta mixte + tierces des accords. <b>Caravan, Nature Boy</b> → penta mineure + la note du mineur harmonique sur la dominante.</li>
@@ -559,11 +559,17 @@ const SONGS = [
     tip:"Deux zones : <b>Do mineur</b> sur les 8 premières mesures, puis tout <b>monte d'un demi-ton</b> (penta de Mi♭m sur E♭m7-A♭7-D♭maj7). Le contraste fait le morceau.",
   },
   {
-    zone:"jazz", title:"Black Orpheus", key:"La mineur · bossa · boucle simplifiée",
-    systems:[{bars:["Am7","Bm7♭5 · E7","Am7","Bm7♭5 · E7"]},{bars:["Am7","Dm7 · G7","Cmaj7","Fmaj7"]},{bars:["Bm7♭5","E7","Am7","Bm7♭5 · E7"]}],
-    chords:["Am7","Bm7♭5","E7","Dm7","G7","Cmaj7","Fmaj7"],
-    tip:"Penta mineure de La comme colonne vertébrale. Sur Dm7-G7-Cmaj7, laisse chanter la gamme de Do majeur.",
-    note:"Section A simplifiée en boucle, la grille complète est plus longue.",
+    zone:"jazz", title:"Black Orpheus", key:"La mineur · bossa · forme A B",
+    systems:[
+      {label:"A", bars:["Am7","Bm7♭5 · E7","Am7","Bm7♭5 · E7"]},
+      {bars:["Am7","Dm7 · G7","Cmaj7","Fmaj7"]},
+      {bars:["Bm7♭5","E7","Am7","Bm7♭5 · E7"]},
+      {label:"B", note:"section B (« la la la... »)", bars:["Em7♭5","A7","Dm","Dm"]},
+      {bars:["Bm7♭5","E7","Am","Bm7♭5 · E7"]}
+    ],
+    chords:["Am7","Bm7♭5","E7","Dm7","G7","Cmaj7","Fmaj7","Em7♭5","A7","Dm","Am"],
+    tip:"Penta mineure de La comme colonne vertébrale. Sur Dm7-G7-Cmaj7, laisse chanter la gamme de Do majeur ; la section B glisse en Ré mineur (Em7♭5-A7-Dm) avant que le ii-V ne ramène au La m.",
+    note:"Forme approchée ; la version du film ajoute des chromatismes.",
   },
   {
     zone:"jazz", title:"Cantaloupe Island", key:"Fa mineur · groove funk, tempo posé",
@@ -857,6 +863,7 @@ E|--0-------0-----|`,
     systems:[{note:"boucle (section A)", bars:["Fm7","Fm7","E♭7","E♭7"]},{bars:["D♭7","C7","Fm7","Fm7"]}],
     chords:["Fm7","E♭7","D♭7","C7"],
     tip:"La descente de basse Fa → Mi♭ → Ré♭ → Do porte tout le morceau. Penta mineure de Fa, phrasé posé, groove têtu.",
+    note:"Forme AAB : le pont (8 mesures) redistribue les mêmes accords en partant du E♭7 ; en jam, boucler le A marche très bien.",
     bass:{tab:
 `G|----------------|
 D|--3---1---------|
@@ -1020,14 +1027,15 @@ E|--3---5-------------|`,
   {
     zone:"jazz", title:"Caravan", key:"Fa mineur · exotique, tendu (Ellington / Tizol)",
     systems:[
-      {note:"section A · 16 mesures", bars:["C7","C7","C7","C7"]},
+      {label:"A", note:"16 mesures", bars:["C7","C7","C7","C7"]},
       {bars:["C7","C7","C7","C7"]},
       {bars:["C7","C7","C7","C7"]},
-      {bars:["Fm","Fm","Fm","Fm"]}
+      {bars:["Fm","Fm","Fm","Fm"]},
+      {label:"B", note:"pont · cycle de dominantes, 4 mesures par accord (simplifié)", bars:["F7","B♭7","E♭7","A♭7 · C7"]}
     ],
-    chords:["C7","Fm"],
-    tip:"Douze mesures de tension sur un seul C7, quatre de détente sur Fm. Sur le C7 : <b>penta de Fa m + le Mi naturel</b> (mineur harmonique de Fa), le son « charmeur de serpent ». Pompe sèche et menaçante.",
-    note:"Section A simplifiée, le pont complet est plus riche.",
+    chords:["C7","Fm","F7","B♭7","E♭7","A♭7"],
+    tip:"Douze mesures de tension sur un seul C7, quatre de détente sur Fm. Sur le C7 : <b>penta de Fa m + le Mi naturel</b> (mineur harmonique de Fa), le son « charmeur de serpent ». Le pont bascule en swing : un pur cycle de dominantes (F7→B♭7→E♭7) avant le retour du désert.",
+    note:"Pont condensé (l'original y met 4 mesures par accord). Après le pont, retour au A.",
   },
   {
     zone:"jazz", title:"Honeysuckle Rose", key:"Fa · swing médium (Fats Waller) · A A B A",
@@ -1286,14 +1294,14 @@ E|--3---5-------------|`,
     note:"Structure simplifiée.",
   },
   {
-    zone:"pop", title:"Mistral gagnant", key:"Do · ballade (Renaud)",
+    zone:"pop", title:"Mistral gagnant", key:"La mineur · ballade (Renaud)",
     systems:[
-      {bars:["C","Em","Am","Em"]},
-      {bars:["F","C","Dm","G"]}
+      {note:"couplet (« à m'asseoir sur un banc »)", bars:["Am","Dm","G","C"]},
+      {bars:["Dm","E7","Am","E7"]}
     ],
-    chords:["C","Em","Am","F","Dm","G"],
-    tip:"La tendresse de Renaud. Gamme de Do majeur, arpèges doux ; le Dm de l'avant-dernière mesure serre la gorge. À deux voix, c'est imparable.",
-    note:"Version simplifiée du couplet.",
+    chords:["Am","Dm","G","C","E7"],
+    tip:"La tendresse de Renaud : la ronde mineure Am-Dm-G-Do qui descend en quintes, puis le E7 qui serre la gorge. Penta de La mineur, arpèges doux, capo 2 pour la tonalité du disque (Si mineur). À deux voix, c'est imparable.",
+    note:"Version simplifiée en La mineur ; le fingerpicking varie selon les couplets.",
   },
   {
     zone:"pop", title:"Dernière danse", key:"Do mineur · médium (Indila)",
@@ -1320,10 +1328,10 @@ E|--3---5-------------|`,
     tip:"Pas la ronde des années 50 : le <b>E7 majeur</b> à la deuxième mesure, c'est lui le drame d'Aline (la dominante de La mineur, qui ne résout jamais). Gamme de Do majeur + le Sol♯ du E7 ; le refrain crie sur les mêmes accords.",
   },
   {
-    zone:"pop", title:"Toi + Moi", key:"Ré · médium (Grégoire)",
-    systems:[{note:"boucle", bars:["D","A","Bm","G"]}],
-    chords:["D","A","Bm","G"],
-    tip:"La I-V-vi-IV en Ré — et c'est <b>exactement la boucle de With or Without You</b> : deux chansons, un même moteur. Bon exercice à deux : enchaînez l'une puis l'autre sans vous arrêter. Gamme de Ré majeur, vise les tierces.",
+    zone:"pop", title:"Toi + Moi", key:"Do · médium (Grégoire)",
+    systems:[{note:"couplet & refrain", bars:["C","G","Am","F"]}],
+    chords:["C","G","Am","F"],
+    tip:"La I-V-vi-IV pur sucre, dans sa tonalité réelle — la même boucle exacte que On écrit sur les murs et la carte-moule : enchaînez les trois sans vous arrêter, c'est le medley qui fait chanter tout le monde. Gamme de Do majeur, vise les tierces.",
   },
   {
     zone:"pop", title:"Je veux", key:"Ré mineur · swing pop (Zaz)",
@@ -1338,38 +1346,41 @@ E|--3---5-------------|`,
   {
     zone:"pop", title:"La vie en rose", key:"Do · swing musette lent (Édith Piaf)",
     systems:[
-      {bars:["C","G7","C7","F"]},
-      {bars:["F","Fm","C","G7"]}
+      {bars:["C · Cmaj7","Dm7 · G7","Dm7 · G7","C"]},
+      {bars:["C7","F","Fm","C · G7"]}
     ],
-    chords:["C","G7","C7","F","Fm"],
-    tip:"Le standard mondial. Les accords 7 (Sol7, Do7) tirent la mélodie ; vise la tierce de chacun, gamme de Do majeur pour relier. Legato, jamais pressé.",
-    note:"Version jam simplifiée du couplet.",
+    chords:["C","Cmaj7","Dm7","G7","C7","F","Fm"],
+    tip:"Le standard mondial : le Do qui s'adoucit en Cmaj7, la balançoire Dm7-G7, puis le C7 qui ouvre vers le Fa et le <b>Fm qui fait fondre</b> au retour. Vise les tierces, gamme de Do majeur, legato, jamais pressé.",
+    note:"Version en Do (celle d'Armstrong) ; l'original de Piaf est en Fa.",
   },
   {
     zone:"pop", title:"Emmenez-moi", key:"La mineur / Do · uptempo (Aznavour)",
     systems:[
-      {note:"couplet (mineur)", bars:["Am","Dm","Am","E7"]},
-      {note:"refrain (majeur)", bars:["C","F","G","C"]}
+      {note:"couplet (« vers les docks »)", bars:["Am","G","Am","E7"]},
+      {note:"refrain (« emmenez-moi au bout de la terre »)", bars:["G","C","G","C"]},
+      {bars:["E7","Am","F","E7 · Am"]}
     ],
-    chords:["Am","Dm","E7","C","F","G"],
-    tip:"Couplet mineur (« vers les docks »), refrain majeur qui décolle : le contraste EST le morceau. Penta de La mineur sur le couplet, gamme de Do majeur sur le refrain.",
-    note:"Structure simplifiée.",
+    chords:["Am","G","E7","C","F"],
+    tip:"Couplet mineur qui tangue (Am-G-Am-E7), refrain qui décolle vers le Do majeur : le contraste EST le morceau. Penta de La mineur sur le couplet, gamme de Do majeur sur le refrain, et le F-E7 final qui ramène au port.",
+    note:"Structure complète, voicings simplifiés.",
   },
   {
-    zone:"pop", title:"Santiano", key:"La mineur · marche marine (Hugues Aufray)",
+    zone:"pop", title:"Santiano", key:"Mi mineur · marche marine (Hugues Aufray)",
     systems:[
-      {note:"couplet", bars:["Am","Am","E","Am"]},
-      {note:"refrain", bars:["C","G","Am","E"]}
+      {note:"couplet & refrain, même carrure", bars:["Em","Em","D","D"]},
+      {bars:["Em","Em","D","D"]},
+      {bars:["Am","Am","D","D"]},
+      {bars:["Em","Em","D","D · Em"]}
     ],
-    chords:["Am","E","C","G"],
-    tip:"Le chant de marin qui se reprend en chœur. Penta de La mineur, phrasé franc et carré ; le refrain (Do-Sol) ouvre la lumière avant de retomber en mineur.",
-    note:"Version simplifiée d'un standard, les variantes sont nombreuses.",
+    chords:["Em","D","Am"],
+    tip:"Le chant de marin qui se reprend en chœur : Em-D qui tangue comme la houle, l'Am de la troisième ligne (« si Dieu veut... ») qui creuse la vague. Penta de Mi mineur, phrasé franc et carré, capo 2 pour la tonalité du disque.",
+    note:"Couplet sur la même carrure (un Si mineur passe sur « quatre cents tonneaux »).",
   },
   {
-    zone:"pop", title:"Il est où le bonheur", key:"Sol · médium (Christophe Maé)",
-    systems:[{note:"boucle", bars:["G","D","Em","C"]}],
-    chords:["G","D","Em","C"],
-    tip:"Encore la I-V-vi-IV, en Sol. Gamme de Sol majeur, penta majeure ; groove medium, chant en avant. La boucle qui fait chanter les stades.",
+    zone:"pop", title:"Il est où le bonheur", key:"La mineur · médium chaloupé (Christophe Maé)",
+    systems:[{note:"couplet & refrain", bars:["Am","Dm","E7","Am"]}],
+    chords:["Am","Dm","E7"],
+    tip:"Pas une boucle majeure : la ronde <b>mineure i-iv-V</b> (Am-Dm-E7) qui chaloupe. Penta de La mineur + Sol♯ sur le E7, groove sautillant, chant en avant. Capo 5 pour la tonalité du disque.",
   },
   {
     zone:"pop", title:"Sweet Caroline", key:"La · uptempo (Neil Diamond)",
@@ -1388,11 +1399,13 @@ E|--3---5-------------|`,
     zone:"pop", title:"Country Roads", key:"Sol · médium (John Denver)",
     systems:[
       {note:"couplet", bars:["G","Em","D","C"]},
-      {note:"refrain", bars:["G","D","Em","C"]}
+      {note:"refrain", bars:["G","D","Em","C"]},
+      {note:"pont (« I hear her voice »)", bars:["Em · D","G","C · G","D"]},
+      {bars:["Em · F","C","G · D","D7"]}
     ],
-    chords:["G","Em","D","C"],
-    tip:"L'hymne country par excellence. Gamme de Sol majeur, penta majeure ; à deux, l'un pose les accords, l'autre double la mélodie en tierces.",
-    note:"Structure simplifiée.",
+    chords:["G","Em","D","C","F","D7"],
+    tip:"L'hymne country par excellence. Le pont surprend avec son <b>Fa</b> (étranger à la tonalité, sur « driving down the road ») et le D7 qui relance le dernier refrain. Gamme de Sol majeur, penta majeure ; à deux, l'un pose les accords, l'autre double la mélodie en tierces.",
+    note:"Structure complète, voicings simplifiés.",
   },
   {
     zone:"pop", title:"Hey Jude", key:"Fa · médium (Beatles)",
@@ -1480,30 +1493,29 @@ E|--3---5-------------|`,
     note:"Structure complète, voicings simplifiés.",
   },
   {
-    zone:"pop", title:"Quelqu'un m'a dit", key:"Do · ballade acoustique (Carla Bruni)",
-    systems:[
-      {bars:["C","Em","Am","F"]},
-      {bars:["Dm","G","C","C"]}
-    ],
-    chords:["C","Em","Am","F","Dm","G"],
-    tip:"La douceur de Carla Bruni. Gamme de Do majeur, arpèges légers ; le Dm-Sol de la fin appelle le retour au Do, encore et encore.",
-    note:"Version jam simplifiée.",
+    zone:"pop", title:"Quelqu'un m'a dit", key:"Sol · ballade acoustique (Carla Bruni)",
+    systems:[{note:"couplet & refrain, même boucle", bars:["G","D","Em","C"]}],
+    chords:["G","D","Em","C"],
+    tip:"La douceur de Carla Bruni : une seule boucle Sol-Ré-Mim-Do porte couplets et refrains, tout est dans le murmure. Gamme de Sol majeur, arpèges légers, gratte feutrée près de la rosace.",
+    note:"Capo selon la voix pour retrouver la tonalité du disque.",
   },
   {
     zone:"pop", title:"Les Lacs du Connemara", key:"Ré · qui monte (Michel Sardou)",
     systems:[
-      {note:"couplet", bars:["D","D","G","A"]},
-      {note:"refrain", bars:["D","A","Bm","G"]}
+      {note:"couplet (« terre brûlée au vent »)", bars:["D","G · D","A","Bm"]},
+      {bars:["Em","B7","Em","B7 · Em"]},
+      {note:"refrain (« les lacs du Connemara »)", bars:["D","G · D","A","Bm"]},
+      {bars:["A","Em","B7","Em"]}
     ],
-    chords:["D","G","A","Bm"],
-    tip:"L'hymne qui monte, qui monte. Gamme de Ré majeur, penta majeure ; garde ton énergie pour le dernier refrain, quand tout le monde chante « Connemara ».",
-    note:"Structure simplifiée.",
+    chords:["D","G","A","Bm","Em","B7"],
+    tip:"L'hymne qui monte, qui monte : la carrure Ré-Sol-La-Bm, puis la plongée en <b>Mi mineur avec son B7</b> (« Sean Kelly s'est dit... ») qui fait toute la dramaturgie. Gamme de Ré majeur ; garde ton énergie pour le dernier refrain.",
+    note:"Structure complète, voicings simplifiés.",
   },
   {
     zone:"pop", title:"Manhattan-Kaboul", key:"La mineur · médium (Renaud & Axelle Red)",
-    systems:[{note:"boucle", bars:["Am","F","C","G"]}],
-    chords:["Am","F","C","G"],
-    tip:"La i-VI-III-VII de Renaud & Axelle Red (Am-Fa-Do-Sol), gravité et mélancolie. Penta de La mineur, phrasé sobre : le texte porte tout.",
+    systems:[{note:"couplet & refrain", bars:["Am","F","G","E"]}],
+    chords:["Am","F","G","E"],
+    tip:"La boucle réelle du duo : Am-Fa-Sol puis le <b>Mi majeur</b> qui serre au lieu de résoudre — c'est lui la gravité du morceau. Penta de La mineur + Sol♯ sur le Mi, phrasé sobre : le texte porte tout.",
   },
   {
     zone:"pop", title:"On écrit sur les murs", key:"Do · médium rassembleur (Kids United)",
@@ -1538,7 +1550,7 @@ E|--3---5-------------|`,
       {bars:["B♭","Gm","A7","Dm"]}
     ],
     chords:["Dm","Gm","C","F","B♭","A7"],
-    tip:"En ré mineur comme l'original : une <b>descente en quintes</b> (Ré → Sol → Do → Fa → Si♭) puis le A7 qui ramène au Ré m — le même squelette que Comme toi. Penta mineure de Ré, arpèges amples, joue peu et juste.",
+    tip:"En ré mineur comme l'original : une <b>descente en quintes</b> (Ré → Sol → Do → Fa → Si♭) puis le A7 qui ramène au Ré m — le même squelette que Parisienne Walkways, un ton et demi plus haut. Penta mineure de Ré, arpèges amples, joue peu et juste.",
     note:"Dans la comédie musicale, la tonalité monte au fil des couplets ; version jam stable en Ré m.",
   },
   {
@@ -1548,14 +1560,15 @@ E|--3---5-------------|`,
     tip:"Le riff Mi-La de Bashung, sec et hypnotique, presque un boogie. Penta de Mi (mineure ou majeure), gros son même en acoustique : le groove fait le morceau.",
   },
   {
-    zone:"pop", title:"Comme toi", key:"La mineur · ballade (Jean-Jacques Goldman)",
+    zone:"pop", title:"Comme toi", key:"Ré mineur · ballade (Jean-Jacques Goldman)",
     systems:[
-      {bars:["Am","Dm","G","C"]},
-      {bars:["F","Dm","E7","Am"]}
+      {note:"couplet (« elle avait les yeux clairs »)", bars:["Dm","Gm","A7","Dm"]},
+      {note:"refrain (« comme toi »)", bars:["Gm","A7","Dm","B♭"]},
+      {bars:["Gm","A7","Dm","Dm"]}
     ],
-    chords:["Am","Dm","G","C","F","E7"],
-    tip:"La ballade de Goldman, une histoire qui serre le cœur. Descente Am-Dm-Sol-Do, puis le E7 qui ramène au La mineur. Penta de La mineur, sobriété.",
-    note:"Version jam simplifiée.",
+    chords:["Dm","Gm","A7","B♭"],
+    tip:"La ballade de Goldman, une histoire qui serre le cœur — en Ré mineur comme l'original : le couplet tourne i-iv-V, le refrain s'échappe par le Si♭ avant de retomber. Penta de Ré mineur + Do♯ sur les A7, sobriété absolue.",
+    note:"Structure simplifiée.",
   },
   {
     zone:"pop", title:"Le Métèque", key:"La mineur · valse 3/4 (Georges Moustaki)",
@@ -1571,35 +1584,46 @@ E|--3---5-------------|`,
     zone:"jazz", title:"Georgia on My Mind", key:"Fa · ballade du Sud (Hoagy Carmichael / Ray Charles)",
     systems:[
       {label:"A", bars:["F","A7","Dm","B♭ · B°7"]},
-      {bars:["F · D7","Gm7 · C7","F","Gm7 · C7"]}
+      {bars:["F · D7","Gm7 · C7","F","Gm7 · C7"]},
+      {label:"B", note:"pont (« other arms reach out to me »)", bars:["Dm","G7","Dm","B♭7"]},
+      {bars:["Dm","G7","F · D7","Gm7 · C7"]}
     ],
-    chords:["F","A7","Dm","B♭","B°7","D7","Gm7","C7"],
-    tip:"La ballade des ballades. Le <b>A7 qui tombe sur le Dm</b> (mesure 2) est le soupir du morceau ; le B°7 relie le Si♭ au Fa. Gamme de Fa majeur, vise les tierces, et prends ton temps : personne ne presse Ray Charles.",
-    note:"Section A simplifiée ; le pont est plus riche.",
+    chords:["F","A7","Dm","B♭","B°7","D7","Gm7","C7","G7","B♭7"],
+    tip:"La ballade des ballades. Le <b>A7 qui tombe sur le Dm</b> (mesure 2) est le soupir du morceau ; le B°7 relie le Si♭ au Fa. Le pont rumine Dm-G7 avant que le turnaround ne ramène au Fa. Gamme de Fa majeur, vise les tierces, et prends ton temps : personne ne presse Ray Charles.",
+    note:"Pont simplifié ; après lui, on rejoue un A.",
   },
   {
-    zone:"jazz", title:"Softly, As in a Morning Sunrise", key:"Do mineur · swing (Romberg)",
-    systems:[{note:"section A · le vamp, en boucle", bars:["Cm","Dm7♭5 · G7","Cm","Dm7♭5 · G7"]}],
-    chords:["Cm","Dm7♭5","G7"],
-    tip:"<b>LE ii-V mineur en boucle</b> : le réflexe Dm7♭5 → G7 → Cm à graver dans les doigts. Penta mineure de Do (case 8) + le Si naturel quand le G7 arrive — une seule note change, tout le drame est là.",
-    note:"Pont simplifié : en jam, restez sur le vamp.",
-  },
-  {
-    zone:"jazz", title:"Beautiful Love", key:"Ré mineur · valse ou swing (standard)",
+    zone:"jazz", title:"Softly, As in a Morning Sunrise", key:"Do mineur · swing (Romberg) · forme A A B A",
     systems:[
-      {bars:["Em7♭5","A7","Dm","Dm"]},
-      {bars:["Gm7","C7","F","Em7♭5 · A7"]}
+      {label:"A", note:"le vamp, jouer 2 fois", bars:["Cm","Dm7♭5 · G7","Cm","Dm7♭5 · G7"]},
+      {label:"B", note:"pont (vers le relatif majeur)", bars:["Fm7 · B♭7","E♭maj7","Gm7","Dm7♭5 · G7"]},
+      {label:"A", bars:["Cm","Dm7♭5 · G7","Cm","Cm"]}
     ],
-    chords:["Em7♭5","A7","Dm","Gm7","C7","F"],
-    tip:"Le standard-école du mineur : un <b>ii-V mineur</b> (Em7♭5-A7-Dm) puis un <b>ii-V majeur</b> (Gm7-C7-F) — les deux mondes côte à côte. Penta de Ré m + Do♯ sur les A7. Compare avec Autumn Leaves : même mécanique.",
-    note:"8 premières mesures en boucle ; la forme complète fait 32 mesures.",
+    chords:["Cm","Dm7♭5","G7","Fm7","B♭7","E♭maj7","Gm7"],
+    tip:"<b>LE ii-V mineur en boucle</b> : le réflexe Dm7♭5 → G7 → Cm à graver dans les doigts. Le pont s'évade vers le relatif majeur (Fm7-B♭7 → E♭) — le lever de soleil du titre — avant que le G7 ne ramène la nuit. Penta de Do m (case 8) + le Si naturel sur G7.",
+    note:"Pont simplifié (l'original passe par des diminués de passage).",
+  },
+  {
+    zone:"jazz", title:"Beautiful Love", key:"Ré mineur · swing (standard) · 16 mesures",
+    systems:[
+      {bars:["Em7♭5","A7","Dm","D7"]},
+      {bars:["Gm7","C7","Fmaj7","Em7♭5 · A7"]},
+      {bars:["Dm","Gm7","B♭7","A7"]},
+      {bars:["Dm","Bm7♭5 · E7","A7","Dm"]}
+    ],
+    chords:["Em7♭5","A7","Dm","D7","Gm7","C7","Fmaj7","B♭7","Bm7♭5","E7"],
+    tip:"Le standard-école du mineur : un <b>ii-V mineur</b> (Em7♭5-A7-Dm) puis un <b>ii-V majeur</b> (Gm7-C7-F) — les deux mondes côte à côte, et le D7 qui pousse vers le Sol m. Penta de Ré m + Do♯ sur les A7. Compare avec Autumn Leaves : même mécanique.",
+    note:"Forme complète de 16 mesures (fin simplifiée).",
   },
   {
     zone:"jazz", title:"St. Thomas", key:"Do · calypso (Sonny Rollins)",
-    systems:[{note:"boucle calypso", bars:["C","Em · A7","Dm · G7","C · G7"]}],
-    chords:["C","Em","A7","Dm","G7"],
-    tip:"Le soleil des Caraïbes en 4 mesures. Gamme de Do majeur, penta majeure, phrasé sautillant : c'est un morceau qui sourit. Le jeu à deux : basse ronde contre accords piqués sur les contretemps.",
-    note:"Boucle simplifiée du thème.",
+    systems:[
+      {note:"le thème : 2 fois la même phrase de 4 mesures", bars:["C · F7","Em7 · A7","Dm7 · G7","C"]},
+      {bars:["C · F7","Em7 · A7","Dm7 · G7","C · G7"]}
+    ],
+    chords:["C","F7","Em7","A7","Dm7","G7"],
+    tip:"Le soleil des Caraïbes : le F7 qui pousse vers le ii-V (Em7-A7 → Dm7-G7), deux fois la même phrase et tout est dit. Gamme de Do majeur, penta majeure, phrasé sautillant. Le jeu à deux : basse ronde contre accords piqués sur les contretemps.",
+    note:"Forme réelle en 8 mesures ; la section B reste proche — en jam, bouclez le thème.",
   },
   {
     zone:"jazz", title:"Mack the Knife", key:"Do · swing chanté (Kurt Weill)",
@@ -1611,29 +1635,33 @@ E|--3---5-------------|`,
   {
     zone:"jazz", title:"Bésame Mucho", key:"Ré mineur · boléro (Consuelo Velázquez)",
     systems:[
-      {bars:["Dm","Dm","Gm","Gm"]},
-      {bars:["Dm","B♭ · A7","Dm","A7"]}
+      {note:"« bésame, bésame mucho... »", bars:["Dm","Gm","D7 · Gm","A7 · Dm"]},
+      {bars:["D7","Gm","Dm · B♭7","A7 · Dm"]}
     ],
-    chords:["Dm","Gm","B♭","A7"],
-    tip:"Le boléro le plus repris du monde. Lent, dramatique, basse ronde sur le 1. Penta de Ré mineur + <b>Do♯ sur les A7</b> (mineur harmonique) : la couleur hispanique immédiate. À chanter sans avoir honte.",
-    note:"Version jam très simplifiée.",
+    chords:["Dm","Gm","D7","A7","B♭7"],
+    tip:"Le boléro le plus repris du monde. Lent, dramatique, basse ronde sur le 1 ; le <b>D7 qui bascule vers le Sol mineur</b> est le geste du morceau, et le Do♯ des A7 (mineur harmonique) la couleur hispanique. À chanter sans avoir honte.",
+    note:"Couplet complet ; les reprises varient d'une version à l'autre.",
   },
   {
     zone:"jazz", title:"Nuages", key:"Sol · manouche lent (Django Reinhardt)",
-    systems:[{note:"les 4 mesures signature, en boucle", bars:["E♭7","D7","G","G"]}],
-    chords:["E♭7","D7","G"],
-    tip:"Le troisième manouche du carnet, le plus doux. Tout est dans la <b>descente chromatique E♭7 → D7 → G</b> : deux accords 7 qui glissent d'un demi-ton vers la maison. Gamme de Sol majeur + arpèges des deux dominantes, legato, vibrato.",
-    note:"Début du thème en boucle ; la grille complète est plus longue.",
+    systems:[
+      {note:"le thème, 8 mesures (simplifié)", bars:["E♭7","D7","G","G"]},
+      {bars:["Am7","Cm","G","Am7 · D7"]}
+    ],
+    chords:["E♭7","D7","G","Am7","Cm"],
+    tip:"Le troisième manouche du carnet, le plus doux. Tout est dans la <b>descente chromatique E♭7 → D7 → G</b>, puis le <b>Cm</b> (le mineur emprunté) qui voile le ciel avant le retour. Gamme de Sol majeur + arpèges des dominantes, legato, vibrato.",
+    note:"Grille simplifiée d'un thème aux nombreuses variantes — Django lui-même en changeait.",
   },
   {
     zone:"jazz", title:"Moondance", key:"La mineur · jazz-soul (Van Morrison)",
     systems:[
       {note:"couplet", bars:["Am7 · Bm7","Am7 · Bm7","Am7 · Bm7","Am7 · Bm7"]},
-      {note:"refrain", bars:["Dm7 · Am7","Dm7 · Am7","Dm7","E7"]}
+      {note:"refrain", bars:["Dm7 · Am7","Dm7 · Am7","Dm7","E7"]},
+      {note:"pont (« you know the night's magic »)", bars:["Dm7 · Am7","Dm7 · Am7","Dm7 · Am7","Dm7 · E7"]}
     ],
     chords:["Am7","Bm7","Dm7","E7"],
-    tip:"Le vamp <b>Am7-Bm7 = pur dorien de La</b> (penta de La m + Fa♯, comme Oye Como Va). C'est LE morceau pour travailler la walking bass à deux : l'un marche, l'autre place des accords courts, puis on échange.",
-    note:"Structure simplifiée.",
+    tip:"Le vamp <b>Am7-Bm7 = pur dorien de La</b> (penta de La m + Fa♯, comme Oye Como Va). C'est LE morceau pour travailler la walking bass à deux : l'un marche, l'autre place des accords courts, puis on échange. Le pont balance Dm7-Am7 et le E7 relance.",
+    note:"Structure complète, voicings simplifiés.",
   },
   {
     zone:"jazz", title:"Fever", key:"La mineur · sobre, claqué (Peggy Lee)",
@@ -1821,7 +1849,7 @@ E|0--0--3-0-------|`,
       {bars:["F","Dm","E7","Am · E7"]}
     ],
     chords:["Am","Dm","G","C","F","E7"],
-    tip:"Le cycle de quintes en mineur (le squelette de Comme toi), et par-dessus <b>UNE note tenue qui pleure</b>. Penta de La mineure, bends lents, vibrato énorme : le concours de la note la plus longue est officiellement ouvert.",
+    tip:"Le cycle de quintes en mineur (le squelette de Belle, en La m), et par-dessus <b>UNE note tenue qui pleure</b>. Penta de La mineure, bends lents, vibrato énorme : le concours de la note la plus longue est officiellement ouvert.",
   }
 ];
 
