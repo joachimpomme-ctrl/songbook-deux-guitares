@@ -486,6 +486,8 @@ const CHORDS = {
   "A♭maj7":  ["4","6","5","5","4","4"],
   "C#m":     ["x","4","6","6","5","4"],
   "G#7":     ["4","6","4","5","4","4"],
+  "G♭maj7":  ["x","x","4","6","6","6"],
+  "F#m7":    ["2","4","2","2","2","2"],
   "E♭":      ["x","6","8","8","8","6"],
   "D6add9":  ["2","0","0","2","0","0"]
 };
@@ -746,10 +748,14 @@ E|------2---------|`,
   },
   {
     zone:"rock", title:"Hotel California", key:"Si mineur · médium (Eagles)",
-    systems:[{note:"couplet = grille du solo final", bars:["Bm","F#7","A","E"]},{bars:["G","D","Em","F#7"]}],
+    systems:[
+      {note:"couplet = grille du solo final", bars:["Bm","F#7","A","E"]},
+      {bars:["G","D","Em","F#7"]},
+      {note:"refrain (« welcome to the Hotel California »)", bars:["G","D","F#7","Bm"]},
+      {bars:["G","D","Em","F#7"]}
+    ],
     chords:["Bm","F#7","A","E","G","D","Em"],
-    tip:"La boucle du couplet est aussi celle des solos de fin : penta mineure de Si (case 7) + arpèges des accords. Au capo 7, tout se joue en accords ouverts : Em, B7, D, A, C, G, Am, B7.",
-    note:"Le refrain (« Welcome to the Hotel California ») reprend les mêmes couleurs autour de G, D, Em et F♯7 ; vérifie le découpage exact sur une partition si vous chantez.",
+    tip:"La boucle du couplet est aussi celle des solos de fin : penta mineure de Si (case 7) + arpèges des accords. Le refrain inverse la donne : il part du Sol majeur et retombe sur le Si mineur. Au capo 7, tout se joue en accords ouverts : Em, B7, D, A, C, G, Am, B7.",
   },
   {
     zone:"blues", title:"Blues en Do", key:"Do · médium",
@@ -859,10 +865,16 @@ E|----------------|`,
       note:"Fa → Mi♭ → Ré♭ → Do : la descente de basse EST le morceau (Fm7-E♭7-D♭7-C7). Une fondamentale par accord, ronde et posée."},
   },
   {
-    zone:"jazz", title:"The Girl from Ipanema", key:"Fa · bossa · section A",
-    systems:[{note:"section A", bars:["Fmaj7","Fmaj7","G7","G7"]},{bars:["Gm7","G♭7","Fmaj7","G♭7"]}],
-    chords:["Fmaj7","G7","Gm7","G♭7"],
-    tip:"La bossa la plus jouée au monde. Le G♭7 qui glisse sous le Fmaj7 fait tout le charme. Gamme de Fa majeur, phrasé legato, jamais pressé. Le pont complet est ardu : restez sur le A en jam.",
+    zone:"jazz", title:"The Girl from Ipanema", key:"Fa · bossa · forme A A B A",
+    systems:[
+      {label:"A", note:"jouer 2 fois", bars:["Fmaj7","Fmaj7","G7","G7"]},
+      {bars:["Gm7","G♭7","Fmaj7","G♭7"]},
+      {label:"B", note:"pont (« oh, but I watch her so sadly ») · 2 mesures par accord", bars:["G♭maj7","B7","F#m7","D7"]},
+      {bars:["Gm7","E♭7","Am7 · D7","Gm7 · C7"]}
+    ],
+    chords:["Fmaj7","G7","Gm7","G♭7","G♭maj7","B7","F#m7","D7","E♭7","Am7","C7"],
+    tip:"La bossa la plus jouée au monde. Le G♭7 qui glisse sous le Fmaj7 fait le charme du A ; le pont, lui, part carrément un demi-ton au-dessus (G♭maj7) et voyage de tonalité en tonalité avant que Gm7-C7 ne ramène à la maison. En jam, le A seul reste permis — le pont est une expédition.",
+    note:"Après le pont, on rejoue un A. Pont en 2 mesures par accord (16 mesures).",
   },
   {
     zone:"jazz", title:"Isn't She Lovely", key:"Mi · groove Stevie Wonder",
@@ -967,10 +979,13 @@ E|--5-------5-----|`,
   },
   {
     zone:"rock", title:"Dead Flowers", key:"Ré · country-rock (Stones)",
-    systems:[{note:"boucle du couplet", bars:["D","A","G","D"]}],
+    systems:[
+      {note:"couplet", bars:["D","A","G","D"]},
+      {note:"refrain (« take me down little Susie »)", bars:["A","D","A","D"]},
+      {bars:["A","D","G","D"]}
+    ],
     chords:["D","A","G"],
-    tip:"Les Stones en mode country : gros son de gratte ouverte, penta majeure de Ré, doubles cordes twang. Chœurs approximatifs vivement encouragés.",
-    note:"Boucle simplifiée.",
+    tip:"Les Stones en mode country : gros son de gratte ouverte, penta majeure de Ré, doubles cordes twang. Le refrain bascule sur le La et retombe par le Sol, comme le couplet. Chœurs approximatifs vivement encouragés.",
   },
   {
     zone:"rock", title:"Proud Mary", key:"Ré · médium (CCR)",
@@ -1068,14 +1083,16 @@ E|--3---5-------------|`,
     note:"Réduit au vamp modal ; la forme complète est plus longue.",
   },
   {
-    zone:"jazz", title:"Misty", key:"Mi♭ · ballade lente (Erroll Garner)",
+    zone:"jazz", title:"Misty", key:"Mi♭ · ballade lente (Erroll Garner) · forme A A B A",
     systems:[
-      {label:"A", bars:["E♭maj7","B♭m7 · E♭7","A♭maj7","A♭m7 · D♭7"]},
-      {bars:["E♭maj7 · Cm7","Fm7 · B♭7","Gm7 · C7","Fm7 · B♭7"]}
+      {label:"A", note:"jouer 2 fois", bars:["E♭maj7","B♭m7 · E♭7","A♭maj7","A♭m7 · D♭7"]},
+      {bars:["E♭maj7 · Cm7","Fm7 · B♭7","Gm7 · C7","Fm7 · B♭7"]},
+      {label:"B", note:"pont (« on my own »)", bars:["B♭m7","E♭7","A♭maj7","A♭maj7"]},
+      {bars:["Am7 · D7","Gm7 · C7","Fm7","B♭7"]}
     ],
-    chords:["E♭maj7","B♭m7","E♭7","A♭maj7","A♭m7","D♭7","Cm7","Fm7","B♭7","Gm7","C7"],
-    tip:"Une chaîne de ii-V, presque un par mesure : le morceau qui apprend à entendre les cadences. Gamme de Mi♭ majeur comme fil, et sur chaque paire vise la tierce du deuxième accord. Accords tenus, beaucoup d'air.",
-    note:"Section A ; le pont est plus touffu.",
+    chords:["E♭maj7","B♭m7","E♭7","A♭maj7","A♭m7","D♭7","Cm7","Fm7","B♭7","Gm7","C7","Am7","D7"],
+    tip:"Une chaîne de ii-V, presque un par mesure : le morceau qui apprend à entendre les cadences. Le pont s'échappe par B♭m7-E♭7 vers le La♭, puis une échelle de ii-V (Am7-D7, Gm7-C7, Fm7-B♭7) redescend vers le A final. Gamme de Mi♭ majeur comme fil, vise la tierce du deuxième accord de chaque paire.",
+    note:"Après le pont, on rejoue un A. Voicings simplifiés.",
   },
   {
     zone:"jazz", title:"Dark Eyes (Les Yeux Noirs)", key:"Ré mineur · swing manouche (traditionnel)",
@@ -1189,10 +1206,14 @@ E|--3---5-------------|`,
   },
   {
     zone:"pop", title:"Someone Like You", key:"La · ballade piano (Adele)",
-    systems:[{note:"couplet", bars:["A","E","F#m","D"]}],
-    chords:["A","E","F#m","D"],
-    tip:"L'arpège de piano au médiator ou aux doigts. Gamme de La majeur, vise les tierces ; laisse respirer, la puissance vient du contraste couplet murmuré / refrain lâché.",
-    note:"Boucle simplifiée du couplet.",
+    systems:[
+      {note:"couplet", bars:["A","C#m","F#m","D"]},
+      {note:"pré-refrain (« I hate to turn up out of the blue »)", bars:["E","F#m","D","D"]},
+      {note:"refrain (« never mind, I'll find »)", bars:["A","E","F#m","D"]}
+    ],
+    chords:["A","C#m","F#m","D","E"],
+    tip:"L'arpège de piano au médiator ou aux doigts. Le couplet passe par le <b>C♯m</b> (la version piano descend même la basse La→Sol♯), le refrain le remplace par le Mi : même famille, deux éclairages. Gamme de La majeur ; la puissance vient du contraste murmure/refrain lâché.",
+    note:"Structure complète, voicings simplifiés.",
   },
   {
     zone:"pop", title:"Let Her Go", key:"Mi mineur (capo 7) · folk-pop (Passenger)",
@@ -1305,13 +1326,14 @@ E|--3---5-------------|`,
     tip:"La I-V-vi-IV en Ré — et c'est <b>exactement la boucle de With or Without You</b> : deux chansons, un même moteur. Bon exercice à deux : enchaînez l'une puis l'autre sans vous arrêter. Gamme de Ré majeur, vise les tierces.",
   },
   {
-    zone:"pop", title:"Je veux", key:"La mineur · swing pop (Zaz)",
+    zone:"pop", title:"Je veux", key:"Ré mineur · swing pop (Zaz)",
     systems:[
-      {note:"couplet", bars:["Am","G","F","Dm · E7"]}
+      {note:"couplet (« donnez-moi une suite au Ritz »)", bars:["Dm","C","B♭","Gm · A7"]},
+      {note:"refrain (« je veux d'l'amour, d'la joie »)", bars:["Dm","B♭ · C","A7 · B♭","G · A7"]}
     ],
-    chords:["Am","G","F","Dm","E7"],
-    tip:"Le swing pop de Zaz, mineur et manouche : pompe légère, les 2 et 4 qui claquent. <b>Penta de La mineur + Sol♯ sur le E7</b> (mineur harmonique), exactement comme sur Minor Swing.",
-    note:"Le refrain tourne sur les mêmes couleurs ; version jam simplifiée.",
+    chords:["Dm","C","B♭","Gm","A7","G"],
+    tip:"Le swing pop de Zaz, mineur et manouche : pompe légère, les 2 et 4 qui claquent. <b>Penta de Ré mineur + Do♯ sur les A7</b> (mineur harmonique), exactement comme sur Dark Eyes. Le Sol majeur du refrain est le clin d'œil dorien.",
+    note:"Structure complète, voicings simplifiés.",
   },
   {
     zone:"pop", title:"La vie en rose", key:"Do · swing musette lent (Édith Piaf)",
