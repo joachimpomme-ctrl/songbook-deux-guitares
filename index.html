@@ -293,6 +293,14 @@
   }
   .fav-only-row{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--paper);font-size:.82rem;cursor:pointer}
   .chart.notfav{display:none}
+  /* ---- riff signature (visible par défaut) ---- */
+  .riff{margin:12px 0 4px;border-left:3px solid var(--rust);padding-left:10px}
+  .riff .riff-h{
+    font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--rust);margin-bottom:5px;display:flex;align-items:center;gap:6px;
+  }
+  .riff .tab{margin-top:0}
+  .riff .riff-orig[hidden]{display:none}
   /* ---- impression ---- */
   @media print{
     body{background:#fff;color:#000;padding:0}
@@ -742,6 +750,14 @@ E|------3---1---0-|`,
     zone:"rock", title:"Sweet Home Alabama", key:"Sol / Ré mixolydien · médium (Lynyrd Skynyrd)",
     systems:[{note:"boucle", bars:["D · C","G","D · C","G"]}],
     chords:["D","C","G"],
+    riff:{tab:
+`e|-------------------------|
+B|-----3---------3---------|
+G|-------2----------0------|
+D|-0-0---------------------|
+A|----------3-3------------|
+E|-------------------------|`,
+      note:"Le lick d'intro qui répond aux accords Ré–Do–Sol : une petite broderie sur chaque accord. Penta majeure de Sol ; c'est la réponse mélodique entre les accords qui fait le morceau."},
     tip:"Penta majeure de Sol (= penta mineure de Mi) sonne parfaitement. Débat célèbre sur la tonalité (Ré ou Sol) : jouez ce qui sonne, les deux mondes se croisent.",
   },
   {
@@ -778,6 +794,14 @@ E|------3---2---1-|`,
     zone:"rock", title:"Cocaine", key:"Mi · blues rock (J.J. Cale / Clapton)",
     systems:[{bars:["E · D","E · D","E · D","E · D"]},{bars:["E · D","E · D","C · B","E"]}],
     chords:["E","D","C","B"],
+    riff:{tab:
+`e|-----------------|
+B|-----------------|
+G|--9--9--7--9--7--|
+D|--9--9--7--9--7--|
+A|--7--7--5--7--5--|
+E|-----------------|`,
+      note:"Deux power chords qui se balancent : Mi5 (case 7) ↔ Ré5 (case 5), tout étouffé à la paume. Le pattern Mi-Mi-Ré-Mi-Ré, sec et carré — c'est ça, tout le morceau."},
     tip:"Vamp Mi ↔ Ré au médiator, sec et carré, puis la descente Mi-Ré-Do-Si qui fait le hook. Penta mineure de Mi, gros son même en acoustique.",
     note:"Structure simplifiée.",
   },
@@ -1776,12 +1800,12 @@ E|--3---5-------------|`,
     zone:"rock", title:"Seven Nation Army", key:"Mi mineur · riff martelé (White Stripes)",
     systems:[{note:"riff en boucle", bars:["Em","Em","Em","Em"]}],
     chords:["Em"],
-    bass:{tab:
+    riff:{tab:
 `G|----------------|
 D|----------------|
 A|----------5-3-2-|
 E|0--0--3-0-------|`,
-      note:"LE riff : Mi-Mi-Sol-Mi-Ré-Do-Si, tout en penta mineure de Mi. Jouez-le à l'unisson d'abord, puis l'un le martèle pendant que l'autre improvise dessus."},
+      note:"Mi-Mi-Sol-Mi-Ré-Do-Si, tout en penta mineure de Mi. Jouez-le à l'unisson (guitare + basse) d'abord, puis l'un le martèle pendant que l'autre improvise dessus."},
     tip:"Un riff, un stade entier qui chante. Le riff EST le morceau : penta mineure de Mi, gros son, silence entre les notes. Improvisation par-dessus dans la même penta, position ouverte ou case 12.",
   },
   {
@@ -2253,6 +2277,7 @@ function songHTML(s){
     ${grooveHTML(s)}
     ${tpose}
     ${systems}
+    ${s.riff?`<div class="riff"><div class="riff-h">🎸 Le riff à connaître</div><pre class="tab">${s.riff.tab}</pre><div class="footnote riff-orig" hidden>Riff en tonalité d'origine (les accords ci-dessus sont transposés).</div><div class="footnote">${s.riff.note}</div></div>`:""}
     <div class="tip">Pour improviser : ${s.tip}</div>
     <details><summary>Accords du morceau</summary><div class="diagrams">${diags}</div></details>
     ${bassHTML}
@@ -2355,6 +2380,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent = off>0 ? "≡ capo "+off+" avec les formes d'origine" : "";
     const reset=card.querySelector(".tp-reset"); if(reset) reset.hidden = off===0;
     const bo=card.querySelector(".bass-orig"); if(bo) bo.hidden = off===0;
+    const ro=card.querySelector(".riff-orig"); if(ro) ro.hidden = off===0;
   }
   function setTP(sl, off){
     off=Math.max(-6, Math.min(6, off));
