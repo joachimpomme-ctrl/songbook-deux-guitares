@@ -293,14 +293,9 @@
   }
   .fav-only-row{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--paper);font-size:.82rem;cursor:pointer}
   .chart.notfav{display:none}
-  /* ---- riff signature (visible par défaut) ---- */
-  .riff{margin:12px 0 4px;border-left:3px solid var(--rust);padding-left:10px}
-  .riff .riff-h{
-    font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
-    color:var(--rust);margin-bottom:5px;display:flex;align-items:center;gap:6px;
-  }
-  .riff .tab{margin-top:0}
-  .riff .riff-orig[hidden]{display:none}
+  /* ---- riff signature (replié par défaut) ---- */
+  .riff-d .riff-orig[hidden]{display:none}
+  .riff-d pre.tab{margin-top:8px}
   /* ---- impression ---- */
   @media print{
     body{background:#fff;color:#000;padding:0}
@@ -962,6 +957,14 @@ E|----------------|`,
     zone:"jazz", title:"Isn't She Lovely", key:"Mi · groove Stevie Wonder",
     systems:[{note:"boucle · 2 mesures par accord", bars:["C#m7","F#7","B7","E"]}],
     chords:["C#m7","F#7","B7","E"],
+    riff:{tab:
+`e|---------------------|
+B|-------------------9-|
+G|--------------6-9--9-|
+D|---------6-9-------9-|
+A|----7-9-----------7--|
+E|-7-9-----------------|`,
+      note:"Le run d'intro qui monte de la corde grave vers l'aigu (gamme de Mi majeur) et finit sur l'accord de Mi : le sourire de Stevie. Joue-le legato, sans forcer."},
     tip:"Le vi-II-V-I qui tourne sans fin. Gamme de Mi majeur, penta majeure de Mi, et le F♯7 appelle une jolie note : son La♯. Groove avant vélocité.",
   },
   {
@@ -995,6 +998,14 @@ E|----------------|`,
       {bars:["Am","C","D","F"]},{bars:["Am","E","Am","E"]}
     ],
     chords:["Am","C","D","F","E"],
+    riff:{tab:
+`e|-------------------|
+B|-----------1-------|
+G|--------2-----2----|
+D|-----2----------2--|
+A|--0----------------|
+E|-------------------|`,
+      note:"Le motif d'arpège en 6/8 (ici sur Am) : basse puis on égrène les cordes, laisser sonner. Applique le même mouvement à chaque accord de la grille (Do, Ré, Fa…)."},
     tip:"L'arpège en 6/8 le plus célèbre du monde : une corde après l'autre, laisser sonner. Penta mineure de La pour le solo, dramatique à souhait.",
   },
   {
@@ -1934,6 +1945,14 @@ E|0--0--3-0-------|`,
       {note:"refrain (« my girl »)", bars:["C","F","C","F"]}
     ],
     chords:["C","F","Dm","G"],
+    riff:{tab:
+`e|-------------------|
+B|-------------------|
+G|-------------------|
+D|----------3--5--7--|
+A|--3--5--7----------|
+E|-------------------|`,
+      note:"La ligne d'intro qui grimpe (Do-Ré-Mi-Fa-Sol-La) : parfait à deux, l'un la joue sur les graves, l'autre pose les accords. Version montante simplifiée du célèbre motif en tierces."},
     tip:"Le riff d'intro se joue en tierces qui montent sur les cordes graves : parfait à deux, l'un le riff, l'autre les accords. Gamme de Do majeur, penta majeure ; à la fin, le morceau monte d'un ton (en Ré) — tentez-le.",
     note:"Structure complète, voicings simplifiés.",
   },
@@ -2277,8 +2296,8 @@ function songHTML(s){
     ${grooveHTML(s)}
     ${tpose}
     ${systems}
-    ${s.riff?`<div class="riff"><div class="riff-h">🎸 Le riff à connaître</div><pre class="tab">${s.riff.tab}</pre><div class="footnote riff-orig" hidden>Riff en tonalité d'origine (les accords ci-dessus sont transposés).</div><div class="footnote">${s.riff.note}</div></div>`:""}
     <div class="tip">Pour improviser : ${s.tip}</div>
+    ${s.riff?`<details class="riff-d"><summary>🎸 Le riff à connaître</summary><pre class="tab">${s.riff.tab}</pre><div class="footnote riff-orig" hidden>Riff en tonalité d'origine (les accords ci-dessus sont transposés).</div><div class="footnote">${s.riff.note}</div></details>`:""}
     <details><summary>Accords du morceau</summary><div class="diagrams">${diags}</div></details>
     ${bassHTML}
     ${s.note?`<div class="footnote">${s.note}</div>`:""}
