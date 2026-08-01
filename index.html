@@ -247,6 +247,52 @@
     margin-top:8px;background:none;border:1px solid var(--rust);color:var(--rust);
     border-radius:8px;padding:6px 12px;font:inherit;font-size:.8rem;cursor:pointer;
   }
+  /* ---- transposition ---- */
+  .tpose{
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+    margin:2px 0 8px;color:var(--ink-soft);font-size:.78rem;
+  }
+  .tpose .tpose-lbl{font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.68rem}
+  .tpose button{
+    width:26px;height:26px;border:1.5px solid var(--ink);background:var(--paper2);
+    color:var(--ink);border-radius:6px;font:inherit;font-size:1rem;font-weight:800;
+    cursor:pointer;line-height:1;padding:0;
+  }
+  .tpose button:active{background:var(--brass)}
+  .tpose .tp-val{min-width:26px;text-align:center;font-weight:800;color:var(--ink);font-size:.9rem}
+  .tpose .tp-capo{font-style:italic;color:var(--rust);font-weight:700}
+  .tpose .tp-reset{
+    width:auto;height:auto;border:none;background:none;color:var(--ink-soft);
+    font-size:.72rem;font-weight:700;text-decoration:underline;padding:0;
+  }
+  .tpose .tp-reset[hidden]{display:none}
+  /* ---- favoris / setlist ---- */
+  .eyebrow .eb-actions{display:flex;align-items:baseline;gap:10px;flex:0 0 auto}
+  .fav-btn{
+    background:none;border:none;cursor:pointer;font:inherit;padding:0;
+    font-size:1rem;line-height:1;color:var(--ink-soft);
+  }
+  .fav-btn[aria-pressed="true"]{color:var(--brass)}
+  details.setlist{margin:8px 0 2px}
+  details.setlist[hidden]{display:none}
+  .setlist>summary{
+    cursor:pointer;color:var(--brass);font-weight:700;font-size:.85rem;
+    font-family:Georgia,serif;font-style:italic;padding:8px 2px 4px;list-style:none;
+  }
+  .setlist>summary::before{content:"▸ "}
+  .setlist[open]>summary::before{content:"▾ "}
+  .fav-item{
+    display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+    padding:5px 2px;border-bottom:1px solid #223040;font-size:.85rem;
+  }
+  .fav-item a{color:var(--paper);text-decoration:none}
+  .fav-item a:active{color:var(--brass)}
+  .fav-item .fav-rm{
+    background:none;border:1px solid var(--ink-soft);color:#9AA7B4;
+    border-radius:999px;font:inherit;font-size:.7rem;padding:2px 8px;cursor:pointer;flex:0 0 auto;
+  }
+  .fav-only-row{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--paper);font-size:.82rem;cursor:pointer}
+  .chart.notfav{display:none}
   /* ---- impression ---- */
   @media print{
     body{background:#fff;color:#000;padding:0}
@@ -290,6 +336,11 @@
     <summary class="idx-summary">📖 Répertoire — <span id="idx-count"></span> morceaux</summary>
     <div id="song-index"></div>
     <div class="idx-empty" id="idx-empty" hidden>Aucun morceau trouvé.</div>
+  </details>
+  <details class="setlist" id="setlist" hidden>
+    <summary>⭐ Ma setlist — <span id="fav-count">0</span></summary>
+    <div class="masq-list" id="fav-list"></div>
+    <label class="fav-only-row"><input type="checkbox" id="fav-only"> N'afficher que ma setlist</label>
   </details>
   <details class="masques" id="masques" hidden>
     <summary>🗑 Morceaux masqués — <span id="masq-count">0</span></summary>
@@ -1850,6 +1901,64 @@ E|0--0--3-0-------|`,
     ],
     chords:["Am","Dm","G","C","F","E7"],
     tip:"Le cycle de quintes en mineur (le squelette de Belle, en La m), et par-dessus <b>UNE note tenue qui pleure</b>. Penta de La mineure, bends lents, vibrato énorme : le concours de la note la plus longue est officiellement ouvert.",
+  },
+  {
+    zone:"rock", title:"My Girl", key:"Do · soul (The Temptations)",
+    systems:[
+      {note:"couplet (« I've got sunshine »)", bars:["C","F","C","F"]},
+      {note:"(« I guess you'd say »)", bars:["C","Dm","F","G"]},
+      {note:"refrain (« my girl »)", bars:["C","F","C","F"]}
+    ],
+    chords:["C","F","Dm","G"],
+    tip:"Le riff d'intro se joue en tierces qui montent sur les cordes graves : parfait à deux, l'un le riff, l'autre les accords. Gamme de Do majeur, penta majeure ; à la fin, le morceau monte d'un ton (en Ré) — tentez-le.",
+    note:"Structure complète, voicings simplifiés.",
+  },
+  {
+    zone:"rock", title:"(Sittin' On) The Dock of the Bay", key:"Sol · soul balancé (Otis Redding)",
+    systems:[
+      {note:"couplet", bars:["G · B","C · A","G · B","C · A"]},
+      {note:"refrain (« sittin' on the dock »)", bars:["G · E","G · E","G · A","E"]}
+    ],
+    chords:["G","B","C","A","E"],
+    tip:"La montée <b>Sol → Si → Do → La</b> du couplet, insouciante comme la marée. Gamme de Sol majeur, penta majeure ; sifflez le solo final, c'est écrit pour. Le B majeur et le La (hors tonalité) sont la couleur du morceau.",
+    note:"Structure simplifiée.",
+  },
+  {
+    zone:"rock", title:"I Heard It Through the Grapevine", key:"Mi mineur · groove sombre (Marvin Gaye)",
+    systems:[{note:"couplet · vamp", bars:["Em","Em","Bm","Bm"]}],
+    chords:["Em","Bm"],
+    tip:"Le groove le plus obsédant de la Motown : deux accords, un océan d'espace. <b>Penta de Mi mineur</b>, phrases courtes très en retard, basse syncopée qui laisse des trous. C'est le silence qui fait peur.",
+    note:"Vamp du couplet ; l'original est en Mi♭ mineur (utilise la transposition ou capo 1).",
+  },
+  {
+    zone:"rock", title:"Superstition", key:"Mi mineur · funk (Stevie Wonder)",
+    systems:[{note:"le riff, en boucle", bars:["Em7","Em7","Em7","A7"]}],
+    chords:["Em7","A7"],
+    tip:"Le clavinet transposé à la gratte : <b>penta de Mi mineur + blue note</b>, riff étouffé et syncopé, la main droite ne s'arrête jamais. Le A7 (le IV7) est la seule respiration harmonique. Le pont monte ailleurs ; en jam, bouclez le riff.",
+    note:"Vamp principal ; original en Mi♭ mineur (accordé un demi-ton plus bas).",
+  },
+  {
+    zone:"jazz", title:"Chameleon", key:"Si♭ dorien · jazz-funk (Herbie Hancock)",
+    systems:[{note:"le vamp, en boucle", bars:["B♭m7","B♭m7","E♭7","E♭7"]}],
+    chords:["B♭m7","E♭7"],
+    tip:"Deux accords, un groove éternel : <b>Si♭ dorien</b> (penta de Si♭ m + le Sol). La basse porte tout ; à deux, l'un tient le riff de basse, l'autre plaque les accords en syncope ou solote en dorien. Cousin funk d'Oye Como Va.",
+    note:"Vamp d'introduction ; le thème complet est plus long.",
+  },
+  {
+    zone:"rock", title:"Papa's Got a Brand New Bag", key:"Mi · funk sur 12 mesures (James Brown)",
+    systems:[{bars:["E7","E7","E7","E7"]},{bars:["A7","A7","E7","E7"]},{bars:["B7","A7","E7","B7"]}],
+    chords:["E7","A7","B7"],
+    tip:"L'acte de naissance du funk : un <b>12 mesures en Mi</b>, mais joué sec, étouffé, tout sur le contretemps. Penta de Mi mixte ; le secret n'est pas dans les notes mais dans le silence entre elles. « On the one ! »",
+  },
+  {
+    zone:"jazz", title:"Mas Que Nada", key:"La mineur · samba (Jorge Ben)",
+    systems:[
+      {note:"« ô ariá raiô »", bars:["Am7","D9","Am7","D9"]},
+      {note:"« mas que nada »", bars:["Gm7","C7","Fmaj7","Fmaj7"]}
+    ],
+    chords:["Am7","D9","Gm7","C7","Fmaj7"],
+    tip:"Le samba le plus contagieux du monde. Le vamp Am7-D9 (dorien de La), puis la bascule Gm7-C7-Fa qui ouvre le soleil. Penta de La m sur la première partie, gamme de Fa majeur sur la seconde. Chantez le « ô ariá » sans complexe.",
+    note:"Version jam simplifiée.",
   }
 ];
 
@@ -1960,7 +2069,14 @@ const GROOVE_BY_TITLE = {
   "San Francisco Bay Blues":{m:"4/4", n:4, acc:[2,4], lbl:"Ragtime : pompe alternée énergique, 2 et 4 marqués, ça avance."},
   "Blues mineur jazz en Do":{m:"4/4", n:4, acc:[2,4], lbl:"Swing mineur : pompe feutrée, 2 et 4 marqués."},
   "Boom Boom":{m:"4/4", n:4, acc:[1], lbl:"Riff + stops : frappe le 1, laisse des trous — c'est le silence qui groove."},
-  "Parisienne Walkways":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade blues lente : basse sur 1 et 3, bends chantés, vibrato large."}
+  "Parisienne Walkways":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade blues lente : basse sur 1 et 3, bends chantés, vibrato large."},
+  "My Girl":{m:"4/4", n:4, acc:[2,4], lbl:"Soul doux : basse ronde, backbeat sur 2 et 4, jamais pressé."},
+  "(Sittin' On) The Dock of the Bay":{m:"4/4", n:4, acc:[2,4], lbl:"Médium balancé : décontracté, backbeat sur 2 et 4."},
+  "I Heard It Through the Grapevine":{m:"4/4", n:4, acc:[2,4], lbl:"Groove sombre : basse syncopée, beaucoup d'espace, backbeat 2 et 4."},
+  "Superstition":{m:"4/4", n:4, acc:[2,4], lbl:"Funk : croches serrées et syncopées, main droite continue, backbeat claqué."},
+  "Chameleon":{m:"4/4", n:4, acc:[2,4], lbl:"Funk : groove en croches, basse en avant, 2 et 4 marqués."},
+  "Papa's Got a Brand New Bag":{m:"4/4", n:4, acc:[2,4], lbl:"Funk : coups secs et étouffés sur le contretemps, backbeat 2 et 4. « On the one ! »"},
+  "Mas Que Nada":{m:"4/4", n:4, acc:[1,3], lbl:"Samba : basse au pouce sur 1 et 3, accords syncopés au-dessus."}
 };
 function grooveHTML(s){
   const g = GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone];
@@ -1976,7 +2092,7 @@ function grooveHTML(s){
 const _ROWS=["G","D","A","E"];      // affichage haut -> bas
 const _ROWPC=[7,2,9,4];             // hauteur des cordes à vide (do=0)
 const _PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5"};
+const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5","Mas Que Nada":"bossa","Chameleon":"root5"};
 function _rootPC(tok){
   tok=tok.trim();
   if(tok.indexOf("/")>-1) tok=tok.split("/")[1].trim();  // slash : la basse est la note d'après
@@ -2076,12 +2192,41 @@ function autoBass(s){
 }
 
 /* ============ Rendu des cartes ============ */
-function barHTML(b){
-  const parts = b.split("·").map(p=>p.trim());
-  if(parts.length===1) return `<div class="bar">${parts[0]}</div>`;
-  return `<div class="bar">${parts[0]}${parts.slice(1).map(p=>` <small>${p}</small>`).join("")}</div>`;
+/* ---- transposition d'accords ---- */
+const _TPNAMES=["C","C#","D","E♭","E","F","F#","G","A♭","A","B♭","B"];
+const _TPROOT={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+function tpChord(tok, off){
+  off=off||0; tok=tok.trim();
+  if(!off) return tok;
+  let bass=null;
+  if(tok.indexOf("/")>-1){ const p=tok.split("/"); tok=p[0]; bass=p[1]; }
+  const shift=n=>{ const m=n.match(/^([A-G])([#♭]?)(.*)$/); if(!m||_TPROOT[m[1]]===undefined) return n;
+    let pc=_TPROOT[m[1]]; if(m[2]==="#")pc++; else if(m[2]==="♭")pc--;
+    return _TPNAMES[((pc+off)%12+12)%12]+m[3]; };
+  let out=shift(tok);
+  if(bass) out+="/"+shift(bass);
+  return out;
+}
+function tpFrets(frets, o){
+  o=((o%12)+12)%12;
+  if(!o) return frets.slice();
+  let nf=frets.map(f=> f==="x" ? "x" : String(Number(f)+o));
+  let pos=nf.filter(f=>f!=="x").map(Number);
+  if(pos.length){ let mn=Math.min(...pos); while(mn>11){ nf=nf.map(f=> f==="x"?"x":String(Number(f)-12)); mn-=12; } }
+  return nf;
+}
+function barInner(b, off){
+  const parts = b.split("·").map(p=>tpChord(p.trim(), off));
+  if(parts.length===1) return parts[0];
+  return parts[0] + parts.slice(1).map(p=>` <small>${p}</small>`).join("");
+}
+function barHTML(b){ return `<div class="bar" data-bars="${b}">${barInner(b,0)}</div>`; }
+function diagInner(ch, off){
+  const fr = CHORDS[ch]; if(!fr) return "";
+  return `<div class="nm">${tpChord(ch, off)}</div>${chordSVG(tpFrets(fr, off))}`;
 }
 function songHTML(s){
+  const sl = slug(s.title);
   let systems = s.systems.map(sys=>{
     let head = "";
     if(sys.label) head = `<span class="sys-label">${sys.label}</span>` + (sys.note?`<span class="sys-note">${sys.note}</span>`:"");
@@ -2089,18 +2234,28 @@ function songHTML(s){
     return head + `<div class="grid">` + sys.bars.map(barHTML).join("") + `</div>`;
   }).join("");
   const diags = s.chords.map(c=>{
-    const fr = CHORDS[c];
-    if(!fr) return "";
-    return `<div class="diag"><div class="nm">${c}</div>${chordSVG(fr)}</div>`;
+    if(!CHORDS[c]) return "";
+    return `<div class="diag" data-ch="${c}">${diagInner(c,0)}</div>`;
   }).join("");
-  return `<div class="chart" id="${slug(s.title)}">
-    <div class="eyebrow"><span>${s.key}</span><button type="button" class="hide-btn" data-slug="${slug(s.title)}" title="Retirer ce morceau de ma liste">✕ retirer</button></div>
+  const tpose = `<div class="tpose" data-slug="${sl}">
+    <span class="tpose-lbl">Ton</span>
+    <button type="button" class="tp-minus" aria-label="Transposer un demi-ton plus bas">–</button>
+    <span class="tp-val">0</span>
+    <button type="button" class="tp-plus" aria-label="Transposer un demi-ton plus haut">+</button>
+    <span class="tp-capo"></span>
+    <button type="button" class="tp-reset" hidden>rétablir</button>
+  </div>`;
+  const bass = s.bass||autoBass(s);
+  const bassHTML = bass ? `<details><summary>Ligne de basse</summary><pre class="tab">${bass.tab}</pre><div class="footnote bass-orig" hidden>Tablature de basse en tonalité d'origine (les accords ci-dessus sont transposés).</div><div class="footnote">${bass.note}</div></details>` : "";
+  return `<div class="chart" id="${sl}">
+    <div class="eyebrow"><span>${s.key}</span><span class="eb-actions"><button type="button" class="fav-btn" data-slug="${sl}" aria-pressed="false" title="Ajouter à ma setlist">☆</button><button type="button" class="hide-btn" data-slug="${sl}" title="Retirer ce morceau de ma liste">✕ retirer</button></span></div>
     <h2>${s.title}</h2>
     ${grooveHTML(s)}
+    ${tpose}
     ${systems}
     <div class="tip">Pour improviser : ${s.tip}</div>
     <details><summary>Accords du morceau</summary><div class="diagrams">${diags}</div></details>
-    ${(()=>{const b=s.bass||autoBass(s);return b?`<details><summary>Ligne de basse</summary><pre class="tab">${b.tab}</pre><div class="footnote">${b.note}</div></details>`:"";})()}
+    ${bassHTML}
     ${s.note?`<div class="footnote">${s.note}</div>`:""}
   </div>`;
 }
@@ -2115,14 +2270,20 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
 (function buildIndex(){
   const ZL={blues:"Blues",jazz:"Jazz",rock:"Rock",pop:"Pop"};
   const ZONES=["blues","jazz","rock","pop"];
-  const KEY="songbook-hidden";
-  let HIDDEN;
-  try{ HIDDEN=new Set(JSON.parse(localStorage.getItem(KEY)||"[]")); }catch(e){ HIDDEN=new Set(); }
-  const save=function(){ try{ localStorage.setItem(KEY, JSON.stringify(Array.from(HIDDEN))); }catch(e){} };
+  const loadJSON=function(k,d){ try{ return JSON.parse(localStorage.getItem(k))||d; }catch(e){ return d; } };
+  const setLS=function(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
+  let HIDDEN=new Set(loadJSON("songbook-hidden",[]));
+  let FAV=loadJSON("songbook-fav",[]).filter(Boolean);        // ordonné
+  let TP=loadJSON("songbook-tp",{});                          // {slug: demi-tons}
+  let favOnly=!!loadJSON("songbook-favonly",false);
+  const saveHidden=function(){ setLS("songbook-hidden",Array.from(HIDDEN)); };
+  const saveFav=function(){ setLS("songbook-fav",FAV); };
+  const saveTP=function(){ setLS("songbook-tp",TP); };
+  const isFav=function(sl){ return FAV.indexOf(sl)>-1; };
 
   const sorted=[...SONGS].sort((a,b)=>_norm(a.title).localeCompare(_norm(b.title)));
   const bySlug={};
-  sorted.forEach(function(s){ bySlug[slug(s.title)]=s; });
+  SONGS.forEach(function(s){ bySlug[slug(s.title)]=s; });
   document.getElementById("song-index").innerHTML = sorted.map(function(s){
     return `<a href="#${slug(s.title)}" data-n="${_norm(s.title)}">${s.title}<span class="z">${ZL[s.zone]||s.zone}</span></a>`;
   }).join("");
@@ -2132,29 +2293,30 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   const details=document.getElementById("idx-details");
   const empty=document.getElementById("idx-empty");
   const links=[].slice.call(document.querySelectorAll("#song-index a"));
-  const masques=document.getElementById("masques");
-  const masqList=document.getElementById("masq-list");
-  const masqCount=document.getElementById("masq-count");
+  const masques=document.getElementById("masques"), masqList=document.getElementById("masq-list"), masqCount=document.getElementById("masq-count");
+  const setlist=document.getElementById("setlist"), favList=document.getElementById("fav-list"), favCount=document.getElementById("fav-count"), favOnlyBox=document.getElementById("fav-only");
   const slugOf=function(a){ return a.getAttribute("href").slice(1); };
+  const shownState=function(sl){ return !HIDDEN.has(sl) && !(favOnly && !isFav(sl)); };
 
   function filterIndex(){
     const q=_norm(search.value.trim());
     let shown=0;
     links.forEach(function(a){
-      const m = !HIDDEN.has(slugOf(a)) && a.dataset.n.indexOf(q)>-1;
+      const m = shownState(slugOf(a)) && a.dataset.n.indexOf(q)>-1;
       a.hidden=!m; if(m) shown++;
     });
     empty.hidden = shown>0;
   }
 
-  function applyHidden(){
-    SONGS.forEach(function(s){ const c=document.getElementById(slug(s.title)); if(c) c.classList.toggle("removed", HIDDEN.has(slug(s.title))); });
+  function applyView(){
+    SONGS.forEach(function(s){ const sl=slug(s.title), c=document.getElementById(sl); if(c){ c.classList.toggle("removed", HIDDEN.has(sl)); c.classList.toggle("notfav", favOnly && !isFav(sl)); } });
     ZONES.forEach(function(z){
       const zone=document.getElementById("zone-"+z), title=document.getElementById(z);
-      const vis = zone ? zone.querySelectorAll(".chart:not(.removed)").length : 0;
+      const vis = zone ? zone.querySelectorAll(".chart:not(.removed):not(.notfav)").length : 0;
       if(zone) zone.style.display = vis ? "" : "none";
       if(title) title.style.display = vis ? "" : "none";
     });
+    // panneau masqués
     const hid=Array.from(HIDDEN).map(function(sl){ return bySlug[sl]; }).filter(Boolean)
       .sort(function(a,b){ return _norm(a.title).localeCompare(_norm(b.title)); });
     masqCount.textContent = hid.length;
@@ -2162,21 +2324,66 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     masqList.innerHTML = hid.map(function(s){
       return `<div class="masq-item"><span>${s.title}</span><button type="button" class="restore" data-slug="${slug(s.title)}">↩ réafficher</button></div>`;
     }).join("");
-    [].slice.call(masqList.querySelectorAll(".restore")).forEach(function(btn){
-      btn.addEventListener("click",function(){ HIDDEN.delete(btn.dataset.slug); save(); applyHidden(); });
-    });
+    // panneau setlist (ordre d'ajout)
+    const favSongs=FAV.map(function(sl){ return bySlug[sl]; }).filter(Boolean);
+    favCount.textContent = favSongs.length;
+    setlist.hidden = favSongs.length===0;
+    if(favSongs.length===0 && favOnly){ favOnly=false; setLS("songbook-favonly",false); }
+    favOnlyBox.checked = favOnly;
+    favList.innerHTML = favSongs.map(function(s){
+      return `<div class="fav-item"><a href="#${slug(s.title)}">${s.title}</a><button type="button" class="fav-rm" data-slug="${slug(s.title)}">retirer</button></div>`;
+    }).join("");
     filterIndex();
   }
 
-  [].slice.call(document.querySelectorAll(".chart .hide-btn")).forEach(function(btn){
-    btn.addEventListener("click",function(e){ e.preventDefault(); HIDDEN.add(btn.dataset.slug); save(); applyHidden(); });
+  function setStar(sl){
+    const btn=document.querySelector('.fav-btn[data-slug="'+sl+'"]');
+    if(btn){ const on=isFav(sl); btn.textContent=on?"★":"☆"; btn.setAttribute("aria-pressed", on?"true":"false"); btn.title=on?"Retirer de ma setlist":"Ajouter à ma setlist"; }
+  }
+  function toggleFav(sl){
+    const i=FAV.indexOf(sl);
+    if(i>-1) FAV.splice(i,1); else FAV.push(sl);
+    saveFav(); setStar(sl); applyView();
+  }
+
+  function applyTP(sl){
+    const off=TP[sl]||0, card=document.getElementById(sl);
+    if(!card) return;
+    card.querySelectorAll(".bar[data-bars]").forEach(function(bar){ bar.innerHTML=barInner(bar.getAttribute("data-bars"), off); });
+    card.querySelectorAll(".diag[data-ch]").forEach(function(d){ d.innerHTML=diagInner(d.getAttribute("data-ch"), off); });
+    const val=card.querySelector(".tp-val"); if(val) val.textContent=(off>0?"+":"")+off;
+    const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent = off>0 ? "≡ capo "+off+" avec les formes d'origine" : "";
+    const reset=card.querySelector(".tp-reset"); if(reset) reset.hidden = off===0;
+    const bo=card.querySelector(".bass-orig"); if(bo) bo.hidden = off===0;
+  }
+  function setTP(sl, off){
+    off=Math.max(-6, Math.min(6, off));
+    if(off===0) delete TP[sl]; else TP[sl]=off;
+    saveTP(); applyTP(sl);
+  }
+
+  // délégation : tous les boutons des cartes + panneaux
+  document.addEventListener("click", function(e){
+    const t=e.target.closest("button, a"); if(!t) return;
+    if(t.classList.contains("hide-btn")){ e.preventDefault(); HIDDEN.add(t.dataset.slug); saveHidden(); applyView(); return; }
+    if(t.classList.contains("fav-btn")){ e.preventDefault(); toggleFav(t.dataset.slug); return; }
+    if(t.classList.contains("tp-plus")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, (TP[t.closest(".tpose").dataset.slug]||0)+1); return; }
+    if(t.classList.contains("tp-minus")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, (TP[t.closest(".tpose").dataset.slug]||0)-1); return; }
+    if(t.classList.contains("tp-reset")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, 0); return; }
+    if(t.classList.contains("restore")){ HIDDEN.delete(t.dataset.slug); saveHidden(); applyView(); return; }
+    if(t.classList.contains("fav-rm")){ toggleFav(t.dataset.slug); return; }
+    if(t.id==="masq-all"){ HIDDEN.clear(); saveHidden(); applyView(); return; }
+    if(t.matches("#song-index a")){ details.open=false; search.value=""; filterIndex(); return; }
+    if(t.classList.contains("fav-item") || (t.closest && t.closest(".fav-item") && t.tagName==="A")){ details.open=false; return; }
   });
   search.addEventListener("input",function(){ if(search.value.trim() && !details.open) details.open=true; filterIndex(); });
   search.addEventListener("focus",function(){ if(!details.open) details.open=true; });
-  links.forEach(function(a){ a.addEventListener("click",function(){ details.open=false; search.value=""; filterIndex(); }); });
-  document.getElementById("masq-all").addEventListener("click",function(){ HIDDEN.clear(); save(); applyHidden(); });
+  favOnlyBox.addEventListener("change",function(){ favOnly=favOnlyBox.checked; setLS("songbook-favonly",favOnly); applyView(); });
 
-  applyHidden();
+  // état initial : étoiles, transpositions mémorisées
+  FAV.forEach(setStar);
+  Object.keys(TP).forEach(function(sl){ if(TP[sl]) applyTP(sl); });
+  applyView();
 })();
 
 /* ============ Manche : penta mineure de La, position 1 ============ */
