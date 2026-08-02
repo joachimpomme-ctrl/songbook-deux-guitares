@@ -585,7 +585,8 @@ const CHORDS = {
   "G6":      ["3","2","0","0","0","0"],
   "C6":      ["x","3","2","2","1","0"],
   "A6":      ["x","0","2","2","2","2"],
-  "Em6":     ["0","2","2","0","2","0"]
+  "Em6":     ["0","2","2","0","2","0"],
+  "Gm6":     ["3","x","2","3","3","x"]
 };
 
 /* ============ Morceaux ============ */
@@ -626,7 +627,7 @@ const SONGS = [
     zone:"jazz", title:"Minor Swing", key:"La mineur · swing manouche (Django)",
     systems:[{bars:["Am6","Am6","Dm6","Dm6"]},{bars:["E7","E7","Am6","Am6"]},{bars:["Dm6","Dm6","Am6","Am6"]},{bars:["E7","E7","Am6","E7"]}],
     chords:["Am6","Dm6","E7"],
-    tip:"LE morceau pour deux acoustiques. <b>Arpèges de Am et E7</b> suffisent à sonner manouche. Sur E7, ajoute le Sol♯ (La mineur harmonique). Pompe stricte à 4 temps.",
+    tip:"LE morceau pour deux acoustiques, et le meilleur banc d'essai de la <b>section Manouche</b> (pompe, accords m6, arpèges). <b>Arpèges de Am6 et E7</b> suffisent à sonner manouche. Sur E7, ajoute le Sol♯ (La mineur harmonique). Pompe stricte à 4 temps.",
   },
   {
     zone:"jazz", title:"Autumn Leaves", key:"Mi mineur · swing médium · forme A A B C",
@@ -1174,7 +1175,7 @@ E|--3---5-------------|`,
       {bars:["G7","G7","C7","C7"]}
     ],
     chords:["Gm7","C7","F","F7","B♭","G7"],
-    tip:"Le ii-V qui tourne quatre mesures avant de retomber sur Fa : parfait pour ancrer le réflexe Gm7 → C7 dans les doigts. Après le pont, on rejoue un A. Grand classique manouche aussi.",
+    tip:"Le ii-V qui tourne quatre mesures avant de retomber sur Fa : parfait pour ancrer le réflexe Gm7 → C7 dans les doigts. Après le pont, on rejoue un A. Grand classique manouche : joue le Fa en <b>Fa6</b> et applique la pompe (section Manouche).",
     note:"Version jam.",
   },
   {
@@ -1233,13 +1234,13 @@ E|--3---5-------------|`,
   {
     zone:"jazz", title:"Dark Eyes (Les Yeux Noirs)", key:"Ré mineur · swing manouche (traditionnel)",
     systems:[
-      {bars:["A7","A7","Dm","Dm"]},
-      {bars:["A7","A7","Dm","Dm"]},
-      {bars:["Gm","Gm","Dm","Dm"]},
-      {bars:["A7","A7","Dm","Dm"]}
+      {bars:["A7","A7","Dm6","Dm6"]},
+      {bars:["A7","A7","Dm6","Dm6"]},
+      {bars:["Gm6","Gm6","Dm6","Dm6"]},
+      {bars:["A7","A7","Dm6","Dm6"]}
     ],
-    chords:["A7","Dm","Gm"],
-    tip:"Le deuxième morceau manouche à deux guitares après Minor Swing, et le plus spectaculaire pour ce qu'il demande. Penta mineure de Ré, plus le <b>Do♯ sur les A7</b> (ré mineur harmonique). Accélère à chaque reprise, c'est la tradition.",
+    chords:["A7","Dm6","Gm6"],
+    tip:"Le deuxième morceau manouche à deux guitares après Minor Swing. Les mineurs se jouent en <b>m6</b> (Dm6, Gm6), comme le veut le style — voir la section Manouche. Penta mineure de Ré + le <b>Do♯ sur les A7</b> (ré mineur harmonique). Accélère à chaque reprise, c'est la tradition.",
     note:"Version jam d'un traditionnel : les variantes sont nombreuses.",
   },
   {
@@ -1778,7 +1779,7 @@ E|--3---5-------------|`,
       {bars:["Am7","Cm","G","Am7 · D7"]}
     ],
     chords:["E♭7","D7","G","Am7","Cm"],
-    tip:"Le troisième manouche du carnet, le plus doux. Tout est dans la <b>descente chromatique E♭7 → D7 → G</b>, puis le <b>Cm</b> (le mineur emprunté) qui voile le ciel avant le retour. Gamme de Sol majeur + arpèges des dominantes, legato, vibrato.",
+    tip:"Le troisième manouche du carnet, le plus doux. Tout est dans la <b>descente chromatique E♭7 → D7 → G</b>, puis le <b>Cm</b> (le mineur emprunté) qui voile le ciel avant le retour. Gamme de Sol majeur + arpèges des dominantes, legato, vibrato ; pompe douce (section Manouche).",
     note:"Grille simplifiée d'un thème aux nombreuses variantes — Django lui-même en changeait.",
   },
   {
@@ -2190,7 +2191,8 @@ const GROOVE_BY_TITLE = {
   "Papa's Got a Brand New Bag":{m:"4/4", n:4, acc:[2,4], lbl:"Funk : coups secs et étouffés sur le contretemps, backbeat 2 et 4. « On the one ! »"},
   "Mas Que Nada":{m:"4/4", n:4, acc:[1,3], lbl:"Samba : basse au pouce sur 1 et 3, accords syncopés au-dessus."},
   "Sweet Georgia Brown":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."},
-  "Dinah":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : quatre temps égaux et secs, 2 et 4 qui claquent. Tempo de métronome."}
+  "Dinah":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : quatre temps égaux et secs, 2 et 4 qui claquent. Tempo de métronome."},
+  "Honeysuckle Rose":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."}
 };
 function grooveHTML(s){
   const g = GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone];
