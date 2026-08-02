@@ -586,7 +586,12 @@ const CHORDS = {
   "C6":      ["x","3","2","2","1","0"],
   "A6":      ["x","0","2","2","2","2"],
   "Em6":     ["0","2","2","0","2","0"],
-  "Gm6":     ["3","x","2","3","3","x"]
+  "Gm6":     ["3","x","2","3","3","x"],
+  "F6":      ["x","x","3","2","3","1"],
+  "B♭6":     ["x","1","3","3","3","3"],
+  "E♭6":     ["x","x","1","3","1","3"],
+  "Cm6":     ["x","3","1","2","1","x"],
+  "Fm6":     ["1","x","0","1","1","x"]
 };
 
 /* ============ Morceaux ============ */
@@ -717,14 +722,14 @@ E|------3---1---0-|`,
   {
     zone:"jazz", title:"All of Me", key:"Do · swing médium · 32 mesures",
     systems:[
-      {bars:["C","C","E7","E7"]},{bars:["A7","A7","Dm","Dm"]},
+      {bars:["C6","C6","E7","E7"]},{bars:["A7","A7","Dm","Dm"]},
       {bars:["E7","E7","Am","Am"]},{bars:["D7","D7","Dm7","G7"]},
-      {bars:["C","C","E7","E7"]},{bars:["A7","A7","Dm","Dm"]},
-      {bars:["F","Fm","C","A7"]},{bars:["Dm7","G7","C","C · G7"]}
+      {bars:["C6","C6","E7","E7"]},{bars:["A7","A7","Dm","Dm"]},
+      {bars:["F6","Fm6","C6","A7"]},{bars:["Dm7","G7","C6","C6 · G7"]}
     ],
-    chords:["C","E7","A7","Dm","D7","Dm7","G7","F","Fm","Am"],
-    tip:"Le standard qui se chante tout seul. Gamme de Do majeur comme base ; sur chaque accord 7 (E7, A7, D7), joue sa tierce majeure : c'est elle qui raconte l'histoire. Le passage <b>F → Fm</b> est le frisson du morceau.",
-    note:"Version jam courante.",
+    chords:["C6","E7","A7","Dm","D7","Dm7","G7","F6","Fm6","Am"],
+    tip:"Le standard qui se chante tout seul, ici en voicings manouche (les majeurs en 6). Gamme de Do majeur comme base ; sur chaque accord 7 (E7, A7, D7), joue sa tierce majeure. Le passage <b>Fa6 → Fa m6</b> est le frisson du morceau.",
+    note:"Version jam courante. En jazz straight, les majeurs se jouent maj7.",
   },
   {
     zone:"jazz", title:"Fly Me to the Moon", key:"La m / Do · swing · boucle 16 mesures",
@@ -744,9 +749,9 @@ E|------3---1---0-|`,
   },
   {
     zone:"jazz", title:"Cycle de dominantes", key:"Fa · swing rapide (inspiré de Sweet Georgia Brown)",
-    systems:[{bars:["D7","D7","G7","G7"]},{bars:["C7","C7","F","F"]}],
-    chords:["D7","G7","C7","F"],
-    tip:"Chaque accord 7 appelle le suivant en cascade jusqu'à la maison (Fa). Sur chaque dominante : son arpège ou sa penta majeure. Excellent exercice déguisé en morceau.",
+    systems:[{bars:["D7","D7","G7","G7"]},{bars:["C7","C7","F6","F6"]}],
+    chords:["D7","G7","C7","F6"],
+    tip:"Chaque accord 7 appelle le suivant en cascade jusqu'à la maison (Fa6). Sur chaque dominante : son arpège ou sa penta majeure. Excellent exercice déguisé en morceau.",
     note:"Boucle très simplifiée pour improviser.",
   },
   {
@@ -1170,11 +1175,11 @@ E|--3---5-------------|`,
     zone:"jazz", title:"Honeysuckle Rose", key:"Fa · swing médium (Fats Waller) · A A B A",
     systems:[
       {label:"A", note:"jouer 2 fois", bars:["Gm7 · C7","Gm7 · C7","Gm7 · C7","Gm7 · C7"]},
-      {bars:["F","F","F","F"]},
-      {label:"B", bars:["F7","F7","B♭","B♭"]},
+      {bars:["F6","F6","F6","F6"]},
+      {label:"B", bars:["F7","F7","B♭6","B♭6"]},
       {bars:["G7","G7","C7","C7"]}
     ],
-    chords:["Gm7","C7","F","F7","B♭","G7"],
+    chords:["Gm7","C7","F6","F7","B♭6","G7"],
     tip:"Le ii-V qui tourne quatre mesures avant de retomber sur Fa : parfait pour ancrer le réflexe Gm7 → C7 dans les doigts. Après le pont, on rejoue un A. Grand classique manouche : joue le Fa en <b>Fa6</b> et applique la pompe (section Manouche).",
     note:"Version jam.",
   },
@@ -1200,12 +1205,12 @@ E|--3---5-------------|`,
   {
     zone:"jazz", title:"Rhythm changes en Si♭", key:"Si♭ · swing rapide · forme A A B A",
     systems:[
-      {label:"A", note:"jouer 2 fois", bars:["B♭ · Gm7","Cm7 · F7","B♭ · Gm7","Cm7 · F7"]},
-      {bars:["B♭7","E♭","B♭ · G7","Cm7 · F7"]},
+      {label:"A", note:"jouer 2 fois", bars:["B♭6 · Gm7","Cm7 · F7","B♭6 · Gm7","Cm7 · F7"]},
+      {bars:["B♭7","E♭6","B♭6 · G7","Cm7 · F7"]},
       {label:"B", note:"le pont, 8 mesures", bars:["D7","D7","G7","G7"]},
       {bars:["C7","C7","F7","F7"]}
     ],
-    chords:["B♭","Gm7","Cm7","F7","B♭7","E♭","G7","D7","C7"],
+    chords:["B♭6","Gm7","Cm7","F7","B♭7","E♭6","G7","D7","C7"],
     tip:"La deuxième forme du jazz après le blues : des centaines de thèmes tournent dessus. Sur les A, gamme de Si♭ majeur, vise les tierces. <b>Le pont est un pur cycle de dominantes</b> (Ré → Sol → Do → Fa), deux mesures chacun : le terrain d'entraînement idéal.",
     note:"Version simplifiée d'une forme qui compte mille variantes. Enchaînement : A, A, B, A.",
   },
@@ -1775,10 +1780,10 @@ E|--3---5-------------|`,
   {
     zone:"jazz", title:"Nuages", key:"Sol · manouche lent (Django Reinhardt)",
     systems:[
-      {note:"le thème, 8 mesures (simplifié)", bars:["E♭7","D7","G","G"]},
-      {bars:["Am7","Cm","G","Am7 · D7"]}
+      {note:"le thème, 8 mesures (simplifié)", bars:["E♭7","D7","G6","G6"]},
+      {bars:["Am7","Cm6","G6","Am7 · D7"]}
     ],
-    chords:["E♭7","D7","G","Am7","Cm"],
+    chords:["E♭7","D7","G6","Am7","Cm6"],
     tip:"Le troisième manouche du carnet, le plus doux. Tout est dans la <b>descente chromatique E♭7 → D7 → G</b>, puis le <b>Cm</b> (le mineur emprunté) qui voile le ciel avant le retour. Gamme de Sol majeur + arpèges des dominantes, legato, vibrato ; pompe douce (section Manouche).",
     note:"Grille simplifiée d'un thème aux nombreuses variantes — Django lui-même en changeait.",
   },
@@ -2047,19 +2052,19 @@ E|-------------------|`,
       {label:"A", note:"chaque dominante tenue 4 mesures", bars:["D7","D7","D7","D7"]},
       {bars:["G7","G7","G7","G7"]},
       {bars:["C7","C7","C7","C7"]},
-      {bars:["F","F","F","D7"]}
+      {bars:["F6","F6","F6","D7"]}
     ],
-    chords:["D7","G7","C7","F"],
+    chords:["D7","G7","C7","F6"],
     tip:"Le cheval de bataille des jams manouche : un pur <b>cycle de dominantes</b>, chaque accord 7 appelant le suivant d'une quinte (Ré → Sol → Do → Fa). Sur chacun, son arpège 7 ou sa penta majeure, et <b>approche la tierce par le demi-ton en dessous</b>. Voir la carte Cycle de dominantes pour la version condensée.",
     note:"Section A (16 mesures) ; le pont enchaîne les mêmes dominantes plus vite.",
   },
   {
     zone:"jazz", title:"Dinah", key:"Fa · swing manouche (Harry Akst)",
     systems:[
-      {label:"A", bars:["F","A7","D7","G7"]},
-      {bars:["C7","A7","D7 · G7","C7 · F"]}
+      {label:"A", bars:["F6","A7","D7","G7"]},
+      {bars:["C7","A7","D7 · G7","C7 · F6"]}
     ],
-    chords:["F","A7","D7","G7","C7"],
+    chords:["F6","A7","D7","G7","C7"],
     tip:"Un standard adoré des manouches : la section A descend en <b>cascade de dominantes</b> (Fa, puis La7 → Ré7 → Sol7 → Do7 qui rentre à la maison). Vise les tierces et approche-les chromatiquement. Excellent pour ancrer le réflexe du cycle.",
     note:"Section A ; le pont module vers le IV (Si♭).",
   },
