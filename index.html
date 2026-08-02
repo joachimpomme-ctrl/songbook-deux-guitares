@@ -329,6 +329,7 @@
   <a href="#pop">Pop</a>
   <a href="#gammes">Gammes</a>
   <a href="#voicings">Voicings</a>
+  <a href="#manouche">Manouche</a>
   <a href="#basses">Basses</a>
   <a href="#impro">Impro &amp; pompe</a>
 </nav>
@@ -411,6 +412,43 @@
 
   <div class="section-title" id="voicings">Voicings : sortir des positions</div>
   <div id="zone-voicings"></div>
+
+  <div class="section-title" id="manouche">Manouche : jouer comme au Hot Club</div>
+
+  <div class="impro">
+    <h3>Deux guitares, une pompe</h3>
+    <p>Le jazz manouche est né pour le duo (et plus) : pendant qu'une guitare improvise, l'autre <b>pompe</b> — cette rythmique sèche et régulière qui est le moteur du style. À deux, tournez les rôles à chaque grille. Les morceaux du carnet pour s'y mettre : <b>Minor Swing</b>, <b>Dark Eyes</b>, <b>Nuages</b>, <b>Honeysuckle Rose</b>, <b>Rhythm changes</b>, <b>Sweet Georgia Brown</b>, <b>Dinah</b>, et <b>Je veux</b> côté chanson.</p>
+  </div>
+
+  <div class="impro">
+    <h3>La pompe : le moteur</h3>
+    <ul>
+      <li><b>Quatre coups vers le bas par mesure</b>, tous au médiator, poignet souple. Aucun aller-retour : c'est la régularité qui groove.</li>
+      <li><b>1 et 3 = « la »</b> (l'accord sonne une fraction de seconde puis la main gauche relâche et étouffe). <b>2 et 4 = « pompe »</b> : coup sec, un peu plus fort, cordes déjà étouffées — c'est le backbeat, la caisse claire du groupe.</li>
+      <li><b>Trois notes suffisent.</b> Pas besoin de l'accord complet : fondamentale + tierce + sixte (ou septième). Le reste est de la percussion.</li>
+      <li><b>Tempo de métronome.</b> La pompe est l'horloge : elle ne ralentit ni n'accélère jamais, même quand le soliste s'emballe.</li>
+      <li>Sur les ballades (<b>Nuages</b>) : pompe plus douce, ou basse-accord au pouce, pour laisser respirer.</li>
+    </ul>
+  </div>
+
+  <div class="impro">
+    <h3>Les accords manouche</h3>
+    <p>Le son Django, ce sont les accords <b>6</b> et <b>m6</b> (au lieu des maj7 / m7 du jazz américain), les <b>9</b> sur les dominantes, et les <b>diminués</b> de passage. Toutes ces formes sont <b>déplaçables</b>.</p>
+    <div id="manouche-chords"></div>
+    <p class="legend">Le diminué (°7) se répète à l'identique tous les 3 cases — un seul doigté pour quatre accords.</p>
+  </div>
+
+  <div class="impro">
+    <h3>Improviser : viser, pas balayer</h3>
+    <ul>
+      <li><b>Joue les arpèges, pas les gammes.</b> Sur chaque accord, ses notes (l'arpège) : c'est 80 % du son manouche. Vise la <b>tierce</b> sur le premier temps. Les formes m6, 7 et maj7 sont dans la carte <i>Arpèges : le GPS des grilles</i> (section Gammes) — remplace juste le m7 par le <b>m6</b> sur le mineur.</li>
+      <li><b>L'approche chromatique.</b> Arrive sur une note-cible (souvent la tierce ou la fondamentale) par le <b>demi-ton en dessous</b>. Une seule note d'approche, et tout sonne « jazz ».</li>
+      <li><b>Le diminué de passage.</b> Entre deux accords distants d'un ton (ex. Do → Ré m), glisse un <b>diminué</b> sur la case intermédiaire : la couleur manouche instantanée.</li>
+      <li><b>Le mineur harmonique sur la dominante.</b> Sur le E7 en La mineur, joue le <b>Sol♯</b> et résous sur le La : la couleur de Minor Swing, Dark Eyes, Nature Boy. Même réflexe : Do♯ sur les A7 en Ré mineur.</li>
+      <li><b>Coups de médiator.</b> Aux tempos rapides, privilégie les <b>coups vers le bas</b> (« rest strokes » : le médiator se pose sur la corde d'à côté) — c'est ce qui donne l'attaque et la vélocité manouche.</li>
+      <li><b>Le trémolo et les octaves</b> (à la Django) pour chanter une phrase lente : répète vite la même note, ou double la mélodie à l'octave.</li>
+    </ul>
+  </div>
 
   <div class="section-title" id="basses">Basses : tenir le grave</div>
   <div class="impro">
@@ -543,7 +581,11 @@ const CHORDS = {
   "G♭maj7":  ["x","x","4","6","6","6"],
   "F#m7":    ["2","4","2","2","2","2"],
   "E♭":      ["x","6","8","8","8","6"],
-  "D6add9":  ["2","0","0","2","0","0"]
+  "D6add9":  ["2","0","0","2","0","0"],
+  "G6":      ["3","2","0","0","0","0"],
+  "C6":      ["x","3","2","2","1","0"],
+  "A6":      ["x","0","2","2","2","2"],
+  "Em6":     ["0","2","2","0","2","0"]
 };
 
 /* ============ Morceaux ============ */
@@ -1999,6 +2041,28 @@ E|-------------------|`,
     tip:"L'acte de naissance du funk : un <b>12 mesures en Mi</b>, mais joué sec, étouffé, tout sur le contretemps. Penta de Mi mixte ; le secret n'est pas dans les notes mais dans le silence entre elles. « On the one ! »",
   },
   {
+    zone:"jazz", title:"Sweet Georgia Brown", key:"Fa · swing manouche · le cycle de dominantes",
+    systems:[
+      {label:"A", note:"chaque dominante tenue 4 mesures", bars:["D7","D7","D7","D7"]},
+      {bars:["G7","G7","G7","G7"]},
+      {bars:["C7","C7","C7","C7"]},
+      {bars:["F","F","F","D7"]}
+    ],
+    chords:["D7","G7","C7","F"],
+    tip:"Le cheval de bataille des jams manouche : un pur <b>cycle de dominantes</b>, chaque accord 7 appelant le suivant d'une quinte (Ré → Sol → Do → Fa). Sur chacun, son arpège 7 ou sa penta majeure, et <b>approche la tierce par le demi-ton en dessous</b>. Voir la carte Cycle de dominantes pour la version condensée.",
+    note:"Section A (16 mesures) ; le pont enchaîne les mêmes dominantes plus vite.",
+  },
+  {
+    zone:"jazz", title:"Dinah", key:"Fa · swing manouche (Harry Akst)",
+    systems:[
+      {label:"A", bars:["F","A7","D7","G7"]},
+      {bars:["C7","A7","D7 · G7","C7 · F"]}
+    ],
+    chords:["F","A7","D7","G7","C7"],
+    tip:"Un standard adoré des manouches : la section A descend en <b>cascade de dominantes</b> (Fa, puis La7 → Ré7 → Sol7 → Do7 qui rentre à la maison). Vise les tierces et approche-les chromatiquement. Excellent pour ancrer le réflexe du cycle.",
+    note:"Section A ; le pont module vers le IV (Si♭).",
+  },
+  {
     zone:"jazz", title:"Mas Que Nada", key:"La mineur · samba (Jorge Ben)",
     systems:[
       {note:"« ô ariá raiô »", bars:["Am7","D9","Am7","D9"]},
@@ -2124,7 +2188,9 @@ const GROOVE_BY_TITLE = {
   "Superstition":{m:"4/4", n:4, acc:[2,4], lbl:"Funk : croches serrées et syncopées, main droite continue, backbeat claqué."},
   "Chameleon":{m:"4/4", n:4, acc:[2,4], lbl:"Funk : groove en croches, basse en avant, 2 et 4 marqués."},
   "Papa's Got a Brand New Bag":{m:"4/4", n:4, acc:[2,4], lbl:"Funk : coups secs et étouffés sur le contretemps, backbeat 2 et 4. « On the one ! »"},
-  "Mas Que Nada":{m:"4/4", n:4, acc:[1,3], lbl:"Samba : basse au pouce sur 1 et 3, accords syncopés au-dessus."}
+  "Mas Que Nada":{m:"4/4", n:4, acc:[1,3], lbl:"Samba : basse au pouce sur 1 et 3, accords syncopés au-dessus."},
+  "Sweet Georgia Brown":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."},
+  "Dinah":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : quatre temps égaux et secs, 2 et 4 qui claquent. Tempo de métronome."}
 };
 function grooveHTML(s){
   const g = GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone];
@@ -2617,6 +2683,19 @@ document.getElementById("zone-voicings").innerHTML = VOICINGS.map(v=>
   `<div class="impro"><h3>${v.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${v.use}</p><div class="diagrams">${
     v.chips.map(c=>`<div class="diag"><div class="nm">${c.n}</div>${chordSVG(c.f)}</div>`).join("")
   }</div><p>${v.desc}</p></div>`
+).join("");
+
+/* ============ Accords manouche ============ */
+const MANOUCHE_VOICINGS=[
+  {grp:"Les « 6 » (majeur) — à la place du maj7", chords:["G6","C6","A6"]},
+  {grp:"Les « m6 » — le son mineur de Django, à la place du m7", chords:["Am6","Dm6","Em6"]},
+  {grp:"Les « 9 » — la dominante manouche", chords:["C9","D9","E9"]},
+  {grp:"Le diminué — un doigté, glissable tous les 3 cases", chords:["B°7"]}
+];
+document.getElementById("manouche-chords").innerHTML = MANOUCHE_VOICINGS.map(g=>
+  `<p style="color:#9AA7B4;font-size:.82rem;margin:10px 0 2px">${g.grp}</p><div class="diagrams">`+
+  g.chords.map(c=>CHORDS[c]?`<div class="diag"><div class="nm">${c}</div>${chordSVG(CHORDS[c])}</div>`:"").join("")+
+  `</div>`
 ).join("");
 
 /* ============ Basses : patrons transposables ============ */
