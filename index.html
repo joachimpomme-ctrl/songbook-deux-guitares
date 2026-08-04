@@ -159,6 +159,7 @@
     font-size:.7rem;font-weight:800;color:var(--ink);
   }
   .beat.on{background:var(--brass)}
+  .groove .tempo{font-weight:800;font-size:.8rem;color:var(--rust);white-space:nowrap}
   .glbl{flex-basis:100%;font-size:.75rem;color:var(--ink-soft);font-style:italic}
   .tab{
     font-family:ui-monospace,Menlo,Consolas,monospace;
@@ -2199,13 +2200,66 @@ const GROOVE_BY_TITLE = {
   "Dinah":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : quatre temps égaux et secs, 2 et 4 qui claquent. Tempo de métronome."},
   "Honeysuckle Rose":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."}
 };
+
+/* ============ Tempos (à la noire, ≈) ============ */
+/* Repères pop/rock = tempo des versions studio ; jazz/blues/manouche = indicatifs.
+   Métriques composées (6/8, 12/8) : la valeur est le grand temps pointé (♩.). */
+const SONG_BPM = {
+  // Blues
+  "Blues shuffle en Mi":120, "Blues en La":100, "Slow blues en Sol":52, "The Thrill Is Gone":63,
+  "Stormy Monday":66, "Key to the Highway":100, "Blues mineur en La":92, "Blues jazz en Fa":132,
+  "Boucle andalouse":120, "Blues en Do":100, "Boogie sur un accord":120, "Sweet Home Chicago":114,
+  "St. James Infirmary":80, "Folsom Prison Blues":108, "Red House":48, "Hoochie Coochie Man":86,
+  "Everyday I Have the Blues":152, "Statesboro Blues":96, "Nobody Knows You When You're Down and Out":76,
+  "San Francisco Bay Blues":140, "Blues mineur jazz en Do":160, "Boom Boom":118, "Crossroads":128,
+  "Parisienne Walkways":66,
+  // Jazz
+  "Minor Swing":180, "Autumn Leaves":132, "Summertime":72, "Blue Bossa":140, "Black Orpheus":130,
+  "Cantaloupe Island":98, "So What":138, "All of Me":140, "Fly Me to the Moon":120,
+  "Oye Como Va (groove)":116, "Cycle de dominantes":180, "Take the A Train":160, "Satin Doll":112,
+  "Sunny":108, "Watermelon Man":120, "Song for My Father":128, "The Girl from Ipanema":130,
+  "Isn't She Lovely":118, "L'anatole en Do":140, "C Jam Blues":140, "All Blues":84, "Caravan":160,
+  "Honeysuckle Rose":140, "Lady Bird":160, "Nature Boy":80, "Rhythm changes en Si♭":200,
+  "My Favorite Things (vamp)":170, "Misty":60, "Dark Eyes (Les Yeux Noirs)":180, "Georgia on My Mind":68,
+  "Softly, As in a Morning Sunrise":160, "Beautiful Love":140, "St. Thomas":160, "Mack the Knife":132,
+  "Bésame Mucho":100, "Nuages":90, "Moondance":122, "Fever":122, "Bye Bye Blackbird":140,
+  "Chameleon":108, "Sweet Georgia Brown":180, "Dinah":180, "Mas Que Nada":128,
+  // Rock
+  "Sympathy for the Devil":116, "Angie":70, "Hey Joe":82, "All Along the Watchtower":116,
+  "Knockin' on Heaven's Door":72, "Sweet Home Alabama":98, "Wish You Were Here":63,
+  "While My Guitar Gently Weeps":115, "Cocaine":106, "Ain't No Sunshine":78, "Stand By Me":118,
+  "Hotel California":75, "Rock'n'roll 12 mesures":160, "La Bamba / Twist and Shout":150,
+  "Bad Moon Rising":96, "House of the Rising Sun":76, "Let It Be":72, "Wonderful Tonight":96,
+  "Creep":92, "Zombie":84, "Wicked Game":112, "Stir It Up":66, "Feelin' Alright":100,
+  "No Woman No Cry":78, "Dead Flowers":128, "Proud Mary":120, "Scarborough Fair":100,
+  "A Horse With No Name":122, "Heart of Gold":90, "Brown Eyed Girl":149, "Wild Horses":72,
+  "Have You Ever Seen the Rain":116, "Losing My Religion":124, "Sultans of Swing":148,
+  "Seven Nation Army":124, "Tennessee Whiskey":48, "Simple Man":68, "Wild World":84,
+  "Redemption Song":76, "Should I Stay or Should I Go":114, "My Girl":104,
+  "(Sittin' On) The Dock of the Bay":104, "I Heard It Through the Grapevine":116, "Superstition":100,
+  "Papa's Got a Brand New Bag":132,
+  // Pop
+  "La boucle des mille chansons (I-V-vi-IV)":120, "I Will Survive":117, "Hallelujah":56,
+  "Every Breath You Take":117, "Perfect":63, "Riptide":102, "Someone Like You":67, "Let Her Go":75,
+  "With or Without You":110, "Wonderwall":87, "Don't Look Back in Anger":82, "Fast Car":104,
+  "Ho Hey":80, "The Scientist":73, "Mistral gagnant":76, "Dernière danse":120, "Les Champs-Élysées":118,
+  "Aline":120, "Toi + Moi":96, "Je veux":120, "La vie en rose":100, "Emmenez-moi":160, "Santiano":120,
+  "Il est où le bonheur":118, "Sweet Caroline":127, "Country Roads":82, "Hey Jude":74, "Imagine":76,
+  "Yesterday":96, "Killing Me Softly":82, "Lean on Me":76, "What's Up":132, "Take On Me":84,
+  "What a Wonderful World":56, "Quelqu'un m'a dit":120, "Les Lacs du Connemara":128,
+  "Manhattan-Kaboul":110, "On écrit sur les murs":120, "Une belle histoire":132, "Salut les amoureux":120,
+  "Belle":72, "Osez Joséphine":116, "Comme toi":92, "Le Métèque":130
+};
 function grooveHTML(s){
   const g = GROOVE_BY_TITLE[s.title] || GROOVE_DEFAULTS[s.zone];
   let cells = "";
   for(let i=1;i<=g.n;i++){
     cells += `<div class="beat${g.acc.includes(i)?" on":""}">${i}</div>`;
   }
-  return `<div class="groove"><a class="meter" href="#solfege">${g.m}</a><div class="beats">${cells}</div><span class="glbl">${g.lbl}</span></div>`;
+  const bpm = SONG_BPM[s.title];
+  const dotted = (g.m==="6/8"||g.m==="12/8");
+  const tempoHTML = bpm ? `<span class="tempo">${dotted?"♩.":"♩"} ≈ ${bpm}</span>` : "";
+  return `<div class="groove"><a class="meter" href="#solfege">${g.m}</a>${tempoHTML}<div class="beats">${cells}</div><span class="glbl">${g.lbl}</span></div>`;
 }
 
 /* ============ Générateur de lignes de basse ============ */
