@@ -2555,6 +2555,10 @@ function autoBass(s){
    On en tire une ou deux gammes déplaçables, dessinées à la bonne position. */
 const _NOTEPC={"do":0,"ré":2,"re":2,"mi":4,"fa":5,"sol":7,"la":9,"si":11};
 const _FRPC=["Do","Do♯","Ré","Mi♭","Mi","Fa","Fa♯","Sol","La♭","La","Si♭","Si"];
+// Rock sélectif : morceaux à vrais mouvements d'accords où viser les arpèges paie.
+const ROCK_ARP={"Hotel California":1,"Sultans of Swing":1,"Wicked Game":1,
+  "While My Guitar Gently Weeps":1,"Hey Joe":1,"Wish You Were Here":1,"Angie":1,
+  "House of the Rising Sun":1,"Wild Horses":1,"All Along the Watchtower":1};
 function parseKey(keyStr){
   if(!keyStr) return {rootPc:null, mode:"major"};
   const low = keyStr.split("·")[0].toLowerCase();
@@ -2713,6 +2717,24 @@ function soloDiagramsHTML(s, off){
         return `<div class="diag solo-sc"><div class="nm">${c.label} · arpège</div>${fretSVG(c.arp.start,c.arp.frets,c.arp.dots)}</div>`+
                `<div class="diag solo-sc"><div class="nm">${c.scaleLabel}</div>${fretSVG(c.scale.start,c.scale.frets,c.scale.dots)}</div>`;
       }).join("");
+    }
+  } else if(s.zone==="rock" && ROCK_ARP[s.title]){
+    const seen={};
+    const arps=(s.chords||[]).map(function(ch){
+      const info=classifyChord(ch); if(!info) return "";
+      const root=((info.rootPc+(off||0))%12+12)%12;
+      const disp=tpChord(ch, off);
+      if(seen[disp]) return ""; seen[disp]=1;
+      const isMin=info.third===3;
+      const body=ch.split("/")[0].replace(/^[A-G][#♭b]?/,"");
+      const rich=/6|7|9|11|13/.test(body);                     // 7e/6te/9e réelle : garder l'arpège complet
+      const rel=rich ? info.arp : (isMin?[0,3,7]:[0,4,7]);      // sinon triade
+      const guide=[(root+(isMin?3:4))%12];                      // tierce en rouge (majeur/mineur)
+      const start=_soloStart(root), frets=5;
+      return `<div class="diag solo-sc"><div class="nm">${disp} · arpège</div>${fretSVG(start,frets,scaleDots(root, rel.map(function(x){return (root+x)%12;}), guide, start, frets))}</div>`;
+    }).filter(Boolean).join("");
+    if(arps){
+      html += `<div class="solo-jazz-h">Par accord — l'arpège à viser sous ta ligne de solo (fondamentale dorée, tierce en rouge). La penta ci-dessus passe sur tout ; les arpèges font chanter la mélodie sur les changements.</div>`+arps;
     }
   }
   return html;
