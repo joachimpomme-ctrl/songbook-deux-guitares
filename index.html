@@ -2641,7 +2641,27 @@ function classifyChord(tok){
   else if(/7|9|11|13/.test(b)) k="dom7";
   else k="maj";
   const q=_Q[k];
-  return {rootPc:pc, arp:q.arp, scale:q.scale, scaleName:q.name, third:q.third, seventh:q.seventh};
+  return {rootPc:pc, k:k, arp:q.arp, scale:q.scale, scaleName:q.name, third:q.third, seventh:q.seventh};
+}
+/* Dominants qui résolvent sur un mineur une quinte plus bas (V→i mineur) → gamme altérée. */
+function _progSeq(s){
+  const seq=[];
+  (s.systems||[]).forEach(function(sys){
+    (sys.bars||[]).forEach(function(bar){
+      bar.split("·").forEach(function(t){ t=t.trim(); if(t) seq.push(t); });
+    });
+  });
+  return seq;
+}
+function alteredDomRoots(s){
+  const seq=_progSeq(s), set={};
+  if(seq.length<2) return set;
+  for(let i=0;i<seq.length;i++){
+    const a=classifyChord(seq[i]); if(!a||a.k!=="dom7") continue;
+    const nb=classifyChord(seq[(i+1)%seq.length]); if(!nb) continue;
+    if((nb.k==="m7"||nb.k==="m6"||nb.k==="mMaj7") && ((a.rootPc+5)%12)===nb.rootPc) set[a.rootPc]=1;
+  }
+  return set;
 }
 function _frRoot(disp){
   const m=(disp||"").match(/^([A-G])([#♭b]?)/); if(!m) return "";
@@ -2650,18 +2670,20 @@ function _frRoot(disp){
   return map[m[1]]+acc;
 }
 function chordScales(s, off){
-  const seen={}, out=[];
+  const seen={}, out=[], altSet=alteredDomRoots(s);
   (s.chords||[]).forEach(function(ch){
     const info=classifyChord(ch); if(!info) return;
+    let arp=info.arp, scale=info.scale, scaleName=info.scaleName, third=info.third, seventh=info.seventh;
+    if(info.k==="dom7" && altSet[info.rootPc]){ const q=_Q.alt; arp=q.arp; scale=q.scale; scaleName=q.name; third=q.third; seventh=q.seventh; }
     const root=((info.rootPc+(off||0))%12+12)%12;
-    const guide=[(root+info.third)%12, (root+info.seventh)%12];
-    const arpPcs=info.arp.map(function(x){ return (root+x)%12; });
-    const scPcs=info.scale.map(function(x){ return (root+x)%12; });
+    const guide=[(root+third)%12, (root+seventh)%12];
+    const arpPcs=arp.map(function(x){ return (root+x)%12; });
+    const scPcs=scale.map(function(x){ return (root+x)%12; });
     const start=_soloStart(root), frets=5;
     const disp=tpChord(ch, off);
-    const kkey=disp+"|"+info.scaleName; if(seen[kkey]) return; seen[kkey]=1;   // pas de doublon
+    const kkey=disp+"|"+scaleName; if(seen[kkey]) return; seen[kkey]=1;   // pas de doublon
     out.push({
-      label:disp, scaleLabel:_frRoot(disp)+" "+info.scaleName,
+      label:disp, scaleLabel:_frRoot(disp)+" "+scaleName,
       arp:{start:start, frets:frets, dots:scaleDots(root, arpPcs, guide, start, frets)},
       scale:{start:start, frets:frets, dots:scaleDots(root, scPcs, guide, start, frets)}
     });
