@@ -411,6 +411,13 @@
   /* ---- riff signature (replié par défaut) ---- */
   .riff-d .riff-orig[hidden]{display:none}
   .riff-d pre.tab{margin-top:8px}
+  /* ---- gammes pour le solo (replié par défaut) ---- */
+  .solo-d>summary{cursor:pointer;font-weight:700;color:var(--rust)}
+  .solo-scales{margin-top:8px;justify-content:flex-start}
+  .solo-sc{text-align:center}
+  .solo-sc .nm{color:var(--brass);font-weight:700;font-size:.82rem;margin-bottom:2px}
+  .solo-sc svg{max-width:100%;height:auto}
+  .solo-lg{margin-top:4px}
   /* ---- impression ---- */
   #printarea{display:none}
   @media print{
@@ -437,6 +444,9 @@
     #printarea .c-sub .tempo{border:1px solid #888;color:#000;background:none}
     #printarea .bar{border:1px solid #888;min-height:34px;font-size:1rem;font-weight:700}
     #printarea .c-tip,#printarea .c-diags{display:none}
+    #printarea .solo-d>*{display:block !important}   /* déplie les gammes dans le PDF */
+    #printarea .solo-d summary{list-style:none;color:#000;margin-bottom:4px}
+    #printarea .solo-scales{display:flex;flex-wrap:wrap;gap:12px}
     #printarea .p-head{margin-bottom:14px}
     #printarea .p-head h1{font-family:Georgia,serif;font-style:italic;font-size:1.7rem}
     #printarea .p-head .p-sub{color:#333;font-size:.85rem;margin-top:2px}
@@ -2538,6 +2548,74 @@ function autoBass(s){
   return {tab,note,auto:true};
 }
 
+/* ============ Gammes pour le solo (déduites de la tonalité du morceau) ============ */
+/* La tonalité est le 1er segment du champ key: (ex. "La mineur", "Sol / Ré mixolydien").
+   On en tire une ou deux gammes déplaçables, dessinées à la bonne position. */
+const _NOTEPC={"do":0,"ré":2,"re":2,"mi":4,"fa":5,"sol":7,"la":9,"si":11};
+function parseKey(keyStr){
+  if(!keyStr) return {rootPc:null, mode:"major"};
+  const low = keyStr.split("·")[0].toLowerCase();
+  let mode="major";
+  if(/mixolyd/.test(low)) mode="mixo";
+  else if(/dorien|dorian/.test(low)) mode="dorian";
+  else if(/mineur|\bm\b|\bm\s|m\s*\//.test(low)) mode="minor";
+  const re=/(do|ré|re|mi|fa|sol|la|si)(#|♯|b|♭)?/g;
+  let m, matches=[];
+  while((m=re.exec(low))!==null) matches.push({note:m[1], acc:m[2], idx:m.index});
+  if(!matches.length) return {rootPc:null, mode:mode};
+  let pick=matches[0];
+  const modeIdx=low.search(/mixolyd|dorien|dorian|mineur/);   // note juste avant le mot de mode
+  if(modeIdx>-1){ for(let i=0;i<matches.length;i++){ if(matches[i].idx<modeIdx) pick=matches[i]; } }
+  let pc=_NOTEPC[pick.note]; if(pc===undefined) return {rootPc:null, mode:mode};
+  if(pick.acc==="#"||pick.acc==="♯") pc+=1; else if(pick.acc==="b"||pick.acc==="♭") pc-=1;
+  return {rootPc:((pc%12)+12)%12, mode:mode};
+}
+const _OPENPC=[4,11,7,2,9,4];   // e,B,G,D,A,E (index 0..5, comme fretSVG)
+function _soloStart(rootPc){ let f=((rootPc-4)%12+12)%12; if(f<3) f+=12; return f; }   // position basée sur la tonique sur le Mi grave
+function scaleDots(rootPc, pcs, colorPcs, start, frets){
+  const dots=[];
+  for(let i=0;i<6;i++){
+    for(let x=start;x<start+frets;x++){
+      const pc=((_OPENPC[i]+x)%12+12)%12;
+      if(pcs.indexOf(pc)>-1){
+        const type = pc===rootPc ? "r" : (colorPcs.indexOf(pc)>-1 ? "a" : "");
+        dots.push([i,x,type]);
+      }
+    }
+  }
+  return dots;
+}
+const _SOLO_DEFS={
+  minor:[["Penta mineure + blue note",[0,3,5,6,7,10],[6]], ["Mineur naturel",[0,2,3,5,7,8,10],[8]]],
+  dorian:[["Dorien",[0,2,3,5,7,9,10],[9]], ["Penta mineure",[0,3,5,7,10],[3]]],
+  mixo:[["Mixolydien",[0,2,4,5,7,9,10],[10]], ["Penta majeure",[0,2,4,7,9],[4]]],
+  major:[["Penta majeure",[0,2,4,7,9],[4]], ["Gamme majeure",[0,2,4,5,7,9,11],[4]]]
+};
+function soloScales(s, off){
+  const pk=parseKey(s.key); if(pk.rootPc===null) return [];
+  const root=((pk.rootPc+(off||0))%12+12)%12;
+  const list=_SOLO_DEFS[pk.mode]||_SOLO_DEFS.major;
+  const start=_soloStart(root), frets=5;
+  return list.map(function(d){
+    const pcs=d[1].map(function(x){ return (root+x)%12; });
+    const color=d[2].map(function(x){ return (root+x)%12; });
+    return {label:d[0], start:start, frets:frets, dots:scaleDots(root,pcs,color,start,frets)};
+  });
+}
+function soloDiagramsHTML(s, off){
+  return soloScales(s, off).map(function(sc){
+    return `<div class="diag solo-sc"><div class="nm">${sc.label}</div>${fretSVG(sc.start,sc.frets,sc.dots)}</div>`;
+  }).join("");
+}
+function soloHTML(s, off){
+  const inner=soloDiagramsHTML(s, off);
+  if(!inner) return "";
+  return `<details class="solo-d"><summary>🎚 Gammes pour le solo</summary>`+
+    `<div class="solo-scales diagrams" data-slug="${slug(s.title)}">${inner}</div>`+
+    `<p class="legend solo-lg">doré = tonique · rouge = note caractéristique · noir = notes de la gamme · forme déplaçable le long du manche</p>`+
+    `</details>`;
+}
+
 /* ============ Rendu des cartes ============ */
 /* ---- transposition d'accords ---- */
 const _TPNAMES=["C","C#","D","E♭","E","F","F#","G","A♭","A","B♭","B"];
@@ -2601,6 +2679,7 @@ function songHTML(s){
     ${tpose}
     ${systems}
     <div class="tip">Pour improviser : ${s.tip}</div>
+    ${soloHTML(s,0)}
     ${s.riff?`<details class="riff-d"><summary>🎸 Le riff à connaître</summary><pre class="tab">${s.riff.tab}</pre><div class="footnote riff-orig" hidden>Riff en tonalité d'origine (les accords ci-dessus sont transposés).</div><div class="footnote">${s.riff.note}</div></details>`:""}
     <details><summary>Accords du morceau</summary><div class="diagrams">${diags}</div></details>
     ${bassHTML}
@@ -2834,6 +2913,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       `<span class="fm fm-m">${g.m}</span>${metroBtnHTML(s,"c-tempo")}${capo}</div>`+
       systems+
       `<div class="c-tip">Impro : ${s.tip}</div>`+
+      soloHTML(s, off)+
       `<div class="c-diags diagrams">${diags}</div>`;
   }
   let concertSongs=[], concertIdx=0;
@@ -2942,6 +3022,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(!card) return;
     card.querySelectorAll(".bar[data-bars]").forEach(function(bar){ bar.innerHTML=barInner(bar.getAttribute("data-bars"), off); });
     card.querySelectorAll(".diag[data-ch]").forEach(function(d){ d.innerHTML=diagInner(d.getAttribute("data-ch"), off); });
+    const soloBox=card.querySelector(".solo-scales"); if(soloBox) soloBox.innerHTML=soloDiagramsHTML(bySlug[sl], off);
     const val=card.querySelector(".tp-val"); if(val) val.textContent=(off>0?"+":"")+off;
     const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent = off>0 ? "≡ capo "+off+" avec les formes d'origine" : "";
     const reset=card.querySelector(".tp-reset"); if(reset) reset.hidden = off===0;
