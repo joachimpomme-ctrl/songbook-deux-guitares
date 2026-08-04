@@ -2554,6 +2554,7 @@ function autoBass(s){
 /* La tonalité est le 1er segment du champ key: (ex. "La mineur", "Sol / Ré mixolydien").
    On en tire une ou deux gammes déplaçables, dessinées à la bonne position. */
 const _NOTEPC={"do":0,"ré":2,"re":2,"mi":4,"fa":5,"sol":7,"la":9,"si":11};
+const _FRPC=["Do","Do♯","Ré","Mi♭","Mi","Fa","Fa♯","Sol","La♭","La","Si♭","Si"];
 function parseKey(keyStr){
   if(!keyStr) return {rootPc:null, mode:"major"};
   const low = keyStr.split("·")[0].toLowerCase();
@@ -2596,8 +2597,15 @@ const _SOLO_DEFS={
 function soloScales(s, off){
   const pk=parseKey(s.key); if(pk.rootPc===null) return [];
   const root=((pk.rootPc+(off||0))%12+12)%12;
-  const list=_SOLO_DEFS[pk.mode]||_SOLO_DEFS.major;
-  const start=_soloStart(root), frets=5;
+  const start=_soloStart(root), frets=5, n=_FRPC[root];
+  let list;
+  if(s.zone==="blues"){                              // en blues : la gamme blues du ton, pas la majeure
+    list = (pk.mode==="minor")
+      ? [["Blues mineur ("+n+", penta + ♭5)",[0,3,5,6,7,10],[6]], [n+" mineur naturel",[0,2,3,5,7,8,10],[8]]]
+      : [["Gamme blues ("+n+", penta + ♭5)",[0,3,5,6,7,10],[6]], ["Penta majeure ("+n+", côté BB King)",[0,2,4,7,9],[4]]];
+  } else {
+    list = _SOLO_DEFS[pk.mode]||_SOLO_DEFS.major;
+  }
   return list.map(function(d){
     const pcs=d[1].map(function(x){ return (root+x)%12; });
     const color=d[2].map(function(x){ return (root+x)%12; });
@@ -2694,10 +2702,13 @@ function soloDiagramsHTML(s, off){
   let html = soloScales(s, off).map(function(sc){
     return `<div class="diag solo-sc"><div class="nm">${sc.label}</div>${fretSVG(sc.start,sc.frets,sc.dots)}</div>`;
   }).join("");
-  if(s.zone==="jazz"){
+  if(s.zone==="jazz" || s.zone==="blues"){
     const cs=chordScales(s, off);
     if(cs.length){
-      html += `<div class="solo-jazz-h">Par accord — arpège (notes de l'accord) et gamme d'accord. Vise le doré (fondamentale) et le rouge (3ce &amp; 7e).</div>`;
+      const intro = s.zone==="blues"
+        ? "Par accord — l'arpège et le mixolydien de chaque accord, pour viser les notes des I7·IV7·V7. Sinon, la gamme blues du ton passe sur toute la grille."
+        : "Par accord — arpège (notes de l'accord) et gamme d'accord. Vise le doré (fondamentale) et le rouge (3ce &amp; 7e).";
+      html += `<div class="solo-jazz-h">${intro}</div>`;
       html += cs.map(function(c){
         return `<div class="diag solo-sc"><div class="nm">${c.label} · arpège</div>${fretSVG(c.arp.start,c.arp.frets,c.arp.dots)}</div>`+
                `<div class="diag solo-sc"><div class="nm">${c.scaleLabel}</div>${fretSVG(c.scale.start,c.scale.frets,c.scale.dots)}</div>`;
