@@ -164,13 +164,21 @@
   .groove .tempo:hover{background:rgba(168,64,44,.16)}
   .groove .tempo.playing{background:var(--rust);color:var(--paper)}
   .glbl{flex-basis:100%;font-size:.75rem;color:var(--ink-soft);font-style:italic}
-  /* Métronome global */
-  body.metro-open{padding-bottom:118px}
-  #metro{position:fixed;left:0;right:0;bottom:0;z-index:40;transform:translateY(115%);
-    transition:transform .22s ease;background:rgba(16,24,32,.985);backdrop-filter:blur(8px);
+  .chart,.section-title{scroll-margin-top:56px}
+  /* Barres flottantes : dock (lecteur de setlist + métronome) */
+  #dock{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;flex-direction:column}
+  #metro,#player{background:rgba(16,24,32,.985);backdrop-filter:blur(8px);
     border-top:1px solid var(--brass);padding:8px 12px calc(8px + env(safe-area-inset-bottom));
-    display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  #metro.open{transform:translateY(0)}
+    display:none;align-items:center;gap:10px}
+  #metro{flex-wrap:wrap}
+  #metro.open,#player.open{display:flex}
+  #player .p-mid{flex:1 1 auto;min-width:0;text-align:center}
+  #player .p-title{font-size:.9rem;font-weight:700;color:var(--paper);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #player .p-pos{font-size:.7rem;color:#9AA7B4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #player .p-pos b{color:var(--brass);font-family:Georgia,serif}
+  #player .p-prev,#player .p-next{flex:0 0 auto;border:1px solid var(--brass);background:transparent;
+    color:var(--paper);border-radius:8px;padding:9px 11px;font-size:.8rem;font-weight:700;cursor:pointer;white-space:nowrap}
+  #player .p-close{flex:0 0 auto;width:30px;height:30px;border:none;background:transparent;color:#9AA7B4;font-size:1.2rem;cursor:pointer;padding:0}
   #metro .m-play{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:none;
     background:var(--rust);color:#fff;font-size:1.05rem;cursor:pointer;display:flex;
     align-items:center;justify-content:center}
@@ -326,8 +334,29 @@
     background:none;border:1px solid var(--ink-soft);color:#9AA7B4;
     border-radius:999px;font:inherit;font-size:.7rem;padding:2px 8px;cursor:pointer;flex:0 0 auto;
   }
-  .fav-only-row{display:flex;align-items:center;gap:8px;margin-top:8px;color:var(--paper);font-size:.82rem;cursor:pointer}
+  .fav-only-row{display:flex;align-items:center;gap:8px;color:var(--paper);font-size:.82rem;cursor:pointer}
   .chart.notfav{display:none}
+  /* ---- setlists multiples ---- */
+  .sl-head{display:flex;gap:6px;align-items:center;margin:6px 0 8px}
+  .sl-head select{flex:1 1 auto;min-width:0;background:var(--night2);color:var(--paper);
+    border:1px solid var(--brass);border-radius:8px;padding:6px 8px;font:inherit;font-size:.82rem}
+  .sl-head button{flex:0 0 auto;width:32px;height:32px;border:1px solid var(--ink-soft);
+    background:transparent;color:var(--paper);border-radius:8px;font-size:.9rem;cursor:pointer;padding:0}
+  .sl-head button:hover{border-color:var(--brass)}
+  .fav-item .drag{cursor:grab;color:var(--ink-soft);font-size:1rem;flex:0 0 auto;user-select:none;touch-action:none}
+  .fav-item.dragging{opacity:.45}
+  .fav-item.dragover{border-top:2px solid var(--brass)}
+  .fav-item>a{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fav-item .fav-ctl{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+  .fav-item .fav-ctl button{background:none;border:1px solid var(--ink-soft);color:#9AA7B4;
+    border-radius:6px;font:inherit;font-size:.72rem;padding:2px 6px;cursor:pointer;line-height:1.2}
+  .fav-item .fav-ctl button:disabled{opacity:.3;cursor:default}
+  .fav-item .fav-ctl .fav-rm{border-radius:999px}
+  .sl-empty{color:#9AA7B4;font-size:.8rem;font-style:italic;padding:6px 2px}
+  .sl-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .sl-play{border:1px solid var(--brass);background:var(--rust);color:#fff;border-radius:999px;
+    padding:7px 18px;font:inherit;font-weight:700;font-size:.82rem;cursor:pointer}
+  .sl-play:disabled{background:transparent;color:var(--ink-soft);border-color:var(--ink-soft);cursor:default}
   /* ---- riff signature (replié par défaut) ---- */
   .riff-d .riff-orig[hidden]{display:none}
   .riff-d pre.tab{margin-top:8px}
@@ -377,9 +406,19 @@
     <div class="idx-empty" id="idx-empty" hidden>Aucun morceau trouvé.</div>
   </details>
   <details class="setlist" id="setlist" hidden>
-    <summary>⭐ Ma setlist — <span id="fav-count">0</span></summary>
+    <summary>⭐ Mes setlists — <span id="fav-count">0</span></summary>
+    <div class="sl-head">
+      <select id="sl-select" aria-label="Choisir une setlist"></select>
+      <button type="button" id="sl-new" title="Nouvelle setlist" aria-label="Nouvelle setlist">＋</button>
+      <button type="button" id="sl-rename" title="Renommer cette setlist" aria-label="Renommer">✎</button>
+      <button type="button" id="sl-del" title="Supprimer cette setlist" aria-label="Supprimer">🗑</button>
+    </div>
     <div class="masq-list" id="fav-list"></div>
-    <label class="fav-only-row"><input type="checkbox" id="fav-only"> N'afficher que ma setlist</label>
+    <div class="sl-empty" id="sl-empty" hidden>Ajoute des morceaux avec l'étoile ☆ sur chaque carte.</div>
+    <div class="sl-foot">
+      <label class="fav-only-row"><input type="checkbox" id="fav-only"> N'afficher que cette setlist</label>
+      <button type="button" id="sl-play" class="sl-play">▶ Jouer</button>
+    </div>
   </details>
   <details class="masques" id="masques" hidden>
     <summary>🗑 Morceaux masqués — <span id="masq-count">0</span></summary>
@@ -544,6 +583,8 @@ B|--3---2---1---0--|  → B7</pre>
   </div>
 
 </main>
+
+<div id="dock"></div>
 
 <script>
 /* ============ Dictionnaire d'accords ============ */
@@ -2488,13 +2529,26 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   const loadJSON=function(k,d){ try{ return JSON.parse(localStorage.getItem(k))||d; }catch(e){ return d; } };
   const setLS=function(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
   let HIDDEN=new Set(loadJSON("songbook-hidden",[]));
-  let FAV=loadJSON("songbook-fav",[]).filter(Boolean);        // ordonné
   let TP=loadJSON("songbook-tp",{});                          // {slug: demi-tons}
-  let favOnly=!!loadJSON("songbook-favonly",false);
+  let favOnly=!!loadJSON("songbook-favonly",false);           // n'afficher que la setlist active
   const saveHidden=function(){ setLS("songbook-hidden",Array.from(HIDDEN)); };
-  const saveFav=function(){ setLS("songbook-fav",FAV); };
   const saveTP=function(){ setLS("songbook-tp",TP); };
-  const isFav=function(sl){ return FAV.indexOf(sl)>-1; };
+  const esc=function(t){ return String(t).replace(/[&<>"]/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); };
+
+  /* ---- Setlists multiples, ordonnables ---- */
+  let _idc=0;
+  const newId=function(){ return "sl"+Date.now().toString(36)+"-"+(_idc++); };
+  const SL=(function(){                                       // migration depuis l'ancienne clé unique
+    const raw=loadJSON("songbook-setlists",null);
+    if(raw && raw.lists) return raw;
+    const old=loadJSON("songbook-fav",[]).filter(Boolean);
+    const lists=[]; let activeId=null;
+    if(old.length){ const id=newId(); lists.push({id:id,name:"Ma setlist",songs:old}); activeId=id; }
+    return {lists:lists, activeId:activeId};
+  })();
+  const saveSL=function(){ setLS("songbook-setlists", SL); };
+  const activeList=function(){ for(let i=0;i<SL.lists.length;i++){ if(SL.lists[i].id===SL.activeId) return SL.lists[i]; } return null; };
+  const isFav=function(sl){ const l=activeList(); return !!l && l.songs.indexOf(sl)>-1; };
 
   const sorted=[...SONGS].sort((a,b)=>_norm(a.title).localeCompare(_norm(b.title)));
   const bySlug={};
@@ -2509,7 +2563,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   const empty=document.getElementById("idx-empty");
   const links=[].slice.call(document.querySelectorAll("#song-index a"));
   const masques=document.getElementById("masques"), masqList=document.getElementById("masq-list"), masqCount=document.getElementById("masq-count");
-  const setlist=document.getElementById("setlist"), favList=document.getElementById("fav-list"), favCount=document.getElementById("fav-count"), favOnlyBox=document.getElementById("fav-only");
+  const setlist=document.getElementById("setlist"), favList=document.getElementById("fav-list"),
+        favCount=document.getElementById("fav-count"), favOnlyBox=document.getElementById("fav-only"),
+        slSelect=document.getElementById("sl-select"), slEmpty=document.getElementById("sl-empty"),
+        slPlay=document.getElementById("sl-play");
   const slugOf=function(a){ return a.getAttribute("href").slice(1); };
   const shownState=function(sl){ return !HIDDEN.has(sl) && !(favOnly && !isFav(sl)); };
 
@@ -2539,27 +2596,145 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     masqList.innerHTML = hid.map(function(s){
       return `<div class="masq-item"><span>${s.title}</span><button type="button" class="restore" data-slug="${slug(s.title)}">↩ réafficher</button></div>`;
     }).join("");
-    // panneau setlist (ordre d'ajout)
-    const favSongs=FAV.map(function(sl){ return bySlug[sl]; }).filter(Boolean);
-    favCount.textContent = favSongs.length;
-    setlist.hidden = favSongs.length===0;
-    if(favSongs.length===0 && favOnly){ favOnly=false; setLS("songbook-favonly",false); }
-    favOnlyBox.checked = favOnly;
-    favList.innerHTML = favSongs.map(function(s){
-      return `<div class="fav-item"><a href="#${slug(s.title)}">${s.title}</a><button type="button" class="fav-rm" data-slug="${slug(s.title)}">retirer</button></div>`;
-    }).join("");
+    renderSetlists();
     filterIndex();
+  }
+
+  function renderSetlists(){
+    setlist.hidden = SL.lists.length===0;
+    favCount.textContent = SL.lists.length;
+    const l=activeList();
+    slSelect.innerHTML = SL.lists.map(function(x){
+      return `<option value="${x.id}"${x.id===SL.activeId?" selected":""}>${esc(x.name)} (${x.songs.length})</option>`;
+    }).join("");
+    const songs = l ? l.songs.map(function(sl){ return {sl:sl, s:bySlug[sl]}; }).filter(function(o){ return o.s; }) : [];
+    slEmpty.hidden = !(l && songs.length===0);
+    slPlay.disabled = songs.length===0;
+    if((!l || songs.length===0) && favOnly){ favOnly=false; setLS("songbook-favonly",false); }
+    favOnlyBox.checked = favOnly;
+    favList.innerHTML = songs.map(function(o,i){
+      return `<div class="fav-item" draggable="true" data-slug="${o.sl}">`+
+        `<span class="drag" title="Glisser pour réordonner" aria-hidden="true">⠿</span>`+
+        `<a href="#${o.sl}">${esc(o.s.title)}</a>`+
+        `<span class="fav-ctl">`+
+          `<button type="button" class="fav-up" title="Monter"${i===0?" disabled":""} aria-label="Monter">↑</button>`+
+          `<button type="button" class="fav-down" title="Descendre"${i===songs.length-1?" disabled":""} aria-label="Descendre">↓</button>`+
+          `<button type="button" class="fav-rm" data-slug="${o.sl}" title="Retirer de la setlist" aria-label="Retirer">✕</button>`+
+        `</span></div>`;
+    }).join("");
   }
 
   function setStar(sl){
     const btn=document.querySelector('.fav-btn[data-slug="'+sl+'"]');
     if(btn){ const on=isFav(sl); btn.textContent=on?"★":"☆"; btn.setAttribute("aria-pressed", on?"true":"false"); btn.title=on?"Retirer de ma setlist":"Ajouter à ma setlist"; }
   }
+  function refreshStars(){ SONGS.forEach(function(s){ setStar(slug(s.title)); }); }
   function toggleFav(sl){
-    const i=FAV.indexOf(sl);
-    if(i>-1) FAV.splice(i,1); else FAV.push(sl);
-    saveFav(); setStar(sl); applyView();
+    let l=activeList();
+    if(!l){ l={id:newId(),name:"Ma setlist",songs:[]}; SL.lists.push(l); SL.activeId=l.id; }
+    const i=l.songs.indexOf(sl);
+    if(i>-1) l.songs.splice(i,1); else l.songs.push(sl);
+    saveSL(); refreshStars(); applyView();
   }
+  function moveInList(sl,dir){
+    const l=activeList(); if(!l) return;
+    const i=l.songs.indexOf(sl); if(i<0) return;
+    const j=i+dir; if(j<0||j>=l.songs.length) return;
+    const t=l.songs[i]; l.songs[i]=l.songs[j]; l.songs[j]=t;
+    saveSL(); applyView();
+  }
+  function createList(){
+    const name=(window.prompt("Nom de la nouvelle setlist :","Setlist "+(SL.lists.length+1))||"").trim();
+    if(!name) return;
+    const l={id:newId(),name:name,songs:[]}; SL.lists.push(l); SL.activeId=l.id;
+    saveSL(); refreshStars(); applyView(); if(!setlist.open) setlist.open=true;
+  }
+  function renameList(){
+    const l=activeList(); if(!l) return;
+    const name=(window.prompt("Renommer la setlist :",l.name)||"").trim();
+    if(!name) return; l.name=name; saveSL(); applyView();
+  }
+  function deleteList(){
+    const l=activeList(); if(!l) return;
+    if(!window.confirm("Supprimer la setlist « "+l.name+" » ? (les morceaux ne sont pas supprimés)")) return;
+    SL.lists=SL.lists.filter(function(x){ return x.id!==l.id; });
+    SL.activeId = SL.lists.length ? SL.lists[0].id : null;
+    saveSL(); refreshStars(); applyView();
+  }
+
+  /* ---- Lecteur de setlist : navigation Préc./Suiv. ---- */
+  const player=document.createElement("div");
+  player.id="player"; player.setAttribute("role","group"); player.setAttribute("aria-label","Lecture de la setlist");
+  player.innerHTML =
+    '<button type="button" class="p-prev" aria-label="Morceau précédent">‹ Préc.</button>'+
+    '<div class="p-mid"><div class="p-title">—</div>'+
+      '<div class="p-pos"><b><span class="p-i">1</span> / <span class="p-n">1</span></b> · <span class="p-name"></span></div></div>'+
+    '<button type="button" class="p-next" aria-label="Morceau suivant">Suiv. ›</button>'+
+    '<button type="button" class="p-close" aria-label="Quitter la lecture">✕</button>';
+  document.getElementById("dock").appendChild(player);
+  const pTitle=player.querySelector(".p-title"), pI=player.querySelector(".p-i"),
+        pN=player.querySelector(".p-n"), pName=player.querySelector(".p-name");
+  let playSongs=[], playIdx=0;
+  function gotoPlay(i){
+    if(!playSongs.length) return;
+    playIdx=((i%playSongs.length)+playSongs.length)%playSongs.length;
+    const sl=playSongs[playIdx], s=bySlug[sl];
+    pI.textContent=playIdx+1; pN.textContent=playSongs.length;
+    pTitle.textContent = s?s.title:"—";
+    const card=document.getElementById(sl);
+    if(card) card.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function enterPlay(){
+    const l=activeList(); if(!l) return;
+    playSongs=l.songs.filter(function(sl){ return bySlug[sl]; });
+    if(!playSongs.length) return;
+    pName.textContent=l.name;
+    player.classList.add("open");
+    details.open=false;
+    gotoPlay(0);
+  }
+  player.querySelector(".p-prev").addEventListener("click",function(){ gotoPlay(playIdx-1); });
+  player.querySelector(".p-next").addEventListener("click",function(){ gotoPlay(playIdx+1); });
+  player.querySelector(".p-close").addEventListener("click",function(){ player.classList.remove("open"); });
+
+  /* ---- Réordonnancement par glisser-déposer (bureau) ---- */
+  let dragEl=null;
+  function dragAfter(y){
+    const els=[].slice.call(favList.querySelectorAll(".fav-item:not(.dragging)"));
+    let closest=null, closestOff=-Infinity;
+    els.forEach(function(el){
+      const box=el.getBoundingClientRect(), off=y-box.top-box.height/2;
+      if(off<0 && off>closestOff){ closestOff=off; closest=el; }
+    });
+    return closest;
+  }
+  favList.addEventListener("dragstart",function(e){
+    const it=e.target.closest(".fav-item"); if(!it) return;
+    dragEl=it; it.classList.add("dragging");
+    e.dataTransfer.effectAllowed="move";
+    try{ e.dataTransfer.setData("text/plain",it.dataset.slug); }catch(_){}
+  });
+  favList.addEventListener("dragend",function(){
+    if(dragEl) dragEl.classList.remove("dragging");
+    [].forEach.call(favList.children,function(c){ c.classList.remove("dragover"); });
+    dragEl=null;
+  });
+  favList.addEventListener("dragover",function(e){
+    if(!dragEl) return;
+    e.preventDefault();
+    const after=dragAfter(e.clientY);
+    [].forEach.call(favList.children,function(c){ c.classList.remove("dragover"); });
+    if(after && after!==dragEl) after.classList.add("dragover");
+  });
+  favList.addEventListener("drop",function(e){
+    if(!dragEl) return;
+    e.preventDefault();
+    const after=dragAfter(e.clientY);
+    if(after==null) favList.appendChild(dragEl); else favList.insertBefore(dragEl,after);
+    const l=activeList();
+    if(l){ l.songs=[].map.call(favList.children,function(c){ return c.dataset.slug; }); saveSL(); }
+    applyView();
+  });
 
   function applyTP(sl){
     const off=TP[sl]||0, card=document.getElementById(sl);
@@ -2587,7 +2762,13 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(t.classList.contains("tp-minus")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, (TP[t.closest(".tpose").dataset.slug]||0)-1); return; }
     if(t.classList.contains("tp-reset")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, 0); return; }
     if(t.classList.contains("restore")){ HIDDEN.delete(t.dataset.slug); saveHidden(); applyView(); return; }
-    if(t.classList.contains("fav-rm")){ toggleFav(t.dataset.slug); return; }
+    if(t.classList.contains("fav-up")){ e.preventDefault(); moveInList(t.closest(".fav-item").dataset.slug,-1); return; }
+    if(t.classList.contains("fav-down")){ e.preventDefault(); moveInList(t.closest(".fav-item").dataset.slug,1); return; }
+    if(t.classList.contains("fav-rm")){ e.preventDefault(); toggleFav(t.dataset.slug); return; }
+    if(t.id==="sl-new"){ e.preventDefault(); createList(); return; }
+    if(t.id==="sl-rename"){ e.preventDefault(); renameList(); return; }
+    if(t.id==="sl-del"){ e.preventDefault(); deleteList(); return; }
+    if(t.id==="sl-play"){ e.preventDefault(); enterPlay(); return; }
     if(t.id==="masq-all"){ HIDDEN.clear(); saveHidden(); applyView(); return; }
     if(t.matches("#song-index a")){ details.open=false; search.value=""; filterIndex(); return; }
     if(t.classList.contains("fav-item") || (t.closest && t.closest(".fav-item") && t.tagName==="A")){ details.open=false; return; }
@@ -2595,9 +2776,11 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   search.addEventListener("input",function(){ if(search.value.trim() && !details.open) details.open=true; filterIndex(); });
   search.addEventListener("focus",function(){ if(!details.open) details.open=true; });
   favOnlyBox.addEventListener("change",function(){ favOnly=favOnlyBox.checked; setLS("songbook-favonly",favOnly); applyView(); });
+  slSelect.addEventListener("change",function(){ SL.activeId=slSelect.value; saveSL(); refreshStars(); applyView(); });
 
-  // état initial : étoiles, transpositions mémorisées
-  FAV.forEach(setStar);
+  // état initial : persiste la migration éventuelle, étoiles, transpositions mémorisées
+  saveSL();
+  refreshStars();
   Object.keys(TP).forEach(function(sl){ if(TP[sl]) applyTP(sl); });
   applyView();
 })();
@@ -2619,7 +2802,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       '<button type="button" class="m-tap" aria-label="Taper le tempo">TAP</button>'+
     '</div>'+
     '<button type="button" class="m-close" aria-label="Fermer le métronome">✕</button>';
-  document.body.appendChild(bar);
+  document.getElementById("dock").appendChild(bar);
 
   const q = s => bar.querySelector(s);
   const playBtn=q(".m-play"), bpmV=q(".m-bpm-v"), bpmLbl=bar.querySelector(".m-bpm small"),
@@ -2706,7 +2889,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       dotted: b.dataset.dotted==="1", title:b.dataset.title, sub:b.dataset.sub
     });
     lastBtn=b;
-    bar.classList.add("open"); document.body.classList.add("metro-open");
+    bar.classList.add("open");
     start();
   });
 
@@ -2714,7 +2897,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   q(".m-plus").addEventListener("click", ()=> setBpm(bpm+ (dotted?1:1)));
   q(".m-minus").addEventListener("click", ()=> setBpm(bpm-1));
   q(".m-close").addEventListener("click", function(){
-    stop(); bar.classList.remove("open"); document.body.classList.remove("metro-open");
+    stop(); bar.classList.remove("open");
   });
 
   // Tap tempo : moyenne des 4 derniers intervalles, remis à zéro après 2 s de pause
@@ -2728,6 +2911,15 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       setBpm(60000/(sum/(taps.length-1)));
     }
   });
+})();
+
+/* Réserve en bas de page = hauteur des barres visibles (dock). */
+(function(){
+  const d=document.getElementById("dock"); if(!d||!window.ResizeObserver) return;
+  new ResizeObserver(function(){
+    const h=d.getBoundingClientRect().height;
+    document.body.style.paddingBottom = h>4 ? (h+10)+"px" : "";
+  }).observe(d);
 })();
 
 /* ============ Manche : penta mineure de La, position 1 ============ */
