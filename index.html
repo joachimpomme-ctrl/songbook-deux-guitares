@@ -159,8 +159,42 @@
     font-size:.7rem;font-weight:800;color:var(--ink);
   }
   .beat.on{background:var(--brass)}
-  .groove .tempo{font-weight:800;font-size:.8rem;color:var(--rust);white-space:nowrap}
+  .groove .tempo{font:inherit;font-weight:800;font-size:.78rem;color:var(--rust);white-space:nowrap;
+    border:1px solid var(--rust);background:rgba(168,64,44,.08);border-radius:999px;padding:2px 9px;cursor:pointer;line-height:1.4}
+  .groove .tempo:hover{background:rgba(168,64,44,.16)}
+  .groove .tempo.playing{background:var(--rust);color:var(--paper)}
   .glbl{flex-basis:100%;font-size:.75rem;color:var(--ink-soft);font-style:italic}
+  /* Métronome global */
+  body.metro-open{padding-bottom:118px}
+  #metro{position:fixed;left:0;right:0;bottom:0;z-index:40;transform:translateY(115%);
+    transition:transform .22s ease;background:rgba(16,24,32,.985);backdrop-filter:blur(8px);
+    border-top:1px solid var(--brass);padding:8px 12px calc(8px + env(safe-area-inset-bottom));
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  #metro.open{transform:translateY(0)}
+  #metro .m-play{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:none;
+    background:var(--rust);color:#fff;font-size:1.05rem;cursor:pointer;display:flex;
+    align-items:center;justify-content:center}
+  #metro .m-play.on{background:var(--brass);color:var(--night)}
+  #metro .m-info{flex:1 1 110px;min-width:80px;overflow:hidden}
+  #metro .m-title{font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;
+    text-overflow:ellipsis;color:var(--paper)}
+  #metro .m-sub{font-size:.68rem;color:#9AA7B4}
+  #metro .m-dots{display:flex;gap:5px;flex:0 0 auto}
+  #metro .m-dots i{width:11px;height:11px;border-radius:50%;background:#2b3a48;display:block;
+    transition:transform .04s ease}
+  #metro .m-dots i.on{background:var(--paper)}
+  #metro .m-dots i.acc.on{background:var(--brass);transform:scale(1.25)}
+  #metro .m-dots i.one.on{background:var(--rust);transform:scale(1.45)}
+  #metro .m-tempo{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+  #metro .m-tempo button{width:32px;height:32px;border-radius:8px;border:1px solid var(--brass);
+    background:transparent;color:var(--paper);font-size:1.15rem;cursor:pointer;line-height:1;padding:0}
+  #metro .m-bpm{font-family:Georgia,serif;font-weight:700;min-width:50px;text-align:center;color:var(--brass);line-height:1}
+  #metro .m-bpm .m-bpm-v{font-size:1.35rem}
+  #metro .m-bpm small{font-size:.58rem;color:#9AA7B4;display:block;font-family:-apple-system,sans-serif;font-weight:400}
+  #metro .m-tap{width:auto;padding:0 10px;font-size:.72rem;border-color:#9AA7B4;letter-spacing:.5px}
+  #metro .m-close{flex:0 0 auto;width:30px;height:30px;border:none;background:transparent;
+    color:#9AA7B4;font-size:1.2rem;cursor:pointer;padding:0}
+  @media(max-width:420px){ #metro .m-info{flex-basis:100%;order:-1} #metro .m-tap{padding:0 7px} }
   .tab{
     font-family:ui-monospace,Menlo,Consolas,monospace;
     background:#0B1118;color:#D8E2EC;
@@ -2258,7 +2292,12 @@ function grooveHTML(s){
   }
   const bpm = SONG_BPM[s.title];
   const dotted = (g.m==="6/8"||g.m==="12/8");
-  const tempoHTML = bpm ? `<span class="tempo">${dotted?"♩.":"♩"} ≈ ${bpm}</span>` : "";
+  // Temps ressentis pour le métronome : 6/8 = 2 grands temps pointés ; sinon g.n.
+  let mBeats = g.n, mAcc = g.acc;
+  if(g.m==="6/8"){ mBeats = 2; mAcc = [1]; }
+  const tempoHTML = bpm
+    ? `<button type="button" class="tempo metro-btn" data-bpm="${bpm}" data-beats="${mBeats}" data-acc="${mAcc.join(",")}" data-dotted="${dotted?1:0}" data-title="${s.title}" data-sub="${g.m}" title="Lancer le métronome à ${bpm}${dotted?" (temps pointé)":""}">▶ ${dotted?"♩.":"♩"} ≈ ${bpm}</button>`
+    : "";
   return `<div class="groove"><a class="meter" href="#solfege">${g.m}</a>${tempoHTML}<div class="beats">${cells}</div><span class="glbl">${g.lbl}</span></div>`;
 }
 
@@ -2561,6 +2600,134 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   FAV.forEach(setStar);
   Object.keys(TP).forEach(function(sl){ if(TP[sl]) applyTP(sl); });
   applyView();
+})();
+
+/* ============ Métronome global ============ */
+/* Scheduler « lookahead » (Chris Wilson) : timing calé sur l'horloge audio,
+   stable même si la page scrolle ou rame. Clic = oscillateur, aucun fichier son. */
+(function(){
+  const bar = document.createElement("div");
+  bar.id = "metro"; bar.setAttribute("role","group"); bar.setAttribute("aria-label","Métronome");
+  bar.innerHTML =
+    '<button type="button" class="m-play" aria-label="Lecture / pause">▶</button>'+
+    '<div class="m-info"><div class="m-title">Métronome</div><div class="m-sub"></div></div>'+
+    '<div class="m-dots"></div>'+
+    '<div class="m-tempo">'+
+      '<button type="button" class="m-minus" aria-label="Moins vite">–</button>'+
+      '<div class="m-bpm"><span class="m-bpm-v">100</span><small>BPM ♩</small></div>'+
+      '<button type="button" class="m-plus" aria-label="Plus vite">+</button>'+
+      '<button type="button" class="m-tap" aria-label="Taper le tempo">TAP</button>'+
+    '</div>'+
+    '<button type="button" class="m-close" aria-label="Fermer le métronome">✕</button>';
+  document.body.appendChild(bar);
+
+  const q = s => bar.querySelector(s);
+  const playBtn=q(".m-play"), bpmV=q(".m-bpm-v"), bpmLbl=bar.querySelector(".m-bpm small"),
+        titleEl=q(".m-title"), subEl=q(".m-sub"), dotsEl=q(".m-dots"), tapBtn=q(".m-tap");
+
+  let ctx=null, running=false, bpm=100, beats=4, accents=[1], dotted=false;
+  let curNote=0, nextTime=0, timer=null, raf=null, lastBtn=null;
+  const queue=[];   // {beat,time} pour l'affichage des dots
+
+  function ensureCtx(){
+    if(!ctx) ctx = new (window.AudioContext||window.webkitAudioContext)();
+    if(ctx.state==="suspended") ctx.resume();
+  }
+  function tick(beat, time){       // un clic à l'instant "time" (horloge audio)
+    const osc=ctx.createOscillator(), g=ctx.createGain();
+    const isOne = beat===0, isAcc = accents.indexOf(beat+1)>-1;
+    osc.frequency.value = isOne?1600 : (isAcc?1100:800);
+    const vol = isOne?1 : (isAcc?0.72:0.5);
+    g.gain.setValueAtTime(vol, time);
+    g.gain.exponentialRampToValueAtTime(0.0001, time+0.05);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(time); osc.stop(time+0.06);
+  }
+  function scheduler(){
+    while(nextTime < ctx.currentTime + 0.1){
+      tick(curNote, nextTime);
+      queue.push({beat:curNote, time:nextTime});
+      nextTime += 60/bpm;                    // lit bpm en direct : tempo modifiable en jouant
+      curNote = (curNote+1)%beats;
+    }
+    timer = setTimeout(scheduler, 25);
+  }
+  function animate(){
+    if(!running) return;
+    const now = ctx.currentTime;
+    while(queue.length && queue[0].time < now){
+      const b = queue.shift().beat, its = dotsEl.children;
+      for(let i=0;i<its.length;i++) its[i].classList.toggle("on", i===b);
+    }
+    raf = requestAnimationFrame(animate);
+  }
+  function drawDots(){
+    let h="";
+    for(let i=0;i<beats;i++){
+      const cls = i===0 ? "one" : (accents.indexOf(i+1)>-1 ? "acc" : "");
+      h += '<i class="'+cls+'"></i>';
+    }
+    dotsEl.innerHTML=h;
+  }
+  function setBpm(v){ bpm=Math.max(30,Math.min(300,Math.round(v))); bpmV.textContent=bpm; }
+  function start(){
+    ensureCtx();
+    running=true; curNote=0; nextTime=ctx.currentTime+0.06; queue.length=0;
+    playBtn.textContent="⏸"; playBtn.classList.add("on");
+    if(lastBtn) lastBtn.classList.add("playing");
+    scheduler(); animate();
+  }
+  function stop(){
+    running=false; clearTimeout(timer); if(raf) cancelAnimationFrame(raf);
+    playBtn.textContent="▶"; playBtn.classList.remove("on");
+    Array.prototype.forEach.call(dotsEl.children, d=>d.classList.remove("on"));
+    document.querySelectorAll(".tempo.playing").forEach(b=>b.classList.remove("playing"));
+    lastBtn=null;
+  }
+  function load(o){
+    beats=o.beats||4; accents=o.accents||[1]; dotted=!!o.dotted;
+    setBpm(o.bpm||100);
+    titleEl.textContent = o.title||"Métronome";
+    subEl.textContent   = o.sub||"";
+    bpmLbl.textContent  = "BPM "+(dotted?"♩.":"♩");
+    drawDots();
+  }
+
+  // ▶ d'un morceau : charge son tempo/métrique et démarre (re-clic = stop)
+  document.addEventListener("click", function(e){
+    const b=e.target.closest(".metro-btn"); if(!b) return;
+    e.preventDefault();
+    const same = (b===lastBtn && running);
+    if(running) stop();
+    if(same) return;
+    load({
+      bpm:+b.dataset.bpm, beats:+b.dataset.beats,
+      accents: b.dataset.acc ? b.dataset.acc.split(",").map(Number) : [1],
+      dotted: b.dataset.dotted==="1", title:b.dataset.title, sub:b.dataset.sub
+    });
+    lastBtn=b;
+    bar.classList.add("open"); document.body.classList.add("metro-open");
+    start();
+  });
+
+  playBtn.addEventListener("click", ()=> running ? stop() : start());
+  q(".m-plus").addEventListener("click", ()=> setBpm(bpm+ (dotted?1:1)));
+  q(".m-minus").addEventListener("click", ()=> setBpm(bpm-1));
+  q(".m-close").addEventListener("click", function(){
+    stop(); bar.classList.remove("open"); document.body.classList.remove("metro-open");
+  });
+
+  // Tap tempo : moyenne des 4 derniers intervalles, remis à zéro après 2 s de pause
+  let taps=[];
+  tapBtn.addEventListener("click", function(){
+    const now=performance.now();
+    if(taps.length && now-taps[taps.length-1]>2000) taps=[];
+    taps.push(now); if(taps.length>5) taps.shift();
+    if(taps.length>=2){
+      let sum=0; for(let i=1;i<taps.length;i++) sum+=taps[i]-taps[i-1];
+      setBpm(60000/(sum/(taps.length-1)));
+    }
+  });
 })();
 
 /* ============ Manche : penta mineure de La, position 1 ============ */
