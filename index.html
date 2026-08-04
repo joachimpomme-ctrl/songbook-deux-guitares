@@ -346,7 +346,20 @@
   .fav-item .drag{cursor:grab;color:var(--ink-soft);font-size:1rem;flex:0 0 auto;user-select:none;touch-action:none}
   .fav-item.dragging{opacity:.45}
   .fav-item.dragover{border-top:2px solid var(--brass)}
-  .fav-item>a{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fav-item>a{flex:1 1 auto;min-width:0}
+  .fav-item .fav-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .fav-item .fav-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fav-meta{display:flex;flex-wrap:wrap;gap:4px}
+  .fav-meta .fm{font-size:.62rem;font-weight:700;line-height:1.55;padding:0 6px;border-radius:999px;white-space:nowrap}
+  .fav-meta .fm-key{background:rgba(201,144,58,.16);color:var(--brass)}
+  .fav-meta .fm-m{background:#223040;color:#9AA7B4}
+  .fav-meta .fm-bpm{background:rgba(168,64,44,.18);color:#E08b76}
+  .sl-edit{display:flex;gap:6px;align-items:center;margin:0 0 8px}
+  .sl-edit input{flex:1 1 auto;min-width:0;background:var(--night2);color:var(--paper);
+    border:1px solid var(--brass);border-radius:8px;padding:7px 9px;font:inherit;font-size:.85rem}
+  .sl-edit button{flex:0 0 auto;width:34px;height:34px;border-radius:8px;border:1px solid var(--ink-soft);
+    background:transparent;color:var(--paper);font-size:.95rem;cursor:pointer;padding:0}
+  .sl-edit #sl-ok{border-color:var(--brass);color:var(--brass)}
   .fav-item .fav-ctl{display:flex;align-items:center;gap:4px;flex:0 0 auto}
   .fav-item .fav-ctl button{background:none;border:1px solid var(--ink-soft);color:#9AA7B4;
     border-radius:6px;font:inherit;font-size:.72rem;padding:2px 6px;cursor:pointer;line-height:1.2}
@@ -412,6 +425,11 @@
       <button type="button" id="sl-new" title="Nouvelle setlist" aria-label="Nouvelle setlist">＋</button>
       <button type="button" id="sl-rename" title="Renommer cette setlist" aria-label="Renommer">✎</button>
       <button type="button" id="sl-del" title="Supprimer cette setlist" aria-label="Supprimer">🗑</button>
+    </div>
+    <div class="sl-edit" id="sl-edit" hidden>
+      <input id="sl-name" type="text" maxlength="40" placeholder="Nom de la setlist" aria-label="Nom de la setlist" autocomplete="off" spellcheck="false">
+      <button type="button" id="sl-ok" title="Valider" aria-label="Valider">✓</button>
+      <button type="button" id="sl-cancel" title="Annuler" aria-label="Annuler">✕</button>
     </div>
     <div class="masq-list" id="fav-list"></div>
     <div class="sl-empty" id="sl-empty" hidden>Ajoute des morceaux avec l'étoile ☆ sur chaque carte.</div>
@@ -2566,7 +2584,12 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   const setlist=document.getElementById("setlist"), favList=document.getElementById("fav-list"),
         favCount=document.getElementById("fav-count"), favOnlyBox=document.getElementById("fav-only"),
         slSelect=document.getElementById("sl-select"), slEmpty=document.getElementById("sl-empty"),
-        slPlay=document.getElementById("sl-play");
+        slPlay=document.getElementById("sl-play"), slEdit=document.getElementById("sl-edit"),
+        slName=document.getElementById("sl-name");
+  const songMeta=function(s){
+    const g=grooveOf(s), bpm=SONG_BPM[s.title], dotted=(g.m==="6/8"||g.m==="12/8");
+    return {key:(s.key||"").split("·")[0].trim(), meter:g.m, bpm:bpm, dotted:dotted};
+  };
   const slugOf=function(a){ return a.getAttribute("href").slice(1); };
   const shownState=function(sl){ return !HIDDEN.has(sl) && !(favOnly && !isFav(sl)); };
 
@@ -2613,9 +2636,13 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if((!l || songs.length===0) && favOnly){ favOnly=false; setLS("songbook-favonly",false); }
     favOnlyBox.checked = favOnly;
     favList.innerHTML = songs.map(function(o,i){
+      const m=songMeta(o.s);
+      const meta = (m.key?`<span class="fm fm-key">${esc(m.key)}</span>`:"")+
+        `<span class="fm fm-m">${m.meter}</span>`+
+        (m.bpm?`<span class="fm fm-bpm">${m.dotted?"♩.":"♩"} ${m.bpm}</span>`:"");
       return `<div class="fav-item" draggable="true" data-slug="${o.sl}">`+
         `<span class="drag" title="Glisser pour réordonner" aria-hidden="true">⠿</span>`+
-        `<a href="#${o.sl}">${esc(o.s.title)}</a>`+
+        `<a href="#${o.sl}" class="fav-main"><span class="fav-t">${esc(o.s.title)}</span><span class="fav-meta">${meta}</span></a>`+
         `<span class="fav-ctl">`+
           `<button type="button" class="fav-up" title="Monter"${i===0?" disabled":""} aria-label="Monter">↑</button>`+
           `<button type="button" class="fav-down" title="Descendre"${i===songs.length-1?" disabled":""} aria-label="Descendre">↓</button>`+
@@ -2643,16 +2670,27 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     const t=l.songs[i]; l.songs[i]=l.songs[j]; l.songs[j]=t;
     saveSL(); applyView();
   }
-  function createList(){
-    const name=(window.prompt("Nom de la nouvelle setlist :","Setlist "+(SL.lists.length+1))||"").trim();
-    if(!name) return;
-    const l={id:newId(),name:name,songs:[]}; SL.lists.push(l); SL.activeId=l.id;
-    saveSL(); refreshStars(); applyView(); if(!setlist.open) setlist.open=true;
+  let editMode=null;                                   // "new" | "rename" | null
+  function openEdit(mode){
+    if(mode==="rename" && !activeList()) return;
+    editMode=mode;
+    const l=activeList();
+    slName.value = (mode==="rename" && l) ? l.name : "Setlist "+(SL.lists.length+1);
+    slEdit.hidden=false; if(!setlist.open) setlist.open=true;
+    slName.focus(); slName.select();
   }
-  function renameList(){
-    const l=activeList(); if(!l) return;
-    const name=(window.prompt("Renommer la setlist :",l.name)||"").trim();
-    if(!name) return; l.name=name; saveSL(); applyView();
+  function closeEdit(){ editMode=null; slEdit.hidden=true; }
+  function commitEdit(){
+    const name=slName.value.trim();
+    if(name){
+      if(editMode==="new"){
+        const l={id:newId(),name:name,songs:[]}; SL.lists.push(l); SL.activeId=l.id;
+        saveSL(); refreshStars(); applyView();
+      } else if(editMode==="rename"){
+        const l=activeList(); if(l){ l.name=name; saveSL(); applyView(); }
+      }
+    }
+    closeEdit();
   }
   function deleteList(){
     const l=activeList(); if(!l) return;
@@ -2765,8 +2803,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(t.classList.contains("fav-up")){ e.preventDefault(); moveInList(t.closest(".fav-item").dataset.slug,-1); return; }
     if(t.classList.contains("fav-down")){ e.preventDefault(); moveInList(t.closest(".fav-item").dataset.slug,1); return; }
     if(t.classList.contains("fav-rm")){ e.preventDefault(); toggleFav(t.dataset.slug); return; }
-    if(t.id==="sl-new"){ e.preventDefault(); createList(); return; }
-    if(t.id==="sl-rename"){ e.preventDefault(); renameList(); return; }
+    if(t.id==="sl-new"){ e.preventDefault(); openEdit("new"); return; }
+    if(t.id==="sl-rename"){ e.preventDefault(); openEdit("rename"); return; }
+    if(t.id==="sl-ok"){ e.preventDefault(); commitEdit(); return; }
+    if(t.id==="sl-cancel"){ e.preventDefault(); closeEdit(); return; }
     if(t.id==="sl-del"){ e.preventDefault(); deleteList(); return; }
     if(t.id==="sl-play"){ e.preventDefault(); enterPlay(); return; }
     if(t.id==="masq-all"){ HIDDEN.clear(); saveHidden(); applyView(); return; }
@@ -2776,7 +2816,11 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   search.addEventListener("input",function(){ if(search.value.trim() && !details.open) details.open=true; filterIndex(); });
   search.addEventListener("focus",function(){ if(!details.open) details.open=true; });
   favOnlyBox.addEventListener("change",function(){ favOnly=favOnlyBox.checked; setLS("songbook-favonly",favOnly); applyView(); });
-  slSelect.addEventListener("change",function(){ SL.activeId=slSelect.value; saveSL(); refreshStars(); applyView(); });
+  slSelect.addEventListener("change",function(){ closeEdit(); SL.activeId=slSelect.value; saveSL(); refreshStars(); applyView(); });
+  slName.addEventListener("keydown",function(e){
+    if(e.key==="Enter"){ e.preventDefault(); commitEdit(); }
+    else if(e.key==="Escape"){ e.preventDefault(); closeEdit(); }
+  });
 
   // état initial : persiste la migration éventuelle, étoiles, transpositions mémorisées
   saveSL();
