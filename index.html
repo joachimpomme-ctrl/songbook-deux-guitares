@@ -492,7 +492,7 @@
 </nav>
 
 <div class="repertoire">
-  <input id="song-search" type="search" placeholder="Chercher un morceau…" aria-label="Chercher un morceau" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <input id="song-search" type="search" placeholder="Chercher un morceau, un artiste…" aria-label="Chercher un morceau ou un artiste" autocomplete="off" autocapitalize="off" spellcheck="false">
   <details id="idx-details">
     <summary class="idx-summary">📖 Répertoire — <span id="idx-count"></span> morceaux</summary>
     <div id="song-index"></div>
@@ -2326,6 +2326,59 @@ E|-------------------|`,
     chords:["G","C","F","D","Bm","Em"],
     tip:"Le fameux accord d'intro (un empilement Sol/Fadd9 aux deux guitares + basse) : approchez-le d'un Gsus bien claqué, laissez-le sonner. Couplet en Sol, pont en Si mineur. Penta de Sol / Mi mineur pour broder.",
     note:"Structure complète (couplet, transition, pont).",
+  },
+  {
+    zone:"pop", title:"In My Life", key:"La · ballade tendre (Beatles / Lennon)",
+    systems:[
+      {note:"couplet", bars:["A · E","F#m · A7","D · Dm","A"]},
+      {note:"« in my life, I love you more »", bars:["D","Dm","A","A"]}
+    ],
+    chords:["A","E","F#m","A7","D","Dm"],
+    tip:"La cadence Ré → Rém → La (le majeur qui bascule en mineur avant de se poser) est LE frisson du morceau — le solo baroque de George Martin brode dessus. Penta majeure et gamme de La majeur ; visez la tierce sur chaque accord.",
+    note:"Forme strophique (couplet + tag).",
+  },
+  {
+    zone:"rock", title:"All My Loving", key:"Mi · pop enlevée (Beatles)",
+    systems:[
+      {note:"couplet", bars:["F#m · B7","E · C#m","A · F#m","D · B7"]},
+      {note:"« all my loving »", bars:["E","C#m","E","C#m"]}
+    ],
+    chords:["F#m","B7","E","C#m","A","D"],
+    tip:"Le hit qui ouvrait les concerts. La walking bass du couplet (F♯m-B7-E-C♯m…) descend en marchant : soignez-la à deux. Refrain E-C♯m obstiné. Penta / gamme de Mi majeur, croches triolet à la Django sur la rythmique.",
+    note:"Couplet + refrain.",
+  },
+  {
+    zone:"rock", title:"Eight Days a Week", key:"Ré · jangle (Beatles)",
+    systems:[
+      {note:"intro & couplet", bars:["D","E7","G","D"]},
+      {note:"« hold me, love me »", bars:["Bm","G","Bm","E7"]}
+    ],
+    chords:["D","E7","G","Bm"],
+    tip:"Le premier fondu d'entrée de l'histoire du disque. Couplet D-E7-G-D tout en jangle (12 cordes), le pont « hold me, love me » vire en Si mineur. Penta majeure de Ré. Le E7 (II majeur) est l'accord surprise.",
+    note:"Couplet + pont.",
+  },
+  {
+    zone:"rock", title:"I Saw Her Standing There", key:"Mi · rock'n'roll (Beatles)",
+    systems:[
+      {note:"couplet — forme blues", bars:["E7","E7","A7","E7"]},
+      {bars:["B7","A7","E7","B7"]},
+      {note:"pont « my heart went boom »", bars:["A7","A7","E7","E7"]},
+      {bars:["A7","B7","E7","B7"]}
+    ],
+    chords:["E7","A7","B7"],
+    tip:"Le rock'n'roll fondateur, en Mi, lancé par le « one-two-three-FOUR ! » de Paul. Forme blues de 12 mesures : penta mineure de Mi + blue note, ou mixolydien sur chaque 7e. Basse marchante en croches, increvable.",
+    note:"Couplet (forme blues) + pont.",
+  },
+  {
+    zone:"rock", title:"Get Back", key:"La · blues-rock (Beatles)",
+    systems:[
+      {note:"couplet — le riff (La)", bars:["A","A","A","A"]},
+      {note:"refrain « get back »", bars:["A","D","A","D"]},
+      {note:"turnaround", bars:["A","G","D","A"]}
+    ],
+    chords:["A","D","G"],
+    tip:"Groove blues-rock en La sur un riff obstiné (celui de Billy Preston au clavier). Penta mineure de La + blue note, ou mixolydien de La pour les solos type Harrison. Le turnaround descendant G-D-A referme chaque tour.",
+    note:"Riff + refrain + turnaround.",
   }
 ];
 
@@ -2499,7 +2552,8 @@ const SONG_BPM = {
   "Belle":72, "Osez Joséphine":116, "Comme toi":92, "Le Métèque":130,
   // Beatles (ajouts)
   "Come Together":84, "Here Comes the Sun":129, "Something":66, "Ob-La-Di, Ob-La-Da":113,
-  "A Hard Day's Night":137
+  "A Hard Day's Night":137, "In My Life":54, "All My Loving":158, "Eight Days a Week":138,
+  "I Saw Her Standing There":160, "Get Back":122
 };
 // Bouton tempo qui pilote le métronome global (réutilisé par la carte et le mode concert).
 function metroBtnHTML(s, extra){
@@ -2932,7 +2986,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   const bySlug={};
   SONGS.forEach(function(s){ bySlug[slug(s.title)]=s; });
   document.getElementById("song-index").innerHTML = sorted.map(function(s){
-    return `<a href="#${slug(s.title)}" data-n="${_norm(s.title)}">${s.title}<span class="z">${ZL[s.zone]||s.zone}</span></a>`;
+    return `<a href="#${slug(s.title)}" data-n="${_norm(s.title+" "+(s.key||""))}">${s.title}<span class="z">${ZL[s.zone]||s.zone}</span></a>`;
   }).join("");
   document.getElementById("idx-count").textContent = SONGS.length;
 
