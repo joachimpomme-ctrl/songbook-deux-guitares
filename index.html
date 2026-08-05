@@ -446,8 +446,8 @@
     #printarea .c-sub .tempo{border:1px solid #888;color:#000;background:none}
     #printarea .bar{border:1px solid #888;min-height:34px;font-size:1rem;font-weight:700}
     #printarea .c-tip,#printarea .c-diags{display:none}
-    #printarea .solo-d>*{display:block !important}   /* déplie les gammes dans le PDF */
-    #printarea .solo-d summary{list-style:none;color:#000;margin-bottom:4px}
+    #printarea .solo-d>*,#printarea .riff-d>*{display:block !important}   /* déplie gammes & riff dans le PDF */
+    #printarea .solo-d summary,#printarea .riff-d summary{list-style:none;color:#000;margin-bottom:4px}
     #printarea .solo-scales{display:flex;flex-wrap:wrap;gap:12px}
     #printarea .p-head{margin-bottom:14px}
     #printarea .p-head h1{font-family:Georgia,serif;font-style:italic;font-size:1.7rem}
@@ -3040,11 +3040,17 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     }).join("");
     const capo = off ? `<span class="c-capo">ton ${off>0?"+":""}${off} · capo ${off} avec les formes d'origine</span>` : "";
     const diags=(s.chords||[]).map(function(c){ return CHORDS[c]?`<div class="diag">${diagInner(c,off)}</div>`:""; }).join("");
+    const riff = s.riff
+      ? `<details class="riff-d"><summary>🎸 Le riff à connaître</summary><pre class="tab">${s.riff.tab}</pre>`+
+        (off?`<div class="footnote">Riff en tonalité d'origine (les accords ci-dessus sont transposés).</div>`:"")+
+        `<div class="footnote">${s.riff.note}</div></details>`
+      : "";
     return `<h2 class="c-title">${esc(s.title)}</h2>`+
       `<div class="c-sub"><span class="fm fm-key">${esc((s.key||"").split("·")[0].trim())}</span>`+
       `<span class="fm fm-m">${g.m}</span>${metroBtnHTML(s,"c-tempo")}${capo}</div>`+
       systems+
       `<div class="c-tip">Impro : ${s.tip}</div>`+
+      riff+
       soloHTML(s, off)+
       `<div class="c-diags diagrams">${diags}</div>`;
   }
