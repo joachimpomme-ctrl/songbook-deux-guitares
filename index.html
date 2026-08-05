@@ -408,6 +408,23 @@
     padding:7px 14px;font:inherit;font-weight:700;font-size:.8rem;cursor:pointer}
   .sl-btn#sl-play,.sl-btn#sl-concert{background:var(--rust);border-color:var(--rust);color:#fff}
   .sl-btn:disabled{background:transparent;color:var(--ink-soft);border-color:var(--ink-soft);cursor:default}
+  /* ---- sélecteur de setlist (à l'étoile d'un morceau) ---- */
+  #pick{position:fixed;z-index:70;width:250px;max-width:calc(100vw - 16px);background:var(--night2);
+    border:1px solid var(--brass);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);padding:10px;color:var(--paper)}
+  #pick[hidden]{display:none}
+  #pick .pick-hd{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.78rem;color:var(--brass)}
+  #pick .pick-x{background:none;border:none;color:#9AA7B4;font-size:1rem;cursor:pointer;padding:0}
+  #pick .pick-title{font-size:.82rem;font-weight:700;margin:2px 0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #pick .pick-list{display:flex;flex-direction:column;gap:2px;max-height:210px;overflow-y:auto}
+  #pick .pick-row{display:flex;align-items:center;gap:8px;padding:6px 4px;font-size:.85rem;cursor:pointer;border-radius:6px}
+  #pick .pick-row:hover{background:rgba(255,255,255,.05)}
+  #pick .pick-row input{flex:0 0 auto;width:16px;height:16px;accent-color:var(--brass)}
+  #pick .pick-row span.nm{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #pick .pick-n{flex:0 0 auto;color:#9AA7B4;font-size:.72rem}
+  #pick .pick-empty{color:#9AA7B4;font-size:.8rem;font-style:italic;padding:4px 2px}
+  #pick .pick-new{display:flex;gap:6px;margin-top:8px;border-top:1px solid #223040;padding-top:8px}
+  #pick .pick-name{flex:1 1 auto;min-width:0;background:var(--night);color:var(--paper);border:1px solid var(--ink-soft);border-radius:6px;padding:6px 7px;font:inherit;font-size:.8rem}
+  #pick .pick-add{flex:0 0 auto;width:32px;border:1px solid var(--brass);background:transparent;color:var(--brass);border-radius:6px;font-size:1rem;cursor:pointer}
   /* ---- riff signature (replié par défaut) ---- */
   .riff-d .riff-orig[hidden]{display:none}
   .riff-d pre.tab{margin-top:8px}
@@ -446,8 +463,8 @@
     #printarea .c-sub .tempo{border:1px solid #888;color:#000;background:none}
     #printarea .bar{border:1px solid #888;min-height:34px;font-size:1rem;font-weight:700}
     #printarea .c-tip,#printarea .c-diags{display:none}
-    #printarea .solo-d>*,#printarea .riff-d>*{display:block !important}   /* déplie gammes & riff dans le PDF */
-    #printarea .solo-d summary,#printarea .riff-d summary{list-style:none;color:#000;margin-bottom:4px}
+    #printarea .solo-d>*,#printarea .riff-d>*,#printarea .bass-d>*{display:block !important}   /* déplie gammes, riff & basse dans le PDF */
+    #printarea .solo-d summary,#printarea .riff-d summary,#printarea .bass-d summary{list-style:none;color:#000;margin-bottom:4px}
     #printarea .solo-scales{display:flex;flex-wrap:wrap;gap:12px}
     #printarea .p-head{margin-bottom:14px}
     #printarea .p-head h1{font-family:Georgia,serif;font-style:italic;font-size:1.7rem}
@@ -2936,9 +2953,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     }).join("");
   }
 
+  const isFavAny=function(sl){ return SL.lists.some(function(l){ return l.songs.indexOf(sl)>-1; }); };
   function setStar(sl){
     const btn=document.querySelector('.fav-btn[data-slug="'+sl+'"]');
-    if(btn){ const on=isFav(sl); btn.textContent=on?"★":"☆"; btn.setAttribute("aria-pressed", on?"true":"false"); btn.title=on?"Retirer de ma setlist":"Ajouter à ma setlist"; }
+    if(btn){ const on=isFavAny(sl); btn.textContent=on?"★":"☆"; btn.setAttribute("aria-pressed", on?"true":"false"); btn.title=on?"Dans une setlist — modifier":"Ajouter à une setlist"; }
   }
   function refreshStars(){ SONGS.forEach(function(s){ setStar(slug(s.title)); }); }
   function toggleFav(sl){
@@ -2948,6 +2966,66 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(i>-1) l.songs.splice(i,1); else l.songs.push(sl);
     saveSL(); refreshStars(); applyView();
   }
+
+  /* ---- Sélecteur : à quelle(s) setlist(s) ajouter un morceau ---- */
+  const pick=document.createElement("div");
+  pick.id="pick"; pick.hidden=true; pick.setAttribute("role","dialog"); pick.setAttribute("aria-label","Ajouter à une setlist");
+  pick.innerHTML =
+    '<div class="pick-hd">Ajouter à…<button type="button" class="pick-x" aria-label="Fermer">✕</button></div>'+
+    '<div class="pick-title"></div>'+
+    '<div class="pick-list"></div>'+
+    '<div class="pick-new"><input class="pick-name" type="text" maxlength="40" placeholder="Nouvelle setlist…" autocomplete="off" spellcheck="false"><button type="button" class="pick-add" aria-label="Créer et ajouter">＋</button></div>';
+  document.body.appendChild(pick);
+  const pickList=pick.querySelector(".pick-list"), pickName=pick.querySelector(".pick-name");
+  function renderPickerRows(sl){
+    if(!SL.lists.length){ pickList.innerHTML='<div class="pick-empty">Aucune setlist. Crée-en une ci-dessous.</div>'; return; }
+    pickList.innerHTML = SL.lists.map(function(l){
+      const inIt=l.songs.indexOf(sl)>-1;
+      return `<label class="pick-row"><input type="checkbox" data-lid="${l.id}"${inIt?" checked":""}><span class="nm">${esc(l.name)}</span><span class="pick-n">${l.songs.length}</span></label>`;
+    }).join("");
+  }
+  function openPicker(sl, anchor){
+    pick.dataset.slug=sl;
+    pick.querySelector(".pick-title").textContent = (bySlug[sl]?bySlug[sl].title:"");
+    pickName.value="";
+    renderPickerRows(sl);
+    pick.hidden=false;                      // afficher pour mesurer
+    const r=anchor.getBoundingClientRect(), pw=pick.offsetWidth, ph=pick.offsetHeight;
+    let left=Math.max(8, Math.min(r.right-pw, window.innerWidth-pw-8));
+    let top=r.bottom+6;
+    if(top+ph > window.innerHeight-8) top=Math.max(8, r.top-ph-6);
+    pick.style.left=left+"px"; pick.style.top=top+"px";
+  }
+  function closePicker(){ pick.hidden=true; }
+  function pickToggle(sl, lid, on){
+    const l=SL.lists.filter(function(x){ return x.id===lid; })[0]; if(!l) return;
+    const i=l.songs.indexOf(sl);
+    if(on && i<0) l.songs.push(sl); else if(!on && i>-1) l.songs.splice(i,1);
+    saveSL(); refreshStars(); applyView();
+  }
+  function pickCreateAdd(){
+    const name=pickName.value.trim(); if(!name) return;
+    const sl=pick.dataset.slug;
+    const l={id:newId(), name:name, songs:[sl]};
+    SL.lists.push(l);
+    if(!activeList()) SL.activeId=l.id;
+    saveSL(); refreshStars(); applyView();
+    pickName.value=""; renderPickerRows(sl);
+  }
+  pickList.addEventListener("change",function(e){
+    const cb=e.target.closest('input[type="checkbox"]'); if(!cb) return;
+    pickToggle(pick.dataset.slug, cb.dataset.lid, cb.checked);
+    const l=SL.lists.filter(function(x){ return x.id===cb.dataset.lid; })[0];
+    const nEl=cb.closest(".pick-row").querySelector(".pick-n"); if(nEl&&l) nEl.textContent=l.songs.length;
+  });
+  pick.querySelector(".pick-add").addEventListener("click", pickCreateAdd);
+  pick.querySelector(".pick-x").addEventListener("click", closePicker);
+  pickName.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); pickCreateAdd(); } else if(e.key==="Escape"){ closePicker(); } });
+  document.addEventListener("click",function(e){
+    if(pick.hidden) return;
+    if(e.target.closest("#pick") || e.target.closest(".fav-btn")) return;
+    closePicker();
+  });
   function moveInList(sl,dir){
     const l=activeList(); if(!l) return;
     const i=l.songs.indexOf(sl); if(i<0) return;
@@ -3045,6 +3123,12 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
         (off?`<div class="footnote">Riff en tonalité d'origine (les accords ci-dessus sont transposés).</div>`:"")+
         `<div class="footnote">${s.riff.note}</div></details>`
       : "";
+    const bass = s.bass||autoBass(s);
+    const bassHTML = bass
+      ? `<details class="bass-d"><summary>Ligne de basse</summary><pre class="tab">${bass.tab}</pre>`+
+        (off?`<div class="footnote">Tablature de basse en tonalité d'origine (les accords ci-dessus sont transposés).</div>`:"")+
+        `<div class="footnote">${bass.note}</div></details>`
+      : "";
     return `<h2 class="c-title">${esc(s.title)}</h2>`+
       `<div class="c-sub"><span class="fm fm-key">${esc((s.key||"").split("·")[0].trim())}</span>`+
       `<span class="fm fm-m">${g.m}</span>${metroBtnHTML(s,"c-tempo")}${capo}</div>`+
@@ -3052,7 +3136,8 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       `<div class="c-tip">Impro : ${s.tip}</div>`+
       riff+
       soloHTML(s, off)+
-      `<div class="c-diags diagrams">${diags}</div>`;
+      `<div class="c-diags diagrams">${diags}</div>`+
+      bassHTML;
   }
   let concertSongs=[], concertIdx=0;
   function concertGoto(i){
@@ -3177,7 +3262,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   document.addEventListener("click", function(e){
     const t=e.target.closest("button, a"); if(!t) return;
     if(t.classList.contains("hide-btn")){ e.preventDefault(); HIDDEN.add(t.dataset.slug); saveHidden(); applyView(); return; }
-    if(t.classList.contains("fav-btn")){ e.preventDefault(); toggleFav(t.dataset.slug); return; }
+    if(t.classList.contains("fav-btn")){ e.preventDefault(); openPicker(t.dataset.slug, t); return; }
     if(t.classList.contains("tp-plus")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, (TP[t.closest(".tpose").dataset.slug]||0)+1); return; }
     if(t.classList.contains("tp-minus")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, (TP[t.closest(".tpose").dataset.slug]||0)-1); return; }
     if(t.classList.contains("tp-reset")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, 0); return; }
