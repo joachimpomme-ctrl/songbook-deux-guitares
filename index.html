@@ -2271,6 +2271,61 @@ E|-------------------|`,
     chords:["Am7","D9","Gm7","C7","Fmaj7"],
     tip:"Le samba le plus contagieux du monde. Le vamp Am7-D9 (dorien de La), puis la bascule Gm7-C7-Fa qui ouvre le soleil. Penta de La m sur la première partie, gamme de Fa majeur sur la seconde. Chantez le « ô ariá » sans complexe.",
     note:"Version jam simplifiée.",
+  },
+  {
+    zone:"rock", title:"Come Together", key:"Ré mineur · groove marécageux (Beatles)",
+    systems:[
+      {note:"couplet — le riff", bars:["Dm7","Dm7","Dm7","Dm7"]},
+      {note:"refrain « come together »", bars:["Bm","A","G","A"]}
+    ],
+    chords:["Dm7","Bm","A","G"],
+    tip:"Tout part du riff de basse en Ré mineur : laissez respirer, c'est le silence qui groove. Solo en penta mineure de Ré (Ré dorien pour la couleur bluesy). Le refrain Bm-A-G descend par paliers : suivez les toniques.",
+    note:"Structure couplet + refrain simplifiée.",
+  },
+  {
+    zone:"pop", title:"Here Comes the Sun", key:"Ré · lumineux (George Harrison / Beatles)",
+    systems:[
+      {note:"couplet", bars:["D","G","A7","D"]},
+      {note:"refrain « here comes the sun »", bars:["G","D","A7","D"]},
+      {note:"pont « sun, sun, sun » — mesures asymétriques", bars:["F","C","G","D · A7"]}
+    ],
+    chords:["D","G","A7","F","C"],
+    tip:"Soleil en Ré majeur : penta majeure de Ré et arpèges qui scintillent sur les cordes aiguës. Le pont « sun sun sun » (F-C-G-D-A7) change de métrique sans prévenir — comptez ensemble, c'est le piège du morceau. Capo 7 sur l'original.",
+    note:"Grille en Ré (l'original est capo 7).",
+  },
+  {
+    zone:"pop", title:"Something", key:"Do · ballade (George Harrison / Beatles)",
+    systems:[
+      {note:"intro", bars:["F","F","E♭","G7"]},
+      {note:"couplet", bars:["C · Cmaj7","C7 · F","D7","G"]},
+      {bars:["Am · Am/G","D/F#","F · E♭","G7"]},
+      {note:"pont « you're asking me »", bars:["A · C#m","F#m · A","D","G · A"]}
+    ],
+    chords:["C","Cmaj7","C7","F","D7","G","Am","Am/G","D/F#","E♭","G7","A","C#m","F#m","D"],
+    tip:"Le chef-d'œuvre de Harrison. La basse descend Do→Si→Si♭→La sous les accords du couplet (C-Cmaj7-C7-F) : c'est ELLE qu'il faut faire chanter. Solo mélodique en gamme de Do, visez les tierces ; le pont module vers La majeur.",
+    note:"Grille complète (intro, couplet, pont).",
+  },
+  {
+    zone:"pop", title:"Ob-La-Di, Ob-La-Da", key:"La · ska-pop enjoué (Beatles)",
+    systems:[
+      {note:"couplet & refrain", bars:["A","E7","A","A7"]},
+      {bars:["D","A","E7","A"]}
+    ],
+    chords:["A","E7","A7","D"],
+    tip:"La boucle la plus joyeuse des Beatles : A-E7-A-A7 puis la bascule sur Ré. Le A7 qui annonce le Ré est tout le sel du morceau. Penta majeure de La, ou contentez-vous des accords en pompe pour faire chanter tout le monde.",
+    note:"Grille en La (boucle couplet = refrain).",
+  },
+  {
+    zone:"rock", title:"A Hard Day's Night", key:"Sol · énergique (Beatles)",
+    systems:[
+      {note:"couplet", bars:["G","C · G","F · G","G"]},
+      {note:"« when I get home »", bars:["C","D","G","G"]},
+      {note:"pont « when I'm home »", bars:["Bm","Em","Bm","G"]},
+      {bars:["C","D","G","G"]}
+    ],
+    chords:["G","C","F","D","Bm","Em"],
+    tip:"Le fameux accord d'intro (un empilement Sol/Fadd9 aux deux guitares + basse) : approchez-le d'un Gsus bien claqué, laissez-le sonner. Couplet en Sol, pont en Si mineur. Penta de Sol / Mi mineur pour broder.",
+    note:"Structure complète (couplet, transition, pont).",
   }
 ];
 
@@ -2441,7 +2496,10 @@ const SONG_BPM = {
   "Yesterday":96, "Killing Me Softly":82, "Lean on Me":76, "What's Up":132, "Take On Me":84,
   "What a Wonderful World":56, "Quelqu'un m'a dit":120, "Les Lacs du Connemara":128,
   "Manhattan-Kaboul":110, "On écrit sur les murs":120, "Une belle histoire":132, "Salut les amoureux":120,
-  "Belle":72, "Osez Joséphine":116, "Comme toi":92, "Le Métèque":130
+  "Belle":72, "Osez Joséphine":116, "Comme toi":92, "Le Métèque":130,
+  // Beatles (ajouts)
+  "Come Together":84, "Here Comes the Sun":129, "Something":66, "Ob-La-Di, Ob-La-Da":113,
+  "A Hard Day's Night":137
 };
 // Bouton tempo qui pilote le métronome global (réutilisé par la carte et le mode concert).
 function metroBtnHTML(s, extra){
