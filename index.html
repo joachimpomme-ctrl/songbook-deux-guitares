@@ -1396,10 +1396,10 @@ E|--3---5-------------|`,
     note:"Version jam simplifiée.",
   },
   {
-    zone:"jazz", title:"Nature Boy", key:"Ré mineur · valse lente 3/4 (eden ahbez)",
-    systems:[{note:"boucle · 3 temps par mesure", bars:["Dm","Em7♭5 · A7","Dm","Em7♭5 · A7"]}],
+    zone:"jazz", title:"Nature Boy", key:"Ré mineur · ballade lente, rubato (eden ahbez)",
+    systems:[{note:"boucle", bars:["Dm","Em7♭5 · A7","Dm","Em7♭5 · A7"]}],
     chords:["Dm","Em7♭5","A7"],
-    tip:"Une valse mineure hypnotique, beaucoup d'espace. Penta de Ré m + Do♯ sur le A7 (mineur harmonique de Ré). Le morceau où une seule note bien placée vaut un chorus entier.",
+    tip:"Une ballade mineure hypnotique, beaucoup d'espace. Penta de Ré m + Do♯ sur le A7 (mineur harmonique de Ré). Le morceau où une seule note bien placée vaut un chorus entier.",
     note:"Boucle simplifiée du couplet.",
   },
   {
@@ -1912,14 +1912,14 @@ E|--------------3-|`,
     note:"Structure simplifiée.",
   },
   {
-    zone:"pop", title:"Le Métèque", key:"La mineur · valse 3/4 (Georges Moustaki)",
+    zone:"pop", title:"Le Métèque", key:"La majeur · valse 3/4 (Georges Moustaki)",
     systems:[
-      {bars:["Am","Am","Dm","Am"]},
-      {bars:["E7","E7","Am","Am"]}
+      {note:"couplet", bars:["A","E7","A","E"]},
+      {note:"« avec mes mains de maraudeur »", bars:["D","C#m","Bm7 · E7","A"]}
     ],
-    chords:["Am","Dm","E7"],
-    tip:"La valse de Moustaki. Trois temps, un accord par phrase, penta de La mineur + Do♯ sur le E7 (mineur harmonique). Laisse chanter, tempo de flânerie.",
-    note:"Version jam simplifiée.",
+    chords:["A","E7","E","D","C#m","Bm7"],
+    tip:"La valse de Moustaki, en La <b>majeur</b> nostalgique (pas mineur !). Gamme de La majeur / penta majeure ; la descente Ré → Do♯m → Sim7 vers le E7 est le cœur mélancolique. Trois temps, tempo de flânerie.",
+    note:"Version simplifiée (couplet).",
   },
   {
     zone:"jazz", title:"Georgia on My Mind", key:"Fa · ballade du Sud (Hoagy Carmichael / Ray Charles)",
@@ -2453,7 +2453,7 @@ const GROOVE_BY_TITLE = {
   "Folsom Prison Blues":{m:"4/4", n:4, acc:[1,3], lbl:"Train beat : basses alternées étouffées sur 1 et 3, « tchika » léger sur 2 et 4."},
   "Minor Swing":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."},
   "All Blues":{m:"6/8", n:6, acc:[1,4], lbl:"6/8 : 6 croches senties comme 2 grands temps balancés (1 et 4)."},
-  "Nature Boy":{m:"3/4", n:3, acc:[1], lbl:"Valse lente : 3 temps, basse sur 1, accords légers sur 2 et 3."},
+  "Nature Boy":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade rubato : 4 temps très lents, basse sur 1 et 3, accords tenus, beaucoup d'air."},
   "Blue Bossa":{m:"4/4", n:4, acc:[1,3], lbl:"Bossa : basse au pouce sur 1 et 3, accords pincés en syncope entre les temps."},
   "Black Orpheus":{m:"4/4", n:4, acc:[1,3], lbl:"Bossa : basse au pouce sur 1 et 3, accords en syncope au-dessus."},
   "The Girl from Ipanema":{m:"4/4", n:4, acc:[1,3], lbl:"Bossa : basse ronde sur 1 et 3, accords courts entre les temps, jamais pressé."},
