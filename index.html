@@ -451,6 +451,27 @@
   .fav-item .fav-rm{padding:5px 10px}
   /* note de forme en mode concert */
   #concert .c-note{margin:2px 0 10px;font-size:.88rem;font-weight:600;font-style:italic;color:var(--rust)}
+  /* plein écran depuis une carte */
+  .chart .eyebrow .full-btn{background:none;border:none;cursor:pointer;font:inherit;font-size:.95rem;
+    color:var(--ink-soft);padding:12px 6px;margin:-12px -2px}
+  .chart .eyebrow .full-btn:active{color:var(--rust)}
+  /* chip tonalité à côté du titre */
+  .key-chip{display:inline-block;vertical-align:2px;margin-left:8px;padding:1px 9px;border-radius:999px;
+    background:rgba(168,64,44,.12);color:var(--rust);font-size:.68rem;font-weight:800;letter-spacing:.02em;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-style:normal;white-space:nowrap}
+  /* export / import setlists */
+  .sl-load-lbl{display:inline-flex;align-items:center;cursor:pointer}
+  /* toast avec action (annuler) */
+  #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom));z-index:80;
+    display:flex;align-items:center;gap:14px;max-width:calc(100vw - 24px);
+    background:rgba(24,36,48,.97);color:var(--paper);border:1px solid var(--brass);border-radius:10px;
+    padding:10px 16px;font-size:.85rem;box-shadow:0 6px 20px rgba(0,0,0,.45)}
+  #toast[hidden]{display:none}
+  #toast button{background:none;border:none;color:var(--brass);font:inherit;font-weight:800;cursor:pointer;padding:0;white-space:nowrap}
+  /* métronome : mode silencieux (flash) */
+  #metro .m-mute{width:38px;height:32px;border-radius:8px;border:1px solid #9AA7B4;background:transparent;font-size:.95rem;cursor:pointer;padding:0}
+  #metro .m-mute.on{border-color:var(--brass);background:rgba(201,144,58,.18)}
+  #metro.flash{background:rgba(201,144,58,.55)}
   /* ---- impression ---- */
   #printarea{display:none}
   @media print{
@@ -475,8 +496,9 @@
     body.printing-setlist #printarea{display:block !important}
     #printarea .p-song{page-break-inside:avoid;margin:0 0 18px;padding-bottom:10px;border-bottom:1px solid #ccc}
     #printarea .c-title{font-family:Georgia,serif;font-style:italic;font-size:1.4rem;margin-bottom:4px}
-    #printarea .c-sub{margin-bottom:8px;font-size:.8rem;color:#333}
-    #printarea .c-sub .tempo{border:1px solid #888;color:#000;background:none}
+    #printarea .c-sub{margin-bottom:8px;font-size:.8rem;color:#333;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    #printarea .c-sub .tempo{border:none;background:none;padding:0;color:#000;font-weight:700}
+    #printarea .p-toc{font-size:.92rem;line-height:1.7;margin:6px 0 0;page-break-after:always}
     #printarea .bar{border:1px solid #888;min-height:34px;font-size:1rem;font-weight:700}
     #printarea .c-tip,#printarea .c-diags{display:none}
     #printarea .solo-d>*,#printarea .riff-d>*,#printarea .bass-d>*{display:block !important}   /* déplie gammes, riff & basse dans le PDF */
@@ -528,14 +550,16 @@
       <button type="button" id="sl-cancel" title="Annuler" aria-label="Annuler">✕</button>
     </div>
     <div class="masq-list" id="fav-list"></div>
-    <div class="sl-empty" id="sl-empty" hidden>Ajoute des morceaux avec l'étoile ☆ sur chaque carte.</div>
+    <div class="sl-empty" id="sl-empty" hidden>Crée ta première setlist : touche l'étoile ☆ d'un morceau, ou le bouton ＋ ci-dessus.</div>
     <div class="sl-foot">
       <label class="fav-only-row"><input type="checkbox" id="fav-only"> N'afficher que cette setlist</label>
       <div class="sl-actions">
-        <button type="button" id="sl-play" class="sl-btn">▶ Défiler</button>
+        <button type="button" id="sl-play" class="sl-btn" title="Fait défiler la setlist dans le carnet, morceau par morceau">▶ Répète</button>
         <button type="button" id="sl-concert" class="sl-btn">🎤 Concert</button>
         <button type="button" id="sl-mail" class="sl-btn">✉ Mail</button>
         <button type="button" id="sl-pdf" class="sl-btn">🖨 PDF</button>
+        <button type="button" id="sl-save" class="sl-btn" title="Télécharger toutes les setlists, transpositions et morceaux masqués (sauvegarde)">💾 Sauver</button>
+        <label class="sl-btn sl-load-lbl" title="Restaurer une sauvegarde">📂 Restaurer<input id="sl-load" type="file" accept=".json,application/json" hidden></label>
       </div>
     </div>
   </details>
@@ -3887,8 +3911,8 @@ function songHTML(s){
   const bass = s.bass||autoBass(s);
   const bassHTML = bass ? `<details><summary>Ligne de basse</summary><pre class="tab">${bass.tab}</pre><div class="footnote bass-orig" hidden>Tablature de basse en tonalité d'origine (les accords ci-dessus sont transposés).</div><div class="footnote">${bass.note}</div></details>` : "";
   return `<div class="chart" id="${sl}">
-    <div class="eyebrow"><span>${s.key}</span><span class="eb-actions"><button type="button" class="fav-btn" data-slug="${sl}" aria-pressed="false" title="Ajouter à ma setlist">☆</button><button type="button" class="hide-btn" data-slug="${sl}" title="Retirer ce morceau de ma liste">✕ retirer</button></span></div>
-    <h2>${s.title}</h2>
+    <div class="eyebrow"><span>${s.key}</span><span class="eb-actions"><button type="button" class="fav-btn" data-slug="${sl}" aria-pressed="false" title="Ajouter à ma setlist">☆</button><button type="button" class="full-btn" data-slug="${sl}" title="Plein écran (mode concert)" aria-label="Afficher en plein écran">⛶</button><button type="button" class="hide-btn" data-slug="${sl}" title="Masquer ce morceau du carnet (réversible)">✕ masquer</button></span></div>
+    <h2>${s.title}<span class="key-chip">${(s.key||"").split("·")[0].trim()}</span></h2>
     ${grooveHTML(s)}
     ${tpose}
     ${systems}
@@ -3955,7 +3979,8 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
         slName=document.getElementById("sl-name");
   const songMeta=function(s){
     const g=grooveOf(s), bpm=SONG_BPM[s.title], dotted=(g.m==="6/8"||g.m==="12/8");
-    return {key:(s.key||"").split("·")[0].trim(), meter:g.m, bpm:bpm, dotted:dotted};
+    // tonalité réellement jouée (transposition comprise) — cohérente avec la grille affichée
+    return {key:frKeyTransposed(s, TP[slug(s.title)]||0), meter:g.m, bpm:bpm, dotted:dotted};
   };
   const slugOf=function(a){ return a.getAttribute("href").slice(1); };
   const shownState=function(sl){ return !HIDDEN.has(sl) && !(favOnly && !isFav(sl)); };
@@ -3991,14 +4016,14 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   }
 
   function renderSetlists(){
-    setlist.hidden = SL.lists.length===0;
+    setlist.hidden = false;               // toujours visible : c'est la porte d'entrée du flux groupe
     favCount.textContent = SL.lists.length;
     const l=activeList();
     slSelect.innerHTML = SL.lists.map(function(x){
       return `<option value="${x.id}"${x.id===SL.activeId?" selected":""}>${esc(x.name)} (${x.songs.length})</option>`;
     }).join("");
     const songs = l ? l.songs.map(function(sl){ return {sl:sl, s:bySlug[sl]}; }).filter(function(o){ return o.s; }) : [];
-    slEmpty.hidden = !(l && songs.length===0);
+    slEmpty.hidden = !(!l || songs.length===0);
     slPlay.disabled = slConcert.disabled = slMail.disabled = slPdf.disabled = songs.length===0;
     if((!l || songs.length===0) && favOnly){ favOnly=false; setLS("songbook-favonly",false); }
     favOnlyBox.checked = favOnly;
@@ -4032,6 +4057,53 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     saveSL(); refreshStars(); applyView();
   }
 
+  /* ---- Toast avec action (annuler) ---- */
+  const toastEl=document.createElement("div");
+  toastEl.id="toast"; toastEl.hidden=true; toastEl.setAttribute("role","status");
+  document.body.appendChild(toastEl);
+  let toastTimer=null;
+  function toast(msg, actionLabel, action){
+    toastEl.innerHTML="";
+    const span=document.createElement("span"); span.textContent=msg; toastEl.appendChild(span);
+    if(actionLabel){
+      const b=document.createElement("button"); b.type="button"; b.textContent=actionLabel;
+      b.addEventListener("click",function(){ toastEl.hidden=true; clearTimeout(toastTimer); if(action) action(); });
+      toastEl.appendChild(b);
+    }
+    toastEl.hidden=false;
+    clearTimeout(toastTimer); toastTimer=setTimeout(function(){ toastEl.hidden=true; },5000);
+  }
+
+  /* ---- Sauvegarde / restauration (setlists + transpositions + masqués) ---- */
+  function exportData(){
+    const data={v:1, date:new Date().toISOString().slice(0,10), setlists:SL, tp:TP, hidden:Array.from(HIDDEN)};
+    const blob=new Blob([JSON.stringify(data,null,1)],{type:"application/json"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="songbook-setlists-"+data.date+".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); },5000);
+    toast("Sauvegarde téléchargée ("+SL.lists.length+" setlist"+(SL.lists.length>1?"s":"")+").");
+  }
+  function importData(file){
+    const r=new FileReader();
+    r.onload=function(){
+      try{
+        const d=JSON.parse(r.result);
+        if(!d || !d.setlists || !Array.isArray(d.setlists.lists)) throw 0;
+        SL.lists=d.setlists.lists; SL.activeId=d.setlists.activeId||null;
+        const touched=new Set(Object.keys(TP));
+        Object.keys(TP).forEach(function(k){ delete TP[k]; });
+        if(d.tp) Object.keys(d.tp).forEach(function(k){ TP[k]=d.tp[k]; touched.add(k); });
+        saveTP(); touched.forEach(function(k){ applyTP(k); });
+        if(Array.isArray(d.hidden)){ HIDDEN=new Set(d.hidden); saveHidden(); }
+        saveSL(); refreshStars(); applyView();
+        toast("Sauvegarde restaurée : "+SL.lists.length+" setlist"+(SL.lists.length>1?"s":"")+".");
+      }catch(err){ toast("Fichier illisible — ce n'est pas une sauvegarde du songbook."); }
+    };
+    r.readAsText(file);
+  }
+
   /* ---- Sélecteur : à quelle(s) setlist(s) ajouter un morceau ---- */
   const pick=document.createElement("div");
   pick.id="pick"; pick.hidden=true; pick.setAttribute("role","dialog"); pick.setAttribute("aria-label","Ajouter à une setlist");
@@ -4060,7 +4132,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     let top=r.bottom+6;
     if(top+ph > window.innerHeight-8) top=Math.max(8, r.top-ph-6);
     pick.style.left=left+"px"; pick.style.top=top+"px";
+    pickOpenedAt=Date.now();
+    const first=pick.querySelector('input[type="checkbox"]'); (first||pickName).focus();
   }
+  let pickOpenedAt=0;
   function closePicker(){ pick.hidden=true; }
   function pickToggle(sl, lid, on){
     const l=SL.lists.filter(function(x){ return x.id===lid; })[0]; if(!l) return;
@@ -4091,6 +4166,11 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(e.target.closest("#pick") || e.target.closest(".fav-btn")) return;
     closePicker();
   });
+  // le popover est positionné en fixe : au scroll il se détacherait de l'étoile → on le ferme
+  window.addEventListener("scroll",function(){
+    if(!pick.hidden && Date.now()-pickOpenedAt>400) closePicker();
+  },{passive:true});
+  pick.addEventListener("keydown",function(e){ if(e.key==="Escape") closePicker(); });
   function moveInList(sl,dir){
     const l=activeList(); if(!l) return;
     const i=l.songs.indexOf(sl); if(i<0) return;
@@ -4215,13 +4295,16 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       `<div class="c-diags diagrams">${diags}</div>`+
       bassHTML;
   }
-  let concertSongs=[], concertIdx=0;
+  let concertSongs=[], concertIdx=0, concertName="";
   function concertGoto(i){
     if(!concertSongs.length) return;
     concertIdx=((i%concertSongs.length)+concertSongs.length)%concertSongs.length;
-    const s=bySlug[concertSongs[concertIdx]], l=activeList();
-    cName.textContent = l?l.name:"";
-    cPos.textContent = (concertIdx+1)+" / "+concertSongs.length;
+    const s=bySlug[concertSongs[concertIdx]];
+    cName.textContent = concertName;
+    cPos.textContent = concertSongs.length>1 ? (concertIdx+1)+" / "+concertSongs.length : "";
+    const many = concertSongs.length>1 ? "" : "none";
+    concert.querySelector(".c-prev").style.display = many;
+    concert.querySelector(".c-next").style.display = many;
     cStage.innerHTML = s?concertHTML(s):"";
     cStage.scrollTop=0;
   }
@@ -4229,8 +4312,16 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     const l=activeList(); if(!l) return;
     concertSongs=l.songs.filter(function(sl){ return bySlug[sl]; });
     if(!concertSongs.length) return;
+    concertName=l.name;
     concertGoto(0);
     concert.hidden=false; document.body.classList.add("concert-on"); details.open=false;
+    if(window.__wake) window.__wake.on("concert");
+  }
+  function enterConcertOne(sl){
+    if(!bySlug[sl]) return;
+    concertSongs=[sl]; concertName="";
+    concertGoto(0);
+    concert.hidden=false; document.body.classList.add("concert-on");
     if(window.__wake) window.__wake.on("concert");
   }
   function exitConcert(){
@@ -4274,6 +4365,9 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   function printSetlist(){
     const l=activeList(); if(!l||!l.songs.length) return;
     let html=`<div class="p-head"><h1>${esc(l.name)}</h1><div class="p-sub">${l.songs.length} morceaux · Deux Guitares · Songbook</div></div>`;
+    // page 1 : le sommaire numéroté (la feuille de scène), puis un morceau détaillé par section
+    const items=l.songs.map(function(sl){ return bySlug[sl]; }).filter(Boolean);
+    html+=`<div class="p-toc">${items.map(function(s,i){ return `<div>${esc(slLine(s,i))}</div>`; }).join("")}</div>`;
     l.songs.forEach(function(sl){ const s=bySlug[sl]; if(s) html+=`<section class="p-song">${concertHTML(s)}</section>`; });
     printarea.innerHTML=html;
     // les <details> fermés ne s'impriment pas : tout déplier (gammes, riff, basse)
@@ -4329,6 +4423,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     card.querySelectorAll(".diag[data-ch]").forEach(function(d){ d.innerHTML=diagInner(d.getAttribute("data-ch"), off); });
     const soloBox=card.querySelector(".solo-scales"); if(soloBox) soloBox.innerHTML=soloDiagramsHTML(bySlug[sl], off);
     const val=card.querySelector(".tp-val"); if(val) val.textContent=(off>0?"+":"")+off;
+    const kc=card.querySelector(".key-chip"); if(kc && bySlug[sl]) kc.textContent=frKeyTransposed(bySlug[sl], off);
     const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent = off>0 ? "≡ capo "+off+" avec les formes d'origine" : "";
     const reset=card.querySelector(".tp-reset"); if(reset) reset.hidden = off===0;
     const bo=card.querySelector(".bass-orig"); if(bo) bo.hidden = off===0;
@@ -4343,7 +4438,13 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   // délégation : tous les boutons des cartes + panneaux
   document.addEventListener("click", function(e){
     const t=e.target.closest("button, a"); if(!t) return;
-    if(t.classList.contains("hide-btn")){ e.preventDefault(); HIDDEN.add(t.dataset.slug); saveHidden(); applyView(); return; }
+    if(t.classList.contains("hide-btn")){
+      e.preventDefault();
+      const sl=t.dataset.slug; HIDDEN.add(sl); saveHidden(); applyView();
+      toast("Morceau masqué — retrouvable dans « Morceaux masqués ».","Annuler",function(){ HIDDEN.delete(sl); saveHidden(); applyView(); });
+      return;
+    }
+    if(t.classList.contains("full-btn")){ e.preventDefault(); enterConcertOne(t.dataset.slug); return; }
     if(t.classList.contains("fav-btn")){ e.preventDefault(); openPicker(t.dataset.slug, t); return; }
     if(t.classList.contains("tp-plus")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, (TP[t.closest(".tpose").dataset.slug]||0)+1); return; }
     if(t.classList.contains("tp-minus")){ e.preventDefault(); setTP(t.closest(".tpose").dataset.slug, (TP[t.closest(".tpose").dataset.slug]||0)-1); return; }
@@ -4361,6 +4462,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(t.id==="sl-concert"){ e.preventDefault(); enterConcert(); return; }
     if(t.id==="sl-mail"){ e.preventDefault(); mailSetlist(); return; }
     if(t.id==="sl-pdf"){ e.preventDefault(); printSetlist(); return; }
+    if(t.id==="sl-save"){ e.preventDefault(); exportData(); return; }
     if(t.id==="masq-all"){ HIDDEN.clear(); saveHidden(); applyView(); return; }
     if(t.matches("#song-index a")){ details.open=false; search.value=""; filterIndex(); return; }
     if(t.classList.contains("fav-item") || (t.closest && t.closest(".fav-item") && t.tagName==="A")){ details.open=false; return; }
@@ -4368,6 +4470,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   search.addEventListener("input",function(){ if(search.value.trim() && !details.open) details.open=true; filterIndex(); });
   search.addEventListener("focus",function(){ if(!details.open) details.open=true; });
   favOnlyBox.addEventListener("change",function(){ favOnly=favOnlyBox.checked; setLS("songbook-favonly",favOnly); applyView(); });
+  document.getElementById("sl-load").addEventListener("change",function(){
+    if(this.files && this.files[0]) importData(this.files[0]);
+    this.value="";
+  });
   slSelect.addEventListener("change",function(){ closeEdit(); SL.activeId=slSelect.value; saveSL(); refreshStars(); applyView(); });
   slName.addEventListener("keydown",function(e){
     if(e.key==="Enter"){ e.preventDefault(); commitEdit(); }
@@ -4414,9 +4520,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     '<div class="m-info"><div class="m-title">Métronome</div><div class="m-sub"></div></div>'+
     '<div class="m-dots"></div>'+
     '<div class="m-tempo">'+
-      '<button type="button" class="m-minus" aria-label="Moins vite">–</button>'+
+      '<button type="button" class="m-minus" aria-label="Moins vite (maintenir pour accélérer)">–</button>'+
       '<div class="m-bpm"><span class="m-bpm-v">100</span><small>BPM ♩</small></div>'+
-      '<button type="button" class="m-plus" aria-label="Plus vite">+</button>'+
+      '<button type="button" class="m-plus" aria-label="Plus vite (maintenir pour accélérer)">+</button>'+
+      '<button type="button" class="m-mute" aria-label="Mode silencieux : flash visuel" title="Silencieux (flash visuel)">🔔</button>'+
       '<button type="button" class="m-tap" aria-label="Taper le tempo">TAP</button>'+
     '</div>'+
     '<button type="button" class="m-close" aria-label="Fermer le métronome">✕</button>';
@@ -4426,7 +4533,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   const playBtn=q(".m-play"), bpmV=q(".m-bpm-v"), bpmLbl=bar.querySelector(".m-bpm small"),
         titleEl=q(".m-title"), subEl=q(".m-sub"), dotsEl=q(".m-dots"), tapBtn=q(".m-tap");
 
-  let ctx=null, running=false, bpm=100, beats=4, accents=[1], dotted=false;
+  let ctx=null, running=false, bpm=100, beats=4, accents=[1], dotted=false, silent=false;
   let curNote=0, nextTime=0, timer=null, raf=null, lastBtn=null;
   const queue=[];   // {beat,time} pour l'affichage des dots
 
@@ -4435,6 +4542,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(ctx.state==="suspended") ctx.resume();
   }
   function tick(beat, time){       // un clic à l'instant "time" (horloge audio)
+    if(silent) return;             // mode flash : le timing continue, seul le son se tait
     const osc=ctx.createOscillator(), g=ctx.createGain();
     const isOne = beat===0, isAcc = accents.indexOf(beat+1)>-1;
     osc.frequency.value = isOne?1600 : (isAcc?1100:800);
@@ -4459,6 +4567,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     while(queue.length && queue[0].time < now){
       const b = queue.shift().beat, its = dotsEl.children;
       for(let i=0;i<its.length;i++) its[i].classList.toggle("on", i===b);
+      if(silent && b===0){          // flash du « 1 » en mode silencieux
+        bar.classList.add("flash");
+        setTimeout(function(){ bar.classList.remove("flash"); },110);
+      }
     }
     raf = requestAnimationFrame(animate);
   }
@@ -4514,8 +4626,25 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   });
 
   playBtn.addEventListener("click", ()=> running ? stop() : start());
-  q(".m-plus").addEventListener("click", ()=> setBpm(bpm+ (dotted?1:1)));
-  q(".m-minus").addEventListener("click", ()=> setBpm(bpm-1));
+  // ± : un clic = 1 BPM ; appui maintenu = défilement rapide
+  function bindHold(btn, step){
+    let t1=null, t2=null;
+    btn.addEventListener("click", function(){ if(btn._held){ btn._held=false; return; } setBpm(bpm+step); });
+    btn.addEventListener("pointerdown", function(){
+      t1=setTimeout(function(){ btn._held=true; t2=setInterval(function(){ setBpm(bpm+step); },70); },450);
+    });
+    ["pointerup","pointerleave","pointercancel"].forEach(function(ev){
+      btn.addEventListener(ev, function(){ clearTimeout(t1); if(t2){ clearInterval(t2); t2=null; } });
+    });
+  }
+  bindHold(q(".m-plus"), +1);
+  bindHold(q(".m-minus"), -1);
+  const muteBtn=q(".m-mute");
+  muteBtn.addEventListener("click", function(){
+    silent=!silent;
+    muteBtn.textContent = silent?"🔕":"🔔";
+    muteBtn.classList.toggle("on", silent);
+  });
   q(".m-close").addEventListener("click", function(){
     stop(); bar.classList.remove("open");
   });
