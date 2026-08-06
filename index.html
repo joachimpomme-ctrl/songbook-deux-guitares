@@ -76,7 +76,7 @@
     margin-bottom:16px;
     box-shadow:0 4px 14px rgba(0,0,0,.4);
     content-visibility:auto;              /* ne peint que les cartes proches du viewport */
-    contain-intrinsic-size:auto 620px;
+    contain-intrinsic-size:auto 690px;    /* ≈ hauteur moyenne réelle d'une carte */
   }
   .chart .eyebrow{
     display:flex;justify-content:space-between;align-items:baseline;
@@ -199,7 +199,7 @@
   #concert .c-diags{margin-top:14px}
   #concert .c-prev,#concert .c-next{position:absolute;bottom:0;top:auto;width:64px;height:calc(100% - 52px);
     border:none;background:transparent;color:var(--rust);font-size:2.4rem;font-weight:700;cursor:pointer;
-    opacity:.32;display:flex;align-items:flex-end;justify-content:center;padding-bottom:24px}
+    opacity:.45;display:flex;align-items:flex-end;justify-content:center;padding-bottom:24px}
   #concert .c-prev{left:0} #concert .c-next{right:0}
   #concert .c-prev:active,#concert .c-next:active{opacity:.7;background:rgba(168,64,44,.08)}
   @media(min-width:900px){ #concert .c-prev,#concert .c-next{opacity:.5} }
@@ -472,13 +472,28 @@
   #metro .m-mute{width:38px;height:32px;border-radius:8px;border:1px solid #9AA7B4;background:transparent;font-size:.95rem;cursor:pointer;padding:0}
   #metro .m-mute.on{border-color:var(--brass);background:rgba(201,144,58,.18)}
   #metro.flash{background:rgba(201,144,58,.55)}
+  /* focus clavier visible */
+  :focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  .chart :focus-visible,.tpose :focus-visible{outline-color:var(--rust)}
+  /* animations réduites si demandé par le système */
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  }
+  /* dock centré sur grand écran */
+  @media(min-width:900px){
+    #metro,#player{max-width:820px;width:100%;margin:0 auto;
+      border-left:1px solid var(--brass);border-right:1px solid var(--brass);border-radius:12px 12px 0 0}
+  }
+  /* pied de page : version */
+  .app-foot{max-width:640px;margin:34px auto 0;padding:0 14px;color:#5c6a78;font-size:.72rem;text-align:center}
   /* ---- impression ---- */
   #printarea{display:none}
   @media print{
     body{background:#fff;color:#000;padding:0}
     .chart{content-visibility:visible;contain-intrinsic-size:none}
     #printarea .c-note{color:#333;font-style:italic;margin:2px 0 8px}
-    nav,.repertoire,.hide-btn,#totop,#dock,#concert{display:none !important}
+    nav,.repertoire,.hide-btn,.full-btn,#totop,#dock,#concert,.app-foot,#toast{display:none !important}
     header{background:none;padding:0 0 8px}
     header h1{color:#000}
     header p{color:#333}
@@ -726,6 +741,8 @@ B|--3---2---1---0--|  → B7</pre>
   </div>
 
 </main>
+
+<footer class="app-foot">Deux Guitares · Songbook — <span id="app-version"></span></footer>
 
 <button type="button" id="totop" hidden aria-label="Revenir en haut de la page" title="Haut de page">↑</button>
 
@@ -3984,6 +4001,21 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   };
   const slugOf=function(a){ return a.getAttribute("href").slice(1); };
   const shownState=function(sl){ return !HIDDEN.has(sl) && !(favOnly && !isFav(sl)); };
+  // défilement doux, sauf si le système demande des animations réduites
+  const SMOOTH = (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ? "auto" : "smooth";
+  // avec content-visibility, les positions s'affinent en scrollant : on recale en plusieurs passes
+  function scrollToCard(target){
+    if(!target) return;
+    // « instant » obligatoire : le scroll-behavior:smooth global n'aboutirait pas entre deux passes
+    target.scrollIntoView({behavior:"instant",block:"start"});
+    setTimeout(function(){ target.scrollIntoView({behavior:"instant",block:"start"}); },150);
+    setTimeout(function(){ target.scrollIntoView({behavior:"instant",block:"start"}); },450);
+  }
+  // toute navigation par ancre (nav, index, liens de setlist) est recalée pareil
+  window.addEventListener("hashchange",function(){
+    const el=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if(el) scrollToCard(el);
+  });
 
   function filterIndex(){
     const q=_norm(search.value.trim());
@@ -4228,7 +4260,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     pI.textContent=playIdx+1; pN.textContent=playSongs.length;
     pTitle.textContent = s?s.title:"—";
     const card=document.getElementById(sl);
-    if(card) card.scrollIntoView({behavior:"smooth",block:"start"});
+    if(card) scrollToCard(card);
   }
   function enterPlay(){
     const l=activeList(); if(!l) return;
@@ -4316,6 +4348,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     concertGoto(0);
     concert.hidden=false; document.body.classList.add("concert-on"); details.open=false;
     if(window.__wake) window.__wake.on("concert");
+    if(concertSongs.length>1 && !loadJSON("songbook-hint-concert",false)){
+      setLS("songbook-hint-concert",true);
+      toast("Balaye l'écran ou touche les bords pour changer de morceau.");
+    }
   }
   function enterConcertOne(sl){
     if(!bySlug[sl]) return;
@@ -4331,7 +4367,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   concert.querySelector(".c-prev").addEventListener("click",function(){ concertGoto(concertIdx-1); });
   concert.querySelector(".c-next").addEventListener("click",function(){ concertGoto(concertIdx+1); });
   concert.querySelector(".c-exit").addEventListener("click",exitConcert);
-  concert.querySelector(".c-top-btn").addEventListener("click",function(){ cStage.scrollTo({top:0,behavior:"smooth"}); });
+  concert.querySelector(".c-top-btn").addEventListener("click",function(){ cStage.scrollTo({top:0,behavior:SMOOTH}); });
   document.addEventListener("keydown",function(e){
     if(concert.hidden) return;
     if(e.key==="ArrowRight"){ e.preventDefault(); concertGoto(concertIdx+1); }
@@ -4347,7 +4383,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
 
   /* ---- Haut de page ---- */
   window.addEventListener("scroll",function(){ totop.hidden = window.scrollY < 500; },{passive:true});
-  totop.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+  totop.addEventListener("click",function(){ window.scrollTo({top:0,behavior:SMOOTH}); });
 
   /* ---- Export : mail (liste) et PDF (détail imprimable) ---- */
   function slLine(s,i){
@@ -4464,11 +4500,22 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(t.id==="sl-pdf"){ e.preventDefault(); printSetlist(); return; }
     if(t.id==="sl-save"){ e.preventDefault(); exportData(); return; }
     if(t.id==="masq-all"){ HIDDEN.clear(); saveHidden(); applyView(); return; }
-    if(t.matches("#song-index a")){ details.open=false; search.value=""; filterIndex(); return; }
+    if(t.matches("#song-index a")){
+      details.open=false; search.value=""; filterIndex();
+      // recale le scroll après la fermeture de l'index (sinon la carte se retrouve décalée)
+      scrollToCard(document.getElementById(slugOf(t)));
+      return;
+    }
     if(t.classList.contains("fav-item") || (t.closest && t.closest(".fav-item") && t.tagName==="A")){ details.open=false; return; }
   });
   search.addEventListener("input",function(){ if(search.value.trim() && !details.open) details.open=true; filterIndex(); });
   search.addEventListener("focus",function(){ if(!details.open) details.open=true; });
+  search.addEventListener("keydown",function(e){
+    if(e.key!=="Enter") return;
+    e.preventDefault();
+    const first=links.filter(function(a){ return !a.hidden; })[0];
+    if(first){ search.blur(); first.click(); }
+  });
   favOnlyBox.addEventListener("change",function(){ favOnly=favOnlyBox.checked; setLS("songbook-favonly",favOnly); applyView(); });
   document.getElementById("sl-load").addEventListener("change",function(){
     if(this.files && this.files[0]) importData(this.files[0]);
@@ -4479,6 +4526,16 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(e.key==="Enter"){ e.preventDefault(); commitEdit(); }
     else if(e.key==="Escape"){ e.preventDefault(); closeEdit(); }
   });
+
+  // version (date de dernière modification du fichier) + indicateur hors-ligne
+  const verEl=document.getElementById("app-version");
+  if(verEl){
+    const d=new Date(document.lastModified);
+    verEl.textContent = isNaN(d) ? "" : "version du "+d.toLocaleDateString("fr-FR");
+  }
+  window.addEventListener("offline",function(){ toast("Hors ligne — tu consultes la version en cache."); });
+  window.addEventListener("online",function(){ toast("De nouveau en ligne."); });
+  if(navigator.onLine===false) toast("Hors ligne — tu consultes la version en cache.");
 
   // état initial : persiste la migration éventuelle, étoiles, transpositions mémorisées
   saveSL();

@@ -1,6 +1,6 @@
 /* Service worker : réseau d'abord, cache en secours (consultation hors-ligne). */
-const CACHE = "songbook-v1";
-const ASSETS = ["./", "./index.html", "./icon.svg", "./manifest.webmanifest"];
+const CACHE = "songbook-v2";
+const ASSETS = ["./", "./index.html", "./icon.svg", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
