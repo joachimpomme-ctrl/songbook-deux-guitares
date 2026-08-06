@@ -75,6 +75,8 @@
     padding:16px 14px 12px;
     margin-bottom:16px;
     box-shadow:0 4px 14px rgba(0,0,0,.4);
+    content-visibility:auto;              /* ne peint que les cartes proches du viewport */
+    contain-intrinsic-size:auto 620px;
   }
   .chart .eyebrow{
     display:flex;justify-content:space-between;align-items:baseline;
@@ -437,10 +439,24 @@
   .solo-jazz-h{flex-basis:100%;font-size:.78rem;color:var(--ink-soft);font-style:italic;
     margin:8px 0 2px;padding-top:8px;border-top:1px dashed #cbb98f}
   .solo-lg{margin-top:4px}
+  /* ---- cibles tactiles élargies (44 px effectifs, rendu inchangé) ---- */
+  .fav-btn{font-size:1.15rem;padding:13px;margin:-13px -5px -13px -13px}
+  .chart .eyebrow .hide-btn{padding:12px 0 12px 12px;margin:-12px 0}
+  .eyebrow .eb-actions{gap:14px}
+  .tpose button{width:34px;height:34px}
+  .groove .tempo{padding:5px 12px}
+  .meter{padding:3px 9px}
+  .fav-item .fav-ctl button{padding:7px 9px}
+  .masq-item .restore{padding:5px 12px}
+  .fav-item .fav-rm{padding:5px 10px}
+  /* note de forme en mode concert */
+  #concert .c-note{margin:2px 0 10px;font-size:.88rem;font-weight:600;font-style:italic;color:var(--rust)}
   /* ---- impression ---- */
   #printarea{display:none}
   @media print{
     body{background:#fff;color:#000;padding:0}
+    .chart{content-visibility:visible;contain-intrinsic-size:none}
+    #printarea .c-note{color:#333;font-style:italic;margin:2px 0 8px}
     nav,.repertoire,.hide-btn,#totop,#dock,#concert{display:none !important}
     header{background:none;padding:0 0 8px}
     header h1{color:#000}
@@ -4157,6 +4173,15 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
         slConcert=document.getElementById("sl-concert"),
         slMail=document.getElementById("sl-mail"),
         slPdf=document.getElementById("sl-pdf");
+  function frKeyTransposed(s, off){
+    // tonalité réellement jouée quand la grille est transposée (ex. Fa +2 → Sol)
+    const base=(s.key||"").split("·")[0].trim();
+    if(!off) return base;
+    const pk=parseKey(s.key);
+    if(pk.rootPc===null) return base;
+    const suffix = pk.mode==="minor"?" mineur" : pk.mode==="mixo"?" mixolydien" : pk.mode==="dorian"?" dorien" : "";
+    return _FRPC[((pk.rootPc+off)%12+12)%12]+suffix;
+  }
   function concertHTML(s){
     const sl=slug(s.title), off=TP[sl]||0, g=grooveOf(s);
     const systems=s.systems.map(function(sys){
@@ -4165,7 +4190,8 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       else if(sys.note) head=`<span class="sys-note" style="margin-left:0">${esc(sys.note)}</span>`;
       return head+`<div class="grid">`+sys.bars.map(function(b){ return `<div class="bar">${barInner(b,off)}</div>`; }).join("")+`</div>`;
     }).join("");
-    const capo = off ? `<span class="c-capo">ton ${off>0?"+":""}${off} · capo ${off} avec les formes d'origine</span>` : "";
+    const baseKey=(s.key||"").split("·")[0].trim();
+    const capo = off ? `<span class="c-capo">ton ${off>0?"+":""}${off} · orig. ${esc(baseKey)}${off>0?" · capo "+off+" avec les formes d'origine":""}</span>` : "";
     const diags=(s.chords||[]).map(function(c){ return CHORDS[c]?`<div class="diag">${diagInner(c,off)}</div>`:""; }).join("");
     const riff = s.riff
       ? `<details class="riff-d"><summary>🎸 Le riff à connaître</summary><pre class="tab">${s.riff.tab}</pre>`+
@@ -4179,9 +4205,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
         `<div class="footnote">${bass.note}</div></details>`
       : "";
     return `<h2 class="c-title">${esc(s.title)}</h2>`+
-      `<div class="c-sub"><span class="fm fm-key">${esc((s.key||"").split("·")[0].trim())}</span>`+
+      `<div class="c-sub"><span class="fm fm-key">${esc(frKeyTransposed(s,off))}</span>`+
       `<span class="fm fm-m">${g.m}</span>${metroBtnHTML(s,"c-tempo")}${capo}</div>`+
       systems+
+      (s.note?`<div class="c-note">⚑ ${esc(s.note)}</div>`:"")+
       `<div class="c-tip">Impro : ${s.tip}</div>`+
       riff+
       soloHTML(s, off)+
@@ -4204,8 +4231,12 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(!concertSongs.length) return;
     concertGoto(0);
     concert.hidden=false; document.body.classList.add("concert-on"); details.open=false;
+    if(window.__wake) window.__wake.on("concert");
   }
-  function exitConcert(){ concert.hidden=true; document.body.classList.remove("concert-on"); }
+  function exitConcert(){
+    concert.hidden=true; document.body.classList.remove("concert-on");
+    if(window.__wake) window.__wake.off("concert");
+  }
   concert.querySelector(".c-prev").addEventListener("click",function(){ concertGoto(concertIdx-1); });
   concert.querySelector(".c-next").addEventListener("click",function(){ concertGoto(concertIdx+1); });
   concert.querySelector(".c-exit").addEventListener("click",exitConcert);
@@ -4245,6 +4276,8 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     let html=`<div class="p-head"><h1>${esc(l.name)}</h1><div class="p-sub">${l.songs.length} morceaux · Deux Guitares · Songbook</div></div>`;
     l.songs.forEach(function(sl){ const s=bySlug[sl]; if(s) html+=`<section class="p-song">${concertHTML(s)}</section>`; });
     printarea.innerHTML=html;
+    // les <details> fermés ne s'impriment pas : tout déplier (gammes, riff, basse)
+    printarea.querySelectorAll("details").forEach(function(d){ d.open=true; });
     document.body.classList.add("printing-setlist");
     window.print();
   }
@@ -4348,6 +4381,28 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   applyView();
 })();
 
+/* ============ Wake lock : écran allumé en concert et métronome ============ */
+(function(){
+  let lock=null;
+  const reasons=new Set();
+  function acquire(){
+    if(!("wakeLock" in navigator) || lock || !reasons.size) return;
+    navigator.wakeLock.request("screen").then(function(l){
+      lock=l;
+      l.addEventListener("release",function(){ lock=null; });
+    }).catch(function(){});
+  }
+  function release(){ if(lock){ lock.release().catch(function(){}); lock=null; } }
+  window.__wake={
+    on:function(r){ reasons.add(r); acquire(); },
+    off:function(r){ reasons.delete(r); if(!reasons.size) release(); }
+  };
+  // le verrou saute quand l'onglet passe en arrière-plan : on le reprend au retour
+  document.addEventListener("visibilitychange",function(){
+    if(document.visibilityState==="visible") acquire();
+  });
+})();
+
 /* ============ Métronome global ============ */
 /* Scheduler « lookahead » (Chris Wilson) : timing calé sur l'horloge audio,
    stable même si la page scrolle ou rame. Clic = oscillateur, aucun fichier son. */
@@ -4421,10 +4476,12 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     running=true; curNote=0; nextTime=ctx.currentTime+0.06; queue.length=0;
     playBtn.textContent="⏸"; playBtn.classList.add("on");
     if(lastBtn) lastBtn.classList.add("playing");
+    if(window.__wake) window.__wake.on("metro");
     scheduler(); animate();
   }
   function stop(){
     running=false; clearTimeout(timer); if(raf) cancelAnimationFrame(raf);
+    if(window.__wake) window.__wake.off("metro");
     playBtn.textContent="▶"; playBtn.classList.remove("on");
     Array.prototype.forEach.call(dotsEl.children, d=>d.classList.remove("on"));
     document.querySelectorAll(".tempo.playing").forEach(b=>b.classList.remove("playing"));
@@ -4476,12 +4533,15 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   });
 })();
 
-/* Réserve en bas de page = hauteur des barres visibles (dock). */
+/* Réserve en bas de page = hauteur des barres visibles (dock),
+   répercutée aussi sur la scène du mode concert (sinon le dock recouvre la fin du morceau). */
 (function(){
   const d=document.getElementById("dock"); if(!d||!window.ResizeObserver) return;
+  const stage=document.querySelector("#concert .c-stage");
   new ResizeObserver(function(){
     const h=d.getBoundingClientRect().height;
     document.body.style.paddingBottom = h>4 ? (h+10)+"px" : "";
+    if(stage) stage.style.paddingBottom = (h>4 ? h+40 : 40)+"px";
   }).observe(d);
 })();
 
