@@ -777,6 +777,7 @@ const CHORDS = {
   "C7":      ["x","3","2","3","1","0"],
   "F#7":     ["2","4","2","3","2","2"],
   "C9":      ["x","3","2","3","3","3"],
+  "D♭":      ["x","4","3","1","2","1"],
   "D9":      ["x","5","4","5","5","5"],
   "Bm":      ["x","2","4","4","3","2"],
   "Em":      ["0","2","2","0","0","0"],
@@ -1918,7 +1919,7 @@ E|1-1-1-1-|1-1-1-1-|3-3-3-3-|3-3-3-3-|`,
     zone:"pop", title:"Perfect", key:"Sol · 6/8 lent (Ed Sheeran)",
     systems:[
       {note:"couplet", bars:["G","Em","C","D"]},
-      {note:"refrain", bars:["G","D","Em","C"]}
+      {note:"refrain (« baby, I'm dancing in the dark »)", bars:["Em","C","G","D"]}
     ],
     chords:["G","Em","C","D"],
     tip:"Un 6/8 lent et balancé (deux grands temps par mesure, pas une valse). Gamme de Sol majeur, très peu de notes : sur une ballade, c'est le silence entre les phrases qui émeut. À deux, l'un arpège, l'autre chante la mélodie sur les cordes aiguës.",
@@ -1971,7 +1972,7 @@ E|----------------|----------------|----------------|3-3-3-3-3-3-3-3-|`,
     systems:[
       {note:"couplet", bars:["Em7","G","D","A7sus4"]},
       {note:"pré-refrain", bars:["C","D","Em7","Em7"]},
-      {note:"refrain", bars:["C","D","G","Em7"]}
+      {note:"refrain (« because maybe... »)", bars:["C","Em7","G","Em7"]}
     ],
     chords:["Em7","G","D","A7sus4","C"],
     tip:"L'hymne des feux de camp (capo 2). Gamme de Sol majeur / penta de Mi mineur. Gratte régulière, sans forcer : c'est le chant qui porte.",
@@ -1982,8 +1983,8 @@ E|----------------|----------------|----------------|3-3-3-3-3-3-3-3-|`,
     systems:[
       {note:"couplet", bars:["C","G","Am","E7"]},
       {bars:["F","G","C","C"]},
-      {note:"refrain", bars:["C","F","G","Am"]},
-      {bars:["F","Fm","C","C"]}
+      {note:"refrain (« so Sally can wait »)", bars:["C","G","Am","E7"]},
+      {bars:["F","G","F · Fm","C"]}
     ],
     chords:["C","G","Am","E7","F","Fm"],
     tip:"Les changements de « Let It Be » revisités par Oasis. Gamme de Do majeur ; savoure le E7 (mesure 4) et surtout le passage F → Fm du refrain, le frisson du morceau.",
@@ -2004,9 +2005,9 @@ E|----------------|----------------|----------------|3-3-3-3-3-3-3-3-|`,
     zone:"pop", title:"Ho Hey", key:"Do · stomp (The Lumineers)",
     systems:[
       {note:"couplet", bars:["C","C","F","C"]},
-      {note:"pont", bars:["Am","G","F","F"]}
+      {note:"pont (« love, we need it now »)", bars:["F · C","G · C","F · C","G · C"]}
     ],
-    chords:["C","F","Am","G"],
+    chords:["C","F","G"],
     tip:"Deux accords et des « Ho ! Hey ! » tapés ensemble : le morceau le plus simple du carnet, le plus efficace pour chanter à plusieurs. Gamme de Do majeur.",
     note:"Structure simplifiée.",
   },
@@ -2014,9 +2015,9 @@ E|----------------|----------------|----------------|3-3-3-3-3-3-3-3-|`,
     zone:"pop", title:"The Scientist", key:"Ré mineur / Fa · ballade piano (Coldplay)",
     systems:[
       {note:"couplet", bars:["Dm","B♭","F","F"]},
-      {note:"refrain", bars:["B♭","F","C","C"]}
+      {note:"refrain (« nobody said it was easy ») — jouer 2 fois", bars:["B♭","F","F","F"]}
     ],
-    chords:["Dm","B♭","F","C"],
+    chords:["Dm","B♭","F"],
     tip:"Ballade piano en ré mineur / fa majeur. Accords tenus, beaucoup d'air. Penta de Ré mineur ou gamme de Fa majeur ; sur une ballade, moins de notes = plus de poids.",
     note:"Structure simplifiée.",
   },
@@ -2292,12 +2293,13 @@ E|--------|0-0-0-0-|2-2-2-2-|--------|`,
     zone:"pop", title:"What a Wonderful World", key:"Fa · ballade jazz (Louis Armstrong)",
     systems:[
       {note:"couplet", bars:["F","Am","B♭","Am"]},
-      {bars:["Gm","F","C7","F"]},
+      {note:"« I see them bloom, for me and you »", bars:["Gm7","F","A7","Dm"]},
+      {note:"« and I think to myself... »", bars:["D♭","Gm7","C7","F"]},
       {note:"pont (« the colors of the rainbow »)", bars:["C7","F","C7","F"]},
       {bars:["Dm","C","Dm","C7"]}
     ],
-    chords:["F","Am","B♭","Gm","C7","Dm","C"],
-    tip:"La ballade jazz d'Armstrong. La montée Fa-Lam-Si♭ et le Sol mineur qui adoucit : vise les tierces, gamme de Fa majeur. Le pont balance C7-F comme une conversation (« I see friends shaking hands »). Legato, sourire dans la voix.",
+    chords:["F","Am","B♭","Gm7","A7","Dm","D♭","C7","C"],
+    tip:"La ballade jazz d'Armstrong. La montée Fa-Lam-Si♭, puis le A7 qui bascule vers Ré mineur, et surtout le <b>Ré♭ de « and I think to myself »</b> — le frisson du morceau. Gamme de Fa majeur, vise les tierces ; le pont balance C7-F comme une conversation. Legato, sourire dans la voix.",
     bass:{tab:
 `G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
@@ -2305,9 +2307,14 @@ A|--------|0---0---|1---1---|0---0---|
 E|1---1---|--------|--------|--------|
 
 G|--------|--------|--------|--------|
+D|--------|--------|--------|0---0---|
+A|--------|--------|0---0---|--------|
+E|3---3---|1---1---|--------|--------|
+
+G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
-A|--------|--------|3---3---|--------|
-E|3---3---|1---1---|--------|1---1---|
+A|4---4---|--------|3---3---|--------|
+E|--------|3---3---|--------|1---1---|
 
 G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
@@ -2318,7 +2325,7 @@ G|--------|--------|--------|--------|
 D|0---0---|--------|0---0---|--------|
 A|--------|3---3---|--------|3---3---|
 E|--------|--------|--------|------0-|`,
-      note:"Toute la forme : la basse monte Fa-La-Si♭ puis redescend sur le La — c'est la houle du morceau — et le pont balance Do-Fa comme la conversation du texte. Rondes et blanches, très legato, le Mi de passage ramène au Fa. Une basse qui sourit, comme la voix."},
+      note:"Toute la forme (12 mesures de couplet + pont) : la basse monte Fa-La-Si♭ puis redescend, le La (A7) appelle le Ré mineur, et le <b>Ré♭</b> tombe sur « and I think to myself » avant Sol-Do-Fa. Le pont balance Do-Fa comme la conversation du texte. Rondes et blanches, très legato, le Mi de passage ramène au Fa. Une basse qui sourit, comme la voix."},
   },
   {
     zone:"pop", title:"Quelqu'un m'a dit", key:"Sol · ballade acoustique (Carla Bruni)",
@@ -2935,32 +2942,33 @@ E|--------|--------|--------|--------|`,
   {
     zone:"jazz", title:"Dinah", key:"Fa · swing manouche (Harry Akst)",
     systems:[
-      {label:"A", bars:["F6","A7","D7","G7"]},
-      {bars:["C7","A7","D7 · G7","C7 · F6"]}
+      {label:"A", note:"deux mesures par accord", bars:["F6","F6","D7","D7"]},
+      {bars:["G7","G7","C7","C7"]}
     ],
-    chords:["F6","A7","D7","G7","C7"],
-    tip:"Un standard adoré des manouches : la section A descend en <b>cascade de dominantes</b> (Fa, puis La7 → Ré7 → Sol7 → Do7 qui rentre à la maison). Vise les tierces et approche-les chromatiquement. Excellent pour ancrer le réflexe du cycle.",
-    note:"Section A ; le pont module vers le IV (Si♭).",
+    chords:["F6","D7","G7","C7"],
+    tip:"Un standard adoré des manouches : la section A descend en <b>cascade de dominantes</b> (Fa, puis Ré7 → Sol7 → Do7 qui rentre à la maison), deux mesures par accord. Vise les tierces et approche-les chromatiquement. Excellent pour ancrer le réflexe du cycle.",
+    note:"Section A (8 mesures) ; le pont passe par le relatif mineur (Ré m) avant de revenir.",
   },
   {
     zone:"jazz", title:"Mas Que Nada", key:"La mineur · samba (Jorge Ben)",
     systems:[
-      {note:"« ô ariá raiô »", bars:["Am7","D9","Am7","D9"]},
-      {note:"« mas que nada »", bars:["Gm7","C7","Fmaj7","Fmaj7"]}
+      {note:"« ô ariá raiô »", bars:["Am7","Am7","Dm7 · Em7","Am7"]},
+      {note:"« obá obá obá » — puis retour au vamp", bars:["Dm7 · Am7","E7","Am7","Am7"]}
     ],
-    chords:["Am7","D9","Gm7","C7","Fmaj7"],
-    tip:"Le samba le plus contagieux du monde. Le vamp Am7-D9 (dorien de La), puis la bascule Gm7-C7-Fa qui ouvre le soleil. Penta de La m sur la première partie, gamme de Fa majeur sur la seconde. Chantez le « ô ariá » sans complexe.",
+    chords:["Am7","Dm7","Em7","E7"],
+    tip:"Le samba le plus contagieux du monde, tout en La mineur : le vamp sur Am7, le va-et-vient Dm7-Em7 qui balance, et le <b>E7 qui claque sur « obá obá obá »</b> avant de retomber sur le vamp. Penta de La mineur partout. Chantez le « ô ariá » sans complexe.",
     bass:{tab:
 `G|--------|--------|--------|--------|
-D|--------|0-----0-|--------|0-----0-|
-A|0-----0-|---0----|0-----0-|---0----|
-E|---0----|--------|---0----|--------|
+D|--------|--------|0-------|--------|
+A|0-----0-|0-----0-|--------|0-----0-|
+E|---0----|---0----|----0---|---0----|
 
 G|--------|--------|--------|--------|
-D|---0----|--------|--------|--------|
-A|--------|3-----3-|---3----|---3----|
-E|3-----3-|---3----|1-----1-|1-----1-|`,
-      note:"Le jeu de surdo du samba : la fondamentale grave sur le 1, la réponse (quinte ou octave) sur le « et » du 2 — La-Mi, Ré-La, puis Sol-Ré, Do-Sol, Fa-Do sur la bascule. C'est le tambour grave de l'école de samba transposé à la basse : régulier, rebondi, hypnotique."},
+D|0-------|--------|--------|--------|
+A|----0---|---2----|0-----0-|0-----0-|
+E|--------|0-----0-|---0----|---0----|`,
+      note:"Le jeu de surdo du samba : la fondamentale grave sur le 1, la réponse (quinte) sur le « et » du 2 — La-Mi en boucle, Ré puis Mi quand la basse suit Dm7-Em7, et le Mi-Si du E7 qui relance. C'est le tambour grave de l'école de samba transposé à la basse : régulier, rebondi, hypnotique."},
+    note:"Boucle simplifiée (les relevés varient) ; Jorge Ben joue en Sol m, Sergio Mendes plus haut — transpose au besoin.",
   },
   {
     zone:"rock", title:"Come Together", key:"Ré mineur · groove marécageux (Beatles)",
@@ -2993,10 +3001,10 @@ E|------------5-5-|3-3-3-3-5-------|----------------|----------------|`,
     zone:"pop", title:"Here Comes the Sun", key:"Ré · lumineux (George Harrison / Beatles)",
     systems:[
       {note:"couplet", bars:["D","G","A7","D"]},
-      {note:"refrain « here comes the sun »", bars:["G","D","A7","D"]},
+      {note:"refrain « here comes the sun... and I say it's all right »", bars:["D","G · E7","D","A7"]},
       {note:"pont « sun, sun, sun » — mesures asymétriques", bars:["F","C","G","D · A7"]}
     ],
-    chords:["D","G","A7","F","C"],
+    chords:["D","G","A7","E7","F","C"],
     tip:"Soleil en Ré majeur : penta majeure de Ré et arpèges qui scintillent sur les cordes aiguës. Le pont « sun sun sun » (F-C-G-D-A7) change de métrique sans prévenir — comptez ensemble, c'est le piège du morceau. Capo 7 sur l'original.",
     bass:{tab:
 `G|--------|--------|--------|--------|
@@ -3005,15 +3013,15 @@ A|--------|--------|0---2-4-|--------|
 E|--------|3---3---|--------|--------|
 
 G|--------|--------|--------|--------|
-D|--------|0---0---|--------|0---0---|
-A|--------|--------|0---2-4-|--------|
-E|3---3---|--------|--------|--------|
+D|0---0---|--------|0---0---|--------|
+A|--------|--------|--------|0---2-4-|
+E|--------|3---0---|--------|--------|
 
 G|--------|--------|--------|--------|
 D|--------|--------|--------|0-------|
 A|--------|3---3---|--------|----0---|
 E|1---1---|--------|3---3---|--------|`,
-      note:"Un bloc par ligne (couplet, refrain, pont « sun sun sun »). La basse suit la guitare, légère : fondamentales sur 1 et 3, et sur chaque A7 la remontée La-Si-Do♯ qui retombe sur le Ré. Tab dans la tonalité de la grille (Ré) ; le disque sonne une quinte plus haut (capo 7)."},
+      note:"Un bloc par ligne (couplet, refrain, pont « sun sun sun »). Au refrain : Ré, puis Sol et Mi (le E7 de « and I say »), Ré, et la remontée La-Si-Do♯ du A7 qui retombe sur le Ré. Fondamentales sur 1 et 3, légères. Tab dans la tonalité de la grille (Ré) ; le disque sonne une quinte plus haut (capo 7)."},
   },
   {
     zone:"pop", title:"Something", key:"Do · ballade (George Harrison / Beatles)",
