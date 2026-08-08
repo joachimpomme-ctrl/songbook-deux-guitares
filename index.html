@@ -529,13 +529,14 @@
 
 <header>
   <h1>Deux Guitares</h1>
-  <p>Blues, jazz, rock &amp; pop pour jouer à deux · grilles, accords, gammes, basses</p>
+  <p>Blues, jazz, rock, reggae &amp; pop pour jouer à deux · grilles, accords, gammes, basses</p>
 </header>
 
 <nav>
   <a href="#blues">Blues</a>
   <a href="#jazz">Jazz</a>
   <a href="#rock">Rock</a>
+  <a href="#reggae">Reggae</a>
   <a href="#pop">Pop</a>
   <a href="#gammes">Gammes</a>
   <a href="#voicings">Voicings</a>
@@ -594,6 +595,9 @@
 
   <div class="section-title" id="rock">Rock &amp; Groove</div>
   <div id="zone-rock"></div>
+
+  <div class="section-title" id="reggae">Reggae &amp; apparentés</div>
+  <div id="zone-reggae"></div>
 
   <div class="section-title" id="pop">Pop</div>
   <div id="zone-pop"></div>
@@ -1453,12 +1457,14 @@ E|---4----|---3----|--------|--------|`,
     systems:[
       {label:"A", note:"jouer 2 fois", bars:["Fmaj7","Fmaj7","G7","G7"]},
       {bars:["Gm7","G♭7","Fmaj7","G♭7"]},
-      {label:"B", note:"pont (« oh, but I watch her so sadly ») · 2 mesures par accord", bars:["G♭maj7","B7","F#m7","D7"]},
-      {bars:["Gm7","E♭7","Am7 · D7","Gm7 · C7"]}
+      {label:"B", note:"pont (« oh, but I watch her so sadly »)", bars:["G♭maj7","G♭maj7","B7","B7"]},
+      {bars:["F#m7","F#m7","D7","D7"]},
+      {bars:["Gm7","Gm7","E♭7","E♭7"]},
+      {bars:["Am7","D7","Gm7","C7"]}
     ],
     chords:["Fmaj7","G7","Gm7","G♭7","G♭maj7","B7","F#m7","D7","E♭7","Am7","C7"],
     tip:"La bossa la plus jouée au monde. Le G♭7 qui glisse sous le Fmaj7 fait le charme du A ; le pont, lui, part carrément un demi-ton au-dessus (G♭maj7) et voyage de tonalité en tonalité avant que Gm7-C7 ne ramène à la maison. En jam, le A seul reste permis — le pont est une expédition.",
-    note:"Après le pont, on rejoue un A. Pont en 2 mesures par accord (16 mesures).",
+    note:"Après le pont (16 mesures), on rejoue un A. Grille jazz standard en Fa ; le disque Getz/Gilberto sonne en Ré♭.",
   },
   {
     zone:"jazz", title:"Isn't She Lovely", key:"Mi · groove Stevie Wonder",
@@ -1611,7 +1617,7 @@ E|--------|--------|0---0---|0---0-2-|`,
       note:"Fondamentales tenues — Si, La, Mi — deux notes par mesure, rondes et legato, et le Fa♯ qui remonte vers le Si pour reboucler (chaque accord dure en fait 2 mesures : joue le bloc deux fois plus lentement qu'il n'est écrit). Ici, celui qui joue le moins gagne — la basse aussi."},
   },
   {
-    zone:"rock", title:"Stir It Up", key:"La · reggae (Bob Marley)",
+    zone:"reggae", title:"Stir It Up", key:"La · reggae (Bob Marley)",
     systems:[{note:"boucle", bars:["A","D · E","A","D · E"]}],
     chords:["A","D","E"],
     tip:"Le skank reggae : accords brefs sur les contretemps (2 et 4), étouffés aussitôt, basse ronde en dessous. Penta majeure de La pour le solo, phrasé paresseux.",
@@ -1629,7 +1635,7 @@ E|5-------|--------|5-------|--------|`,
     tip:"Deux accords 7 qui se balancent, terrain d'impro sans fin : penta de Do mineure ou majeure, mixolydien, tout passe. Le groove fait le morceau.",
   },
   {
-    zone:"rock", title:"No Woman No Cry", key:"Do · reggae lent (Bob Marley)",
+    zone:"reggae", title:"No Woman No Cry", key:"Do · reggae lent (Bob Marley)",
     systems:[
       {note:"boucle", bars:["C · G","Am · F","C · F","C · G"]},
       {note:"« everything's gonna be alright »", bars:["C","F","C","F"]}
@@ -2660,7 +2666,7 @@ E|---0----|---2----|---0----|---2----|`,
     note:"Structure simplifiée.",
   },
   {
-    zone:"rock", title:"Redemption Song", key:"Sol · folk (Bob Marley)",
+    zone:"reggae", title:"Redemption Song", key:"Sol · folk (Bob Marley)",
     systems:[
       {note:"couplet", bars:["G","Em","C","Am"]},
       {note:"refrain", bars:["G","C · D","G","C · D"]}
@@ -3035,7 +3041,7 @@ E|--------|2-------|--------|3-------|`,
       note:"Un bloc par ligne : intro, couplet (2 lignes), pont. LA descente Do→Si→Si♭→La porte le couplet — le La est la tierce du Fa — puis la deuxième descente, vérifiée sur la transcription Play Bass with the Beatles : <b>La→Sol♯→Sol→Fa♯</b> (le Sol♯ de « Am(maj7) », que la grille simplifie), Fa, Mi♭, Sol. McCartney brode énormément autour (♩=66) : ce double fil descendant est la colonne vertébrale à faire chanter."},
   },
   {
-    zone:"pop", title:"Ob-La-Di, Ob-La-Da", key:"La · ska-pop enjoué (Beatles)",
+    zone:"reggae", title:"Ob-La-Di, Ob-La-Da", key:"La · ska-pop enjoué (Beatles)",
     systems:[
       {note:"couplet & refrain", bars:["A","E7","A","A7"]},
       {bars:["D","A","E7","A"]}
@@ -3299,13 +3305,13 @@ E|--------|3---3---|1---1---|0---0---|`,
     zone:"jazz", title:"Corcovado", key:"Do · bossa douce (Jobim) · « Quiet Nights of Quiet Stars »",
     systems:[
       {note:"« quiet nights of quiet stars »", bars:["Am6","A♭7","Gm7","C9"]},
-      {bars:["Fmaj7","Fm6","Em7","A7"]},
-      {note:"« this is where I want to be »", bars:["Dm7","D♭7","Cmaj7","Cmaj7"]},
-      {bars:["Dm7","G7","Cmaj7","Cmaj7"]}
+      {note:"« quiet thoughts and quiet dreams »", bars:["Fmaj7","Fm6","Em7","A7"]},
+      {note:"« and a window looking on the mountains and the sea »", bars:["D9","D9","Dm7","G7"]},
+      {note:"« this is where I want to be »", bars:["Cmaj7","Cmaj7","Dm7 · G7","Cmaj7"]}
     ],
-    chords:["Am6","A♭7","Gm7","C9","Fmaj7","Fm6","Em7","A7","Dm7","D♭7","Cmaj7","G7"],
-    tip:"La bossa la plus tendre de Jobim : tout glisse par demi-tons — Am6→A♭7→Gm7, Fmaj7→Fm6→Em7, Dm7→D♭7→Do. Gamme de Do majeur, vise les tierces, jamais plus fort qu'une conversation. Cousine harmonique d'Ipanema : mêmes eaux calmes.",
-    note:"Harmonisation simplifiée pour la jam (l'original raffine chaque accord).",
+    chords:["Am6","A♭7","Gm7","C9","Fmaj7","Fm6","Em7","A7","D9","Dm7","G7","Cmaj7"],
+    tip:"La bossa la plus tendre de Jobim : tout glisse par demi-tons — Am6→A♭7→Gm7, Fmaj7→Fm6→Em7. La couleur du morceau, c'est le <b>D9</b> (« a window looking on the mountains ») : un II en dominante, lumineux, avant que Dm7-G7 ne ramène à Do. Gamme de Do majeur, vise les tierces, jamais plus fort qu'une conversation. Cousine harmonique d'Ipanema : mêmes eaux calmes.",
+    note:"Harmonisation simplifiée pour la jam (l'original raffine chaque accord et poursuit — « I who was lost and lonely » — avant le Do final).",
   },
   {
     zone:"jazz", title:"Night and Day", key:"Do · swing (Cole Porter) · forme A A B",
@@ -3393,6 +3399,7 @@ const GROOVE_DEFAULTS = {
   blues:{m:"4/4", n:4, acc:[2,4], lbl:"Shuffle (ternaire) : basse sur 1 et 3, frappe sèche et étouffée sur 2 et 4."},
   jazz:{m:"4/4", n:4, acc:[2,4], lbl:"Swing : pompe à 4 temps égaux, les 2 et 4 claquent un peu plus."},
   rock:{m:"4/4", n:4, acc:[2,4], lbl:"Binaire : croches droites, accents sur 2 et 4."},
+  reggae:{m:"4/4", n:4, acc:[2,4], lbl:"Skank : rien sur 1 et 3, accords brefs et étouffés sur 2 et 4, basse ronde en dessous."},
   pop:{m:"4/4", n:4, acc:[2,4], lbl:"Binaire : accords réguliers, accents sur 2 et 4."}
 };
 const GROOVE_BY_TITLE = {
@@ -3413,6 +3420,7 @@ const GROOVE_BY_TITLE = {
   "Oye Como Va (groove)":{m:"4/4", n:4, acc:[2,4], lbl:"Latin rock : accords courts sur les contretemps, groove régulier et fier."},
   "Sympathy for the Devil":{m:"4/4", n:4, acc:[2,4], lbl:"Samba-rock : jeu percussif étouffé et continu, accents légers sur 2 et 4."},
   "Stir It Up":{m:"4/4", n:4, acc:[2,4], lbl:"Skank reggae : rien sur 1 et 3, accords brefs et étouffés sur 2 et 4."},
+  "Redemption Song":{m:"4/4", n:4, acc:[2,4], lbl:"Folk binaire : gratte régulière, pas de skank — le seul Marley acoustique."},
   "No Woman No Cry":{m:"4/4", n:4, acc:[2,4], lbl:"Skank doux : accords courts sur 2 et 4, basse ronde en dessous."},
   "House of the Rising Sun":{m:"6/8", n:6, acc:[1,4], lbl:"6/8 arpégé : une corde par croche, appuie la 1 et la 4, laisse sonner."},
   "Rock'n'roll 12 mesures":{m:"4/4", n:4, acc:[2,4], lbl:"Croches droites, pas swinguées. Backbeat 2 et 4 bien marqué."},
@@ -4000,7 +4008,7 @@ function songHTML(s){
     ${s.note?`<div class="footnote">${s.note}</div>`:""}
   </div>`;
 }
-["blues","jazz","rock","pop"].forEach(function(z){
+["blues","jazz","rock","reggae","pop"].forEach(function(z){
   document.getElementById("zone-"+z).innerHTML =
     SONGS.filter(function(s){ return s.zone===z; }).sort(byArtist).map(songHTML).join("");
 });
@@ -4009,8 +4017,8 @@ function songHTML(s){
 function _norm(t){ return t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
 function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
 (function buildIndex(){
-  const ZL={blues:"Blues",jazz:"Jazz",rock:"Rock",pop:"Pop"};
-  const ZONES=["blues","jazz","rock","pop"];
+  const ZL={blues:"Blues",jazz:"Jazz",rock:"Rock",reggae:"Reggae",pop:"Pop"};
+  const ZONES=["blues","jazz","rock","reggae","pop"];
   const loadJSON=function(k,d){ try{ return JSON.parse(localStorage.getItem(k))||d; }catch(e){ return d; } };
   const setLS=function(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
   let HIDDEN=new Set(loadJSON("songbook-hidden",[]));
