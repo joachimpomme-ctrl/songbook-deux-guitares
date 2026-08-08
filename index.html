@@ -810,6 +810,7 @@ const CHORDS = {
   "F7":      ["1","3","1","2","1","1"],
   "B♭7":     ["x","1","3","1","3","1"],
   "B°7":     ["x","2","3","1","3","1"],
+  "A♭°7":    ["4","x","3","4","3","x"],
   "Am7♭5":   ["x","0","1","0","1","x"],
   "Gm7":     ["3","5","3","3","3","3"],
   "F9":      ["1","3","1","2","1","3"],
@@ -3317,16 +3318,19 @@ E|--------|3---3---|1---1---|0---0---|`,
     note:"Grille d'usage en La m ; l'original de Ray Charles est un demi-ton plus bas (Sol♯ m).",
   },
   {
-    zone:"jazz", title:"Corcovado", key:"Do · bossa douce (Jobim) · « Quiet Nights of Quiet Stars »",
+    zone:"jazz", title:"Corcovado", key:"La mineur · bossa douce (Jobim) · « Quiet Nights of Quiet Stars »",
     systems:[
-      {note:"« quiet nights of quiet stars »", bars:["Am6","A♭7","Gm7","C9"]},
-      {note:"« quiet thoughts and quiet dreams »", bars:["Fmaj7","Fm6","Em7","A7"]},
-      {note:"« and a window looking on the mountains and the sea »", bars:["D9","D9","Dm7","G7"]},
-      {note:"« this is where I want to be »", bars:["Cmaj7","Cmaj7","Dm7 · G7","Cmaj7"]}
+      {note:"thème (« quiet nights of quiet stars »)", bars:["Am6","Am6","A♭°7","A♭°7"]},
+      {bars:["Gm6","G♭7","Fmaj7","F6"]},
+      {note:"« quiet thoughts and quiet dreams »", bars:["Fm6","Fm6","Em7","A7"]},
+      {note:"« and a window that looks out on Corcovado » — puis retour au thème", bars:["D9","D9","Dm7","A♭°7"]},
+      {note:"dernier tour (« I, who was lost and lonely »)", bars:["Fm6","Fm6","Em7","Am7"]},
+      {bars:["Dm7","G7","Em7","A7"]},
+      {note:"cadence finale — le vamp Am6 / A♭°7 s'éteint", bars:["Dm7","G7","Am6","A♭°7"]}
     ],
-    chords:["Am6","A♭7","Gm7","C9","Fmaj7","Fm6","Em7","A7","D9","Dm7","G7","Cmaj7"],
-    tip:"La bossa la plus tendre de Jobim : tout glisse par demi-tons — Am6→A♭7→Gm7, Fmaj7→Fm6→Em7. La couleur du morceau, c'est le <b>D9</b> (« a window looking on the mountains ») : un II en dominante, lumineux, avant que Dm7-G7 ne ramène à Do. Gamme de Do majeur, vise les tierces, jamais plus fort qu'une conversation. Cousine harmonique d'Ipanema : mêmes eaux calmes.",
-    note:"Harmonisation simplifiée pour la jam (l'original raffine chaque accord et poursuit — « I who was lost and lonely » — avant le Do final).",
+    chords:["Am6","A♭°7","Gm6","G♭7","Fmaj7","F6","Fm6","Em7","A7","Am7","D9","Dm7","G7"],
+    tip:"La bossa la plus tendre de Jobim, et sa vraie couleur : <b>tout vit en La mineur</b>, sans jamais résoudre en majeur. La descente chromatique Am6→A♭°7→Gm6→G♭7 porte le thème, le Fm6 assombrit, et le <b>D9</b> (« a window that looks out on Corcovado ») ouvre la fenêtre avant que A♭°7 ne remonte vers Am6. Gamme de La mineur / Do majeur, vise les tierces, jamais plus fort qu'une conversation.",
+    note:"D'après la partition officielle de la version Jobim : thème de 8 mesures (joué trois fois sur le disque) + le dernier tour qui cadence Dm7-G7 vers le Am6 final. Les charts jazz américains la jouent souvent « en Do » (C9, Cmaj7) — ici, l'original.",
   },
   {
     zone:"jazz", title:"Night and Day", key:"Do · swing (Cole Porter) · forme A A B",
@@ -3554,7 +3558,7 @@ const SONG_BPM = {
   // Ajouts Stones / Clapton / Hendrix / Ray Charles + standards
   "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":116,
   "Layla":96, "Little Wing":68, "Hit the Road Jack":88,
-  "Corcovado":80, "Night and Day":128, "Take Five":176
+  "Corcovado":120, "Night and Day":128, "Take Five":176
 };
 
 /* ============ Auteur / artiste (pour trier chaque zone) ============ */
