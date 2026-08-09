@@ -144,6 +144,15 @@
   }
   .diag{text-align:center;background:var(--paper);border-radius:6px;padding:4px 6px 2px;color:var(--ink)}
   .diag .nm{font-weight:800;font-size:.82rem;margin-bottom:2px}
+  /* popover : positions de l'accord au tap sur une mesure */
+  .bar[data-bars]{cursor:pointer}
+  #chordpop{position:fixed;z-index:80;background:var(--paper);color:var(--ink);border-radius:10px;
+    box-shadow:0 8px 28px rgba(0,0,0,.45);padding:8px 10px;display:none;max-width:min(92vw,340px)}
+  #chordpop.open{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+  #chordpop .diag{background:none;padding:0 2px}
+  #chordpop .pop-miss{font-size:.72rem;color:var(--ink-soft);padding:6px 2px}
+  .bar.pop-src{outline:2px solid var(--brass);outline-offset:-2px;border-radius:4px}
+  @media print{ #chordpop{display:none !important} .bar.pop-src{outline:none} }
   .footnote{font-size:.75rem;color:var(--ink-soft);font-style:italic;margin-top:8px}
   .groove{display:flex;align-items:center;gap:8px;margin:2px 0 8px;flex-wrap:wrap}
   .meter{
@@ -4386,7 +4395,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       let head="";
       if(sys.label) head=`<span class="sys-label">${esc(sys.label)}</span>`+(sys.note?`<span class="sys-note">${esc(sys.note)}</span>`:"");
       else if(sys.note) head=`<span class="sys-note" style="margin-left:0">${esc(sys.note)}</span>`;
-      return head+`<div class="grid">`+sys.bars.map(function(b){ return `<div class="bar">${barInner(b,off)}</div>`; }).join("")+`</div>`;
+      return head+`<div class="grid">`+sys.bars.map(function(b){ return `<div class="bar" data-bars="${esc(b)}">${barInner(b,off)}</div>`; }).join("")+`</div>`;
     }).join("");
     const baseKey=(s.key||"").split("·")[0].trim();
     const capo = off ? `<span class="c-capo">ton ${off>0?"+":""}${off} · orig. ${esc(baseKey)}${off>0?" · capo "+off+" avec les formes d'origine":""}</span>` : "";
@@ -4555,6 +4564,57 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     off=Math.max(-6, Math.min(6, off));
     if(off===0) delete TP[sl]; else TP[sl]=off;
     saveTP(); applyTP(sl);
+  }
+
+  /* ---- Popover « positions de l'accord » : tap sur une mesure de la grille ---- */
+  const chordPop=document.createElement("div");
+  chordPop.id="chordpop"; chordPop.setAttribute("role","status");
+  document.body.appendChild(chordPop);
+  let popSrc=null;
+  function closePop(){
+    if(popSrc){ popSrc.classList.remove("pop-src"); popSrc=null; }
+    chordPop.classList.remove("open");
+  }
+  function popOffFor(bar){
+    const card=bar.closest(".chart");
+    if(card) return TP[card.id]||0;
+    if(bar.closest("#concert") && concertSongs.length) return TP[concertSongs[concertIdx]]||0;
+    return 0;
+  }
+  function openPop(bar){
+    const raw=bar.getAttribute("data-bars"); if(!raw) return;
+    const off=popOffFor(bar);
+    let html="";
+    raw.split("·").forEach(function(tok){
+      tok=tok.trim(); if(!tok) return;
+      const name=tpChord(tok,off);
+      const fr=CHORDS[tok]||CHORDS[tok.split("/")[0]];
+      if(fr) html+=`<div class="diag"><div class="nm">${esc(name)}</div>${chordSVG(tpFrets(fr,off))}</div>`;
+      else html+=`<div class="pop-miss">${esc(name)} : voir « Accords du morceau »</div>`;
+    });
+    if(!html){ closePop(); return; }
+    chordPop.innerHTML=html;
+    if(popSrc) popSrc.classList.remove("pop-src");
+    popSrc=bar; bar.classList.add("pop-src");
+    chordPop.style.left="0px"; chordPop.style.top="0px";
+    chordPop.classList.add("open");
+    const r=bar.getBoundingClientRect(), pw=chordPop.offsetWidth, ph=chordPop.offsetHeight;
+    let x=Math.min(Math.max(8, r.left+r.width/2-pw/2), innerWidth-pw-8);
+    let y=r.bottom+6;
+    if(y+ph>innerHeight-8) y=r.top-ph-6;
+    if(y<8) y=8;
+    chordPop.style.left=x+"px"; chordPop.style.top=y+"px";
+  }
+  document.addEventListener("click", function(e){
+    const bar=e.target.closest ? e.target.closest(".bar[data-bars]") : null;
+    if(bar){ if(bar===popSrc) closePop(); else openPop(bar); return; }
+    if(!chordPop.contains(e.target)) closePop();
+  });
+  addEventListener("scroll", closePop, {passive:true, capture:true});
+  addEventListener("resize", closePop, {passive:true});
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closePop(); });
+  if(!loadJSON("songbook-hint-pop",false)){
+    setTimeout(function(){ toast("Astuce : touchez un accord dans une grille pour voir sa position."); setLS("songbook-hint-pop",true); },1500);
   }
 
   // délégation : tous les boutons des cartes + panneaux
