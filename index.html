@@ -4071,33 +4071,57 @@ function chordTones(name, off){
   if(bass!==null) bass=(((bass+off)%12)+12)%12;
   const pcs=new Set(form.map(i=>(root+i)%12));
   if(bass!==null) pcs.add(bass);
-  return {pcs:pcs, root:root, bass:bass};
+  const ints=form.slice().sort((a,b)=>a-b);
+  return {pcs:pcs, ints:ints, root:root, bass:bass};
 }
-function pianoSVG(t){
-  const W=104,H=64,left=3,top=6,ww=14,wh=52,bw=8,bh=32;
-  const WH=[0,2,4,5,7,9,11], BL={1:1,3:2,6:4,8:5,10:6};
-  const fillFor=(pc,black)=> pc===t.root ? "#C9903A" : t.pcs.has(pc) ? "#A8402C" : (black?"#211B12":"#F9F4E6");
+const _KB={ww:9,bw:6,wh:52,bh:32,left:3,top:6,WH:[0,2,4,5,7,9,11],BLW:{1:0,3:1,6:3,8:4,10:5}};
+function _kbAbs(t){ // positions absolues (demi-tons depuis le Do grave du clavier), accord en position
+  const seq=[];
+  let rootAbs=t.root;
+  if(t.bass!==null && t.bass!==t.root){
+    seq.push([t.bass,"b"]);
+    rootAbs=t.bass+((t.root-t.bass+11)%12+1);
+  }
+  seq.push([rootAbs,"r"]);
+  (t.ints||[]).forEach(function(i){
+    if(i<=0) return;
+    let abs=rootAbs+i;
+    if(i===2 && rootAbs+14<=23) abs=rootAbs+14;   // 9e réelle au-dessus quand le clavier le permet
+    seq.push([abs,"t"]);
+  });
+  return seq;
+}
+function _kbSVG(marks, dots){ // marks: [abs,type] touches pleines ; dots: [abs,type] pastilles
+  const K=_KB, W=K.left*2+K.ww*14, H=64;
+  const fillOf=function(type,black){ return type==="r" ? "#C9903A" : type==="a"||type==="t"||type==="b" ? "#A8402C" : (black?"#211B12":"#F9F4E6"); };
+  const mk={}; (marks||[]).forEach(function(m){ mk[m[0]]=m[1]; });
   let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
-  WH.forEach((pc,i)=>{ s+=`<rect x="${left+i*ww}" y="${top}" width="${ww-1}" height="${wh}" rx="2" fill="${fillFor(pc,false)}" stroke="#211B12" stroke-width="1"/>`; });
-  Object.keys(BL).forEach(k=>{ const pc=Number(k); s+=`<rect x="${left+BL[pc]*ww-bw/2}" y="${top}" width="${bw}" height="${bh}" rx="1.5" fill="${fillFor(pc,true)}" stroke="#211B12" stroke-width="1"/>`; });
+  for(let o=0;o<2;o++) K.WH.forEach(function(pc,i){
+    const abs=o*12+pc, x=K.left+(o*7+i)*K.ww;
+    s+=`<rect x="${x}" y="${K.top}" width="${K.ww-1}" height="${K.wh}" rx="1.5" fill="${mk[abs]!==undefined?fillOf(mk[abs],false):"#F9F4E6"}" stroke="#211B12" stroke-width="0.9"/>`;
+  });
+  for(let o=0;o<2;o++) Object.keys(K.BLW).forEach(function(k){
+    const pc=Number(k), abs=o*12+pc, x=K.left+(o*7+K.BLW[pc]+1)*K.ww-K.bw/2;
+    s+=`<rect x="${x}" y="${K.top}" width="${K.bw}" height="${K.bh}" rx="1.2" fill="${mk[abs]!==undefined?fillOf(mk[abs],true):"#211B12"}" stroke="#211B12" stroke-width="0.9"/>`;
+  });
+  (dots||[]).forEach(function(d){
+    const abs=d[0], type=d[1], o=Math.floor(abs/12), pc=abs%12, black=K.BLW[pc]!==undefined;
+    const cx=black ? K.left+(o*7+K.BLW[pc]+1)*K.ww : K.left+(o*7+K.WH.indexOf(pc))*K.ww+K.ww/2-0.5;
+    const cy=black ? K.top+K.bh-6 : K.top+K.wh-7;
+    const fill=type==="r" ? "#C9903A" : type==="a" ? "#A8402C" : (black ? "#F3EAD3" : "#211B12");
+    s+=`<circle cx="${cx}" cy="${cy}" r="3.4" fill="${fill}"${type==="r"?' stroke="#211B12" stroke-width="1"':''}/>`;
+  });
   return s+"</svg>";
 }
+function pianoSVG(t){ return _kbSVG(_kbAbs(t), null); }
 const _UKE_NAMES=["A","E","C","G"], _UKE_OPENPC=[9,4,0,7];
 function pianoScaleSVG(rootPc, pcs, colorPcs){
-  const W=104,H=64,left=3,top=6,ww=14,wh=52,bw=8,bh=32;
-  const WH=[0,2,4,5,7,9,11], BL={1:1,3:2,6:4,8:5,10:6};
-  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
-  WH.forEach((pc,i)=>{ s+=`<rect x="${left+i*ww}" y="${top}" width="${ww-1}" height="${wh}" rx="2" fill="#F9F4E6" stroke="#211B12" stroke-width="1"/>`; });
-  Object.keys(BL).forEach(k=>{ const pc=Number(k); s+=`<rect x="${left+BL[pc]*ww-bw/2}" y="${top}" width="${bw}" height="${bh}" rx="1.5" fill="#211B12" stroke="#211B12" stroke-width="1"/>`; });
-  for(let pc=0;pc<12;pc++){
-    if(pcs.indexOf(pc)<0) continue;
-    const black=BL[pc]!==undefined;
-    const cx = black ? left+BL[pc]*ww : left+WH.indexOf(pc)*ww+ww/2-0.5;
-    const cy = black ? top+bh-7 : top+wh-8;
-    const fill = pc===rootPc ? "#C9903A" : (colorPcs.indexOf(pc)>-1 ? "#A8402C" : (black ? "#F3EAD3" : "#211B12"));
-    s+=`<circle cx="${cx}" cy="${cy}" r="4.4" fill="${fill}"${pc===rootPc?' stroke="#211B12" stroke-width="1.2"':''}/>`;
-  }
-  return s+"</svg>";
+  const dots=pcs.map(function(pc){
+    const abs=rootPc+((pc-rootPc)%12+12)%12;
+    return [abs, pc===rootPc ? "r" : (colorPcs.indexOf(pc)>-1 ? "a" : "")];
+  });
+  dots.push([rootPc+12,"r"]);   // la tonique à l'octave, fin de la gamme
+  return _kbSVG(null, dots);
 }
 function scaleSVGFor(root, pcs, color, start, frets){
   if(INSTR==="piano") return pianoScaleSVG(root, pcs, color);
@@ -4107,7 +4131,7 @@ function scaleSVGFor(root, pcs, color, start, frets){
 function instrDiagSVG(ch, off, shell){
   if(INSTR==="piano"){
     const t=chordTones(ch, off); if(!t) return null;
-    if(shell && t.pcs.size>=4){ const p5=(t.root+7)%12; if(t.pcs.has(p5) && p5!==t.bass) t.pcs.delete(p5); }
+    if(shell && t.ints.length>=4 && t.ints.indexOf(7)>-1){ t.ints=t.ints.filter(function(i){ return i!==7; }); t.pcs.delete((t.root+7)%12); }
     return pianoSVG(t);
   }
   if(INSTR==="uke"){ const fr=UKE[ch]||UKE[ch.split("/")[0]]; return fr?chordSVG(tpFrets(fr, off||0)):null; }
