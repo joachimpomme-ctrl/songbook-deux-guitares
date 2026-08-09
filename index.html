@@ -2872,22 +2872,28 @@ E|--------|1-1-----|--------|1-1-----|`,
     zone:"rock", title:"(Sittin' On) The Dock of the Bay", key:"Sol · soul balancé (Otis Redding)",
     systems:[
       {note:"couplet — jouer 2 fois", bars:["G","B7","C","A"]},
-      {note:"refrain (« sittin' on the dock of the bay »)", bars:["G","E7","G","A"]}
+      {note:"refrain (« sittin' on the dock of the bay »)", bars:["G","E7","G","E7"]},
+      {note:"(« wastin' time »)", bars:["G","D","G","A"]}
     ],
-    chords:["G","B7","C","A","E7"],
-    tip:"La montée <b>Sol → Si7 → Do → La</b> du couplet, une mesure pleine par accord, insouciante comme la marée. Gamme de Sol majeur, penta majeure ; sifflez le solo final, c'est écrit pour. Le Si7 et le La (hors tonalité) sont la couleur du morceau.",
+    chords:["G","B7","C","A","E7","D"],
+    tip:"La montée <b>Sol → Si7 → Do → La</b> du couplet, une mesure pleine par accord, insouciante comme la marée. Au refrain, le balancement Sol-Mi7, et la surprise de « wastin' time » : un <b>Ré majeur</b> qui éclaire tout avant le La de relance. Gamme de Sol majeur, penta majeure ; sifflez l'outro, c'est écrit pour.",
     bass:{tab:
 `G|--------|--------|--------|--------|
-D|----5---|--------|--------|--------|
-A|--------|2-----2-|3---2-1-|0-----0-|
-E|3-----5-|----2---|--------|----0---|
+D|--------|--4-----|--5-----|--------|
+A|--5--0-1|2-----2-|3---3-1-|0-0---0-|
+E|3---3---|-------7|-----7--|----0---|
 
 G|--------|--------|--------|--------|
-D|----5---|--------|----5---|--------|
-A|--------|----2---|--------|0-------|
-E|3-------|0-----0-|3-------|----0-3-|`,
-      note:"La ligne de Duck Dunn, condensée des relevés publiés : sur Sol, la fondamentale grave, l'octave, puis le <b>glissé Sol→La</b> qui amène le Si7 (c'est aussi la figure de l'intro, jouée quatre fois) ; sous B7, la quinte Fa♯ en dessous ; et la signature du couplet, la <b>descente chromatique Do→Si→Si♭</b> qui retombe sur le La. Refrain : l'octave de Sol, le balancement Mi-Si du E7, et le Sol de passage qui ramène au couplet. Décontracté, legato, très en arrière — la marée, pas la machine."},
-    note:"Structure simplifiée (le disque ajoute un pont Sol-Ré-Do).",
+D|------0-|--------|------0-|--------|
+A|-----2--|--------|-----2--|--------|
+E|3---3--0|0-------|3---3--0|0-------|
+
+G|--------|--------|--------|--------|
+D|--------|----7-7-|--------|7-------|
+A|----5-5-|5--5----|----5-5-|--------|
+E|3--3----|--------|3--3----|--------|`,
+      note:"La ligne de Duck Dunn <b>note à note d'après la tab officielle</b> (♩=104). Couplet : Sol et sa quinte Ré, puis la montée chromatique <b>La→Si♭→Si</b> qui amène le Si7 (tenu, quinte Fa♯ en dessous) ; sur Do, la quinte Sol puis la descente <b>Do→Si→Si♭</b> qui retombe sur le La ; à la fin du 2e couplet, la montée Mi→Fa→Fa♯ relance le refrain. Refrain : Sol, puis la montée <b>Si-Ré-Mi</b> qui atterrit sur le Mi7 tenu (le dernier 0 anticipe, lié) ; « wastin' time » : Ré-Ré et glissé vers La, deux fois — la même figure que l'intro du disque (Sol, Sol, glissé Do→Ré ×2). Décontracté, très en arrière — la marée, pas la machine."},
+    note:"Le disque ajoute un pont (Sol-Ré-Do-Sol ×2) après le 2e refrain, puis l'outro sifflé sur le va-et-vient Sol-Ré.",
   },
   {
     zone:"rock", title:"I Heard It Through the Grapevine", key:"Mi mineur · groove sombre (Marvin Gaye)",
@@ -3818,11 +3824,12 @@ function parseKey(keyStr){
 }
 const _OPENPC=[4,11,7,2,9,4];   // e,B,G,D,A,E (index 0..5, comme fretSVG)
 function _soloStart(rootPc){ let f=((rootPc-4)%12+12)%12; if(f<3) f+=12; return f; }   // position basée sur la tonique sur le Mi grave
-function scaleDots(rootPc, pcs, colorPcs, start, frets){
+function scaleDots(rootPc, pcs, colorPcs, start, frets, opens){
+  const OP=opens||_OPENPC;
   const dots=[];
-  for(let i=0;i<6;i++){
+  for(let i=0;i<OP.length;i++){
     for(let x=start;x<start+frets;x++){
-      const pc=((_OPENPC[i]+x)%12+12)%12;
+      const pc=((OP[i]+x)%12+12)%12;
       if(pcs.indexOf(pc)>-1){
         const type = pc===rootPc ? "r" : (colorPcs.indexOf(pc)>-1 ? "a" : "");
         dots.push([i,x,type]);
@@ -3852,7 +3859,7 @@ function soloScales(s, off){
   return list.map(function(d){
     const pcs=d[1].map(function(x){ return (root+x)%12; });
     const color=d[2].map(function(x){ return (root+x)%12; });
-    return {label:d[0], start:start, frets:frets, dots:scaleDots(root,pcs,color,start,frets)};
+    return {label:d[0], start:start, frets:frets, root:root, pcs:pcs, color:color};
   });
 }
 /* ---- Arpèges & gammes d'accord (jazz) : une gamme + un arpège par accord du morceau ---- */
@@ -3935,15 +3942,14 @@ function chordScales(s, off){
     const kkey=disp+"|"+scaleName; if(seen[kkey]) return; seen[kkey]=1;   // pas de doublon
     out.push({
       label:disp, scaleLabel:_frRoot(disp)+" "+scaleName,
-      arp:{start:start, frets:frets, dots:scaleDots(root, arpPcs, guide, start, frets)},
-      scale:{start:start, frets:frets, dots:scaleDots(root, scPcs, guide, start, frets)}
+      root:root, guide:guide, arpPcs:arpPcs, scPcs:scPcs, start:start, frets:frets
     });
   });
   return out;
 }
 function soloDiagramsHTML(s, off){
   let html = soloScales(s, off).map(function(sc){
-    return `<div class="diag solo-sc"><div class="nm">${sc.label}</div>${fretSVG(sc.start,sc.frets,sc.dots)}</div>`;
+    return `<div class="diag solo-sc"><div class="nm">${sc.label}</div>${scaleSVGFor(sc.root,sc.pcs,sc.color,sc.start,sc.frets)}</div>`;
   }).join("");
   if(s.zone==="jazz" || s.zone==="blues"){
     const cs=chordScales(s, off);
@@ -3953,8 +3959,8 @@ function soloDiagramsHTML(s, off){
         : "Par accord — arpège (notes de l'accord) et gamme d'accord. Vise le doré (fondamentale) et le rouge (3ce &amp; 7e).";
       html += `<div class="solo-jazz-h">${intro}</div>`;
       html += cs.map(function(c){
-        return `<div class="diag solo-sc"><div class="nm">${c.label} · arpège</div>${fretSVG(c.arp.start,c.arp.frets,c.arp.dots)}</div>`+
-               `<div class="diag solo-sc"><div class="nm">${c.scaleLabel}</div>${fretSVG(c.scale.start,c.scale.frets,c.scale.dots)}</div>`;
+        return `<div class="diag solo-sc"><div class="nm">${c.label} · arpège</div>${scaleSVGFor(c.root,c.arpPcs,c.guide,c.start,c.frets)}</div>`+
+               `<div class="diag solo-sc"><div class="nm">${c.scaleLabel}</div>${scaleSVGFor(c.root,c.scPcs,c.guide,c.start,c.frets)}</div>`;
       }).join("");
     }
   } else if(s.zone==="rock" && ROCK_ARP[s.title]){
@@ -3970,7 +3976,7 @@ function soloDiagramsHTML(s, off){
       const rel=rich ? info.arp : (isMin?[0,3,7]:[0,4,7]);      // sinon triade
       const guide=[(root+(isMin?3:4))%12];                      // tierce en rouge (majeur/mineur)
       const start=_soloStart(root), frets=5;
-      return `<div class="diag solo-sc"><div class="nm">${disp} · arpège</div>${fretSVG(start,frets,scaleDots(root, rel.map(function(x){return (root+x)%12;}), guide, start, frets))}</div>`;
+      return `<div class="diag solo-sc"><div class="nm">${disp} · arpège</div>${scaleSVGFor(root, rel.map(function(x){return (root+x)%12;}), guide, start, frets)}</div>`;
     }).filter(Boolean).join("");
     if(arps){
       html += `<div class="solo-jazz-h">Par accord — l'arpège à viser sous ta ligne de solo (fondamentale dorée, tierce en rouge). La penta ci-dessus passe sur tout ; les arpèges font chanter la mélodie sur les changements.</div>`+arps;
@@ -4076,8 +4082,34 @@ function pianoSVG(t){
   Object.keys(BL).forEach(k=>{ const pc=Number(k); s+=`<rect x="${left+BL[pc]*ww-bw/2}" y="${top}" width="${bw}" height="${bh}" rx="1.5" fill="${fillFor(pc,true)}" stroke="#211B12" stroke-width="1"/>`; });
   return s+"</svg>";
 }
-function instrDiagSVG(ch, off){
-  if(INSTR==="piano"){ const t=chordTones(ch, off); return t?pianoSVG(t):null; }
+const _UKE_NAMES=["A","E","C","G"], _UKE_OPENPC=[9,4,0,7];
+function pianoScaleSVG(rootPc, pcs, colorPcs){
+  const W=104,H=64,left=3,top=6,ww=14,wh=52,bw=8,bh=32;
+  const WH=[0,2,4,5,7,9,11], BL={1:1,3:2,6:4,8:5,10:6};
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+  WH.forEach((pc,i)=>{ s+=`<rect x="${left+i*ww}" y="${top}" width="${ww-1}" height="${wh}" rx="2" fill="#F9F4E6" stroke="#211B12" stroke-width="1"/>`; });
+  Object.keys(BL).forEach(k=>{ const pc=Number(k); s+=`<rect x="${left+BL[pc]*ww-bw/2}" y="${top}" width="${bw}" height="${bh}" rx="1.5" fill="#211B12" stroke="#211B12" stroke-width="1"/>`; });
+  for(let pc=0;pc<12;pc++){
+    if(pcs.indexOf(pc)<0) continue;
+    const black=BL[pc]!==undefined;
+    const cx = black ? left+BL[pc]*ww : left+WH.indexOf(pc)*ww+ww/2-0.5;
+    const cy = black ? top+bh-7 : top+wh-8;
+    const fill = pc===rootPc ? "#C9903A" : (colorPcs.indexOf(pc)>-1 ? "#A8402C" : (black ? "#F3EAD3" : "#211B12"));
+    s+=`<circle cx="${cx}" cy="${cy}" r="4.4" fill="${fill}"${pc===rootPc?' stroke="#211B12" stroke-width="1.2"':''}/>`;
+  }
+  return s+"</svg>";
+}
+function scaleSVGFor(root, pcs, color, start, frets){
+  if(INSTR==="piano") return pianoScaleSVG(root, pcs, color);
+  if(INSTR==="uke") return fretSVG(0, 5, scaleDots(root, pcs, color, 0, 5, _UKE_OPENPC), _UKE_NAMES);
+  return fretSVG(start, frets, scaleDots(root, pcs, color, start, frets));
+}
+function instrDiagSVG(ch, off, shell){
+  if(INSTR==="piano"){
+    const t=chordTones(ch, off); if(!t) return null;
+    if(shell && t.pcs.size>=4){ const p5=(t.root+7)%12; if(t.pcs.has(p5) && p5!==t.bass) t.pcs.delete(p5); }
+    return pianoSVG(t);
+  }
   if(INSTR==="uke"){ const fr=UKE[ch]||UKE[ch.split("/")[0]]; return fr?chordSVG(tpFrets(fr, off||0)):null; }
   const fr=CHORDS[ch]||CHORDS[ch.split("/")[0]]; return fr?chordSVG(tpFrets(fr, off||0)):null;
 }
@@ -4096,8 +4128,8 @@ function bassNoteNames(tab){
     return bars.join(" | ");
   }).join("  ‖  ");
 }
-function diagInner(ch, off){
-  const svg = instrDiagSVG(ch, off);
+function diagInner(ch, off, shell){
+  const svg = instrDiagSVG(ch, off, shell);
   if(!svg) return "";
   return `<div class="nm">${tpChord(ch, off)}</div>${svg}`;
 }
@@ -4109,10 +4141,11 @@ function songHTML(s){
     else if(sys.note) head = `<span class="sys-note" style="margin-left:0">${sys.note}</span>`;
     return head + `<div class="grid">` + sys.bars.map(barHTML).join("") + `</div>`;
   }).join("");
+  const shell = s.zone==="jazz";
   const diags = s.chords.map(c=>{
     if(!CHORDS[c]) return "";
-    return `<div class="diag" data-ch="${c}">${diagInner(c,0)}</div>`;
-  }).join("");
+    return `<div class="diag" data-ch="${c}"${shell?' data-shell="1"':""}>${diagInner(c,0,shell)}</div>`;
+  }).join("") + (shell?`<div class="footnote piano-lh"${INSTR==="piano"?"":" hidden"}>🎹 Accords à 4 sons affichés en « shell » : fondamentale, tierce, septième — le squelette du comping jazz (quinte omise).</div>`:"");
   const tpose = `<div class="tpose" data-slug="${sl}">
     <span class="tpose-lbl">Ton</span>
     <button type="button" class="tp-minus" aria-label="Transposer un demi-ton plus bas">–</button>
@@ -4499,8 +4532,8 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       return head+`<div class="grid">`+sys.bars.map(function(b){ return `<div class="bar" data-bars="${esc(b)}">${barInner(b,off)}</div>`; }).join("")+`</div>`;
     }).join("");
     const baseKey=(s.key||"").split("·")[0].trim();
-    const capo = off ? `<span class="c-capo">ton ${off>0?"+":""}${off} · orig. ${esc(baseKey)}${(off>0&&INSTR==="guitar")?" · capo "+off+" avec les formes d'origine":""}</span>` : "";
-    const diags=(s.chords||[]).map(function(c){ return CHORDS[c]?`<div class="diag">${diagInner(c,off)}</div>`:""; }).join("");
+    const capo = off ? `<span class="c-capo">ton ${off>0?"+":""}${off} · orig. ${esc(baseKey)}${(off>0&&INSTR!=="piano")?" · capo "+off+" avec les formes d'origine":""}</span>` : "";
+    const diags=(s.chords||[]).map(function(c){ return CHORDS[c]?`<div class="diag">${diagInner(c,off,s.zone==="jazz")}</div>`:""; }).join("");
     const riff = s.riff
       ? `<details class="riff-d"><summary>🎸 Le riff à connaître</summary><pre class="tab">${s.riff.tab}</pre>`+
         (off?`<div class="footnote">Riff en tonalité d'origine (les accords ci-dessus sont transposés).</div>`:"")+
@@ -4653,11 +4686,11 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     const off=TP[sl]||0, card=document.getElementById(sl);
     if(!card) return;
     card.querySelectorAll(".bar[data-bars]").forEach(function(bar){ bar.innerHTML=barInner(bar.getAttribute("data-bars"), off); });
-    card.querySelectorAll(".diag[data-ch]").forEach(function(d){ d.innerHTML=diagInner(d.getAttribute("data-ch"), off); });
+    card.querySelectorAll(".diag[data-ch]").forEach(function(d){ d.innerHTML=diagInner(d.getAttribute("data-ch"), off, d.hasAttribute("data-shell")); });
     const soloBox=card.querySelector(".solo-scales"); if(soloBox) soloBox.innerHTML=soloDiagramsHTML(bySlug[sl], off);
     const val=card.querySelector(".tp-val"); if(val) val.textContent=(off>0?"+":"")+off;
     const kc=card.querySelector(".key-chip"); if(kc && bySlug[sl]) kc.textContent=frKeyTransposed(bySlug[sl], off);
-    const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent = (INSTR==="guitar" && off>0) ? "≡ capo "+off+" avec les formes d'origine" : "";
+    const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent = (INSTR!=="piano" && off>0) ? "≡ capo "+off+" avec les formes d'origine" : "";
     const reset=card.querySelector(".tp-reset"); if(reset) reset.hidden = off===0;
     const bo=card.querySelector(".bass-orig"); if(bo) bo.hidden = off===0;
     const ro=card.querySelector(".riff-orig"); if(ro) ro.hidden = off===0;
@@ -4686,11 +4719,14 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   function openPop(bar){
     const raw=bar.getAttribute("data-bars"); if(!raw) return;
     const off=popOffFor(bar);
+    const pcard=bar.closest(".chart");
+    const psong=pcard ? bySlug[pcard.id] : (bar.closest("#concert")&&concertSongs.length ? bySlug[concertSongs[concertIdx]] : null);
+    const popShell=!!(psong && psong.zone==="jazz");
     let html="";
     raw.split("·").forEach(function(tok){
       tok=tok.trim(); if(!tok) return;
       const name=tpChord(tok,off);
-      const svg=instrDiagSVG(tok,off);
+      const svg=instrDiagSVG(tok,off,popShell);
       if(svg) html+=`<div class="diag"><div class="nm">${esc(name)}</div>${svg}</div>`;
       else html+=`<div class="pop-miss">${esc(name)} : voir « Accords du morceau »</div>`;
     });
@@ -4730,8 +4766,9 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     syncInstrBtns();
     document.querySelectorAll(".chart").forEach(function(card){
       const off=TP[card.id]||0;
-      card.querySelectorAll(".diag[data-ch]").forEach(function(d){ d.innerHTML=diagInner(d.getAttribute("data-ch"), off); });
-      const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent=(INSTR==="guitar"&&off>0)?"≡ capo "+off+" avec les formes d'origine":"";
+      card.querySelectorAll(".diag[data-ch]").forEach(function(d){ d.innerHTML=diagInner(d.getAttribute("data-ch"), off, d.hasAttribute("data-shell")); });
+      const soloBox=card.querySelector(".solo-scales"); if(soloBox && bySlug[card.id]) soloBox.innerHTML=soloDiagramsHTML(bySlug[card.id], off);
+      const capo=card.querySelector(".tp-capo"); if(capo) capo.textContent=(INSTR!=="piano"&&off>0)?"≡ capo "+off+" avec les formes d'origine":"";
     });
     document.querySelectorAll(".piano-lh").forEach(function(el){ el.hidden = INSTR!=="piano"; });
     closePop();
@@ -5046,18 +5083,18 @@ document.getElementById("ending-diags").innerHTML = ["F9","E9"]
 
 /* ============ Manches génériques : gammes & arpèges ============ */
 /* dots : [corde (0=e aigu … 5=Mi grave), case, type] — type "r"=tonique, "a"=note couleur */
-function fretSVG(start,count,dots){
+function fretSVG(start,count,dots,names){
+  const nm=names||["e","B","G","D","A","E"], nStr=nm.length;
   const left=30,top=18,fw=42,sh=17;
-  const W=left+fw*count+12,H=top+sh*5+30;
-  const names=["e","B","G","D","A","E"];
+  const W=left+fw*count+12,H=top+sh*(nStr-1)+30;
   let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
   for(let j=0;j<=count;j++){
-    s+=`<line x1="${left+j*fw}" y1="${top}" x2="${left+j*fw}" y2="${top+sh*5}" stroke="#211B12" stroke-width="${j===0?2.4:1}"/>`;
+    s+=`<line x1="${left+j*fw}" y1="${top}" x2="${left+j*fw}" y2="${top+sh*(nStr-1)}" stroke="#211B12" stroke-width="${j===0?2.4:1}"/>`;
   }
-  for(let i=0;i<6;i++){
+  for(let i=0;i<nStr;i++){
     const y=top+i*sh;
     s+=`<line x1="${left}" y1="${y}" x2="${left+fw*count}" y2="${y}" stroke="#211B12" stroke-width="1"/>`;
-    s+=`<text x="${left-12}" y="${y+3.5}" font-size="10" font-weight="700" fill="#5C513D" text-anchor="middle">${names[i]}</text>`;
+    s+=`<text x="${left-12}" y="${y+3.5}" font-size="10" font-weight="700" fill="#5C513D" text-anchor="middle">${nm[i]}</text>`;
   }
   for(let j=0;j<count;j++){
     s+=`<text x="${left+(j+0.5)*fw}" y="${H-10}" font-size="10" font-weight="700" fill="#5C513D" text-anchor="middle">${start+j}</text>`;
@@ -5256,7 +5293,7 @@ E|--5-------5-----|`,
   }
 ];
 document.getElementById("zone-basses").innerHTML = BASSES.map(b=>
-  `<div class="impro"><h3>${b.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${b.use}</p><pre class="tab">${b.tab}</pre><p>${b.desc}</p></div>`
+  `<div class="impro"><h3>${b.title}</h3><p style="color:#9AA7B4;font-size:.82rem">${b.use}</p><pre class="tab">${b.tab}</pre><div class="footnote piano-lh"${INSTR==="piano"?"":" hidden"}>🎹 ${bassNoteNames(b.tab)}</div><p>${b.desc}</p></div>`
 ).join("");
 </script>
 </body>
