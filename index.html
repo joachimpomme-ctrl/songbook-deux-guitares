@@ -820,6 +820,7 @@ const CHORDS = {
   "F#m7♭5":  ["2","x","2","2","1","0"],
   "Bm7♭5":   ["x","2","3","2","3","x"],
   "Dm7♭5":   ["x","x","0","1","1","1"],
+  "A♭":       ["4","6","6","5","4","4"],
   "A♭7":     ["4","6","4","5","4","4"],
   "D♭7":     ["x","4","6","4","6","4"],
   "E♭7":     ["x","6","8","6","8","6"],
@@ -3661,6 +3662,25 @@ A|------2---|------2---|------2---|------2---|
 E|0---3---2-|0---3---2-|0---3---2-|0---3---2-|`,
       note:"Le vamp en 3+2 : Mi (sur le 1), Sol (sur le 3), puis Si-Fa♯ sur le « 1-2 » court — la basse dessine le balancement à elle seule. Au pont, Do-Sol-La puis Si-Fa♯-Mi, mêmes appuis. Répète sans varier : en 5/4, la stabilité EST le groove. (Tonalité de la grille ; l'original est un demi-ton plus bas.)"},
     note:"Grille en Mi m ; l'original est en Mi♭ mineur. Sur le disque, chaque section fait 8 mesures (jouer les blocs 2 fois).",
+  },
+  {
+    zone:"jazz", title:"In the Mood", key:"La♭ · swing rapide (Glenn Miller) · blues de 12 mesures",
+    systems:[
+      {note:"le riff, en boucle", bars:["A♭","A♭","A♭","A♭7"]},
+      {bars:["D♭7","D♭7","A♭","A♭"]},
+      {bars:["E♭7","D♭7","A♭","E♭7"]}
+    ],
+    chords:["A♭","A♭7","D♭7","E♭7"],
+    riff:{tab:
+`e|------------------------|------------------------|------------------------|
+B|------------------------|------------------------|------------------------|
+G|------------------------|-------1--4--1----------|-------3--6--3----------|
+D|-------1--4--1----------|----3-----------3-------|----5-----------5-------|
+A|----3-----------3-------|-4-----------------4----|-6-----------------6----|
+E|-4-----------------4----|------------------------|------------------------|`,
+      note:"Le riff des saxophones : l'<b>arpège de septième</b> monté puis redescendu — fondamentale, tierce, quinte, <b>septième mineure</b>, et retour. Une forme unique, déplacée sur chaque accord de la grille : ici La♭ (case 4 sur la corde de mi), Ré♭ (case 4 sur la corde de la), Mi♭ (case 6). Croches swinguées, très détachées, sans jamais forcer : c'est un riff de section de cuivres, pas de guitare électrique."},
+    tip:"Un <b>blues de 12 mesures</b> déguisé en tube de danse. Tout le morceau tient dans un seul dessin : l'arpège 1-3-5-<b>♭7</b> promené sur La♭, Ré♭ et Mi♭ — le ♭7 est la note qui fait swinguer, ne l'oublie jamais. Pour improviser : penta majeure de La♭ + le ♭7, ou l'arpège de chaque dominante. Trop dur en La♭ ? <b>Capo 1 et joue en formes de Sol</b> (Sol, C7, D7) : c'est la même chose. À deux : l'un tient le riff en boucle, l'autre pompe à quatre temps égaux, puis échangez.",
+    note:"Tonalité d'origine (La♭). Le disque de 1939 finit sur le fameux jeu de nuances : le riff se répète de plus en plus doux, puis explose — gardez-le pour la fin.",
   }
 ];
 
@@ -3847,7 +3867,7 @@ const SONG_BPM = {
   // Ajouts Stones / Clapton / Hendrix / Ray Charles + standards
   "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":116,
   "Layla":96, "Little Wing":68, "Hit the Road Jack":88,
-  "Corcovado":120, "Night and Day":128, "Take Five":176
+  "Corcovado":120, "Night and Day":128, "Take Five":176, "In the Mood":168
 };
 
 /* ============ Auteur / artiste (pour trier chaque zone) ============ */
@@ -3917,7 +3937,7 @@ const SONG_ARTIST = {
   "(I Can't Get No) Satisfaction":"Rolling Stones", "Jumpin' Jack Flash":"Rolling Stones",
   "Honky Tonk Women":"Rolling Stones", "Layla":"Eric Clapton", "Little Wing":"Jimi Hendrix",
   "Hit the Road Jack":"Ray Charles", "Corcovado":"Antônio Carlos Jobim",
-  "Night and Day":"Cole Porter", "Take Five":"Dave Brubeck"
+  "Night and Day":"Cole Porter", "Take Five":"Dave Brubeck", "In the Mood":"Glenn Miller"
 };
 function _artistKey(name){ return (name && name.length) ? name.toLowerCase().replace(/^the\s+/,"") : "￿"; }
 function byArtist(a,b){
