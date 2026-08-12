@@ -306,6 +306,8 @@
     display:flex;justify-content:space-between;align-items:baseline;gap:8px;
   }
   #song-index a[hidden]{display:none}
+  #song-index a .ti{display:flex;flex-direction:column;gap:1px;min-width:0}
+  #song-index a .ar{font-size:.68rem;color:#9AA7B4;font-style:italic}
   #song-index a:active{color:var(--brass)}
   #song-index a .z{
     font-size:.6rem;text-transform:uppercase;letter-spacing:.05em;
@@ -821,6 +823,16 @@ const CHORDS = {
   "Bm7♭5":   ["x","2","3","2","3","x"],
   "Dm7♭5":   ["x","x","0","1","1","1"],
   "A♭":       ["4","6","6","5","4","4"],
+  "A♭6":      ["4", "6", "6", "5", "6", "4"],
+  "D♭6":      ["x", "4", "3", "3", "2", "x"],
+  "D6":       ["x", "x", "0", "2", "0", "2"],
+  "Dmaj7":    ["x", "x", "0", "2", "2", "2"],
+  "F°7":      ["x", "x", "3", "4", "3", "4"],
+  "C#°7":     ["x", "x", "2", "3", "2", "3"],
+  "D#°7":     ["x", "x", "1", "2", "1", "2"],
+  "Bm6":      ["x", "2", "4", "4", "3", "4"],
+  "C#7":      ["x", "4", "3", "4", "2", "x"],
+  "G#m":      ["4", "6", "6", "4", "4", "4"],
   "A♭7":     ["4","6","4","5","4","4"],
   "D♭7":     ["x","4","6","4","6","4"],
   "E♭7":     ["x","6","8","6","8","6"],
@@ -3666,11 +3678,11 @@ E|0---3---2-|0---3---2-|0---3---2-|0---3---2-|`,
   {
     zone:"jazz", title:"In the Mood", key:"La♭ · swing rapide (Glenn Miller) · blues de 12 mesures",
     systems:[
-      {note:"le riff, en boucle", bars:["A♭","A♭","A♭","A♭7"]},
-      {bars:["D♭7","D♭7","A♭","A♭"]},
-      {bars:["E♭7","D♭7","A♭","E♭7"]}
+      {note:"le riff, en boucle", bars:["A♭6","A♭6","A♭6","A♭7"]},
+      {bars:["D♭6","D♭6","A♭6","A♭6"]},
+      {note:"le dernier quart, plus jazz que blues", bars:["E♭7","E♭7 · B♭m7","A♭6 · D♭","E7 · B♭m7"]}
     ],
-    chords:["A♭","A♭7","D♭7","E♭7"],
+    chords:["A♭6","A♭7","D♭6","D♭","E♭7","B♭m7","E7"],
     riff:{tab:
 `e|------------------------|------------------------|------------------------|
 B|------------------------|------------------------|------------------------|
@@ -3678,9 +3690,34 @@ G|------------------------|-------1--4--1----------|-------3--6--3----------|
 D|-------1--4--1----------|----3-----------3-------|----5-----------5-------|
 A|----3-----------3-------|-4-----------------4----|-6-----------------6----|
 E|-4-----------------4----|------------------------|------------------------|`,
-      note:"Le riff des saxophones : l'<b>arpège de septième</b> monté puis redescendu — fondamentale, tierce, quinte, <b>septième mineure</b>, et retour. Une forme unique, déplacée sur chaque accord de la grille : ici La♭ (case 4 sur la corde de mi), Ré♭ (case 4 sur la corde de la), Mi♭ (case 6). Croches swinguées, très détachées, sans jamais forcer : c'est un riff de section de cuivres, pas de guitare électrique."},
-    tip:"Un <b>blues de 12 mesures</b> déguisé en tube de danse. Tout le morceau tient dans un seul dessin : l'arpège 1-3-5-<b>♭7</b> promené sur La♭, Ré♭ et Mi♭ — le ♭7 est la note qui fait swinguer, ne l'oublie jamais. Pour improviser : penta majeure de La♭ + le ♭7, ou l'arpège de chaque dominante. Trop dur en La♭ ? <b>Capo 1 et joue en formes de Sol</b> (Sol, C7, D7) : c'est la même chose. À deux : l'un tient le riff en boucle, l'autre pompe à quatre temps égaux, puis échangez.",
-    note:"Tonalité d'origine (La♭). Le disque de 1939 finit sur le fameux jeu de nuances : le riff se répète de plus en plus doux, puis explose — gardez-le pour la fin.",
+      note:"Le riff des saxophones : l'<b>arpège de septième</b> monté puis redescendu — fondamentale, tierce, quinte, <b>septième mineure</b>, et retour. Une forme unique, déplacée sur chaque accord : ici La♭ (case 4 sur la corde de mi), Ré♭ (case 4 sur la corde de la), Mi♭ (case 6). Croches swinguées, très détachées : c'est un riff de cuivres, pas de guitare électrique. Sur le disque, la guitare rythmique ne joue <b>pas</b> ce riff — elle pose des accords de trois cordes en noires régulières (La♭ = mi4/la3/ré1, Ré♭ = la4/ré3/sol1, Mi♭7 = ré1/sol3/si2) : à deux, l'un fait le saxophone, l'autre la pompe."},
+    tip:"Un <b>blues de 12 mesures</b> déguisé en tube de danse — mais un blues de swing band : le tonique est un <b>La♭6</b>, pas un accord de 7e, et les quatre dernières mesures partent en ii-V (Mi♭7-Si♭m7) avec un <b>Mi7</b> chromatique juste avant la reprise. Tout le reste tient dans un seul dessin : l'arpège 1-3-5-<b>♭7</b> promené sur La♭, Ré♭ et Mi♭ — le ♭7 est la note qui fait swinguer. Pour improviser : penta majeure de La♭ + le ♭7, ou l'arpège de chaque dominante. Trop dur en La♭ ? <b>Capo 1 et joue en formes de Sol</b> : c'est la même chose. À deux : l'un tient le riff en boucle, l'autre pompe à quatre temps égaux, puis échangez.",
+    note:"Tonalité d'origine (La♭), grille relevée mesure par mesure sur la tab officielle. Le disque de 1939 finit sur le fameux jeu de nuances : le riff se répète de plus en plus doux, puis explose — gardez-le pour la fin.",
+  },
+  {
+    zone:"jazz", title:"Moonlight Serenade", key:"Ré · ballade lente (Glenn Miller) · forme A A B A",
+    systems:[
+      {label:"A", note:"la mélodie qui monte, une note par accord", bars:["D6","F°7","Em","A7"]},
+      {bars:["D","Dmaj7","D7","B7 · C#°7"]},
+      {bars:["Dmaj7 · B°7","Em6","A7","D"]},
+      {label:"B", note:"pont", bars:["Gmaj7","Gm6","F#7","D#°7"]},
+      {bars:["Bm6 · C#7","Bm6 · C#7","F#m7♭5 · B7","Em7♭5 · A7"]}
+    ],
+    chords:["D6","F°7","Em","A7","D","Dmaj7","D7","B7","C#°7","B°7","Em6","Gmaj7","Gm6","F#7","D#°7","Bm6","C#7","F#m7♭5","Em7♭5"],
+    tip:"La ballade la plus célèbre du swing, et une leçon d'harmonie : entre deux accords stables, Miller glisse toujours un <b>diminué de passage</b> (Fa°, Do♯°, Si°, Ré♯°) qui fait monter la basse d'un demi-ton. Ne les zappe pas — c'est eux, la couleur « clarinette » du morceau. Sur les A : gamme de Ré majeur, phrases très longues, presque pas de notes. Le pont module vers Sol puis redescend en ii-V. À deux guitares : l'un tient les accords en rondes, l'autre chante la mélodie sur les cordes aiguës, très près du silence.",
+    note:"Grille relevée mesure par mesure sur la tab officielle (arrangement en Ré). Le disque est en <b>Mi♭</b> : capo 1 pour jouer avec. Forme A A B A — la reprise du A est identique. En mesure 12, l'original descend en diminués chromatiques (Do° puis Si° puis Si♭°) avant de retomber sur le Ré : à essayer une fois le reste en place.",
+  },
+  {
+    zone:"jazz", title:"Chattanooga Choo Choo", key:"Sol · swing médium (Glenn Miller)",
+    systems:[
+      {note:"couplet (« pardon me boy… »)", bars:["G","G","G","G"]},
+      {bars:["Am","D","G","G"]},
+      {note:"refrain (« Chattanooga choo choo… »)", bars:["C · G7","C","C · G7","C"]},
+      {bars:["C","G · Cmaj7","G#m · G","G6"]}
+    ],
+    chords:["G","Am","D","C","G7","Cmaj7","G#m","G6"],
+    tip:"Le train du swing : un couplet qui ne bouge pas (quatre mesures de Sol, puis Am-Ré pour relancer) et un refrain qui bascule sur le <b>Do</b> — le contraste fait tout, ne joue pas le couplet trop fort. Le <b>Sol♯m</b> de l'avant-dernière mesure est une surprise de passage entre Do et Sol : glisse-le, ne l'appuie pas. Gamme de Sol majeur partout, phrasé en croches swinguées. À deux : l'un fait la pompe façon chemin de fer (quatre temps égaux, étouffés), l'autre chante le thème.",
+    note:"Grille relevée mesure par mesure sur la tab officielle (arrangement en Sol). Le refrain se termine par une première fin en Sol6 et une seconde qui repart sur Do.",
   }
 ];
 
@@ -3758,6 +3795,7 @@ const GROOVE_BY_TITLE = {
   "Ain't No Sunshine":{m:"4/4", n:4, acc:[1], lbl:"Groove lent : pose le 1, puis laisse le silence travailler."},
   "My Favorite Things (vamp)":{m:"3/4", n:3, acc:[1], lbl:"Valse jazz : 3 temps, appui franc sur le 1, accompagnement léger sur 2 et 3."},
   "Misty":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade lente : accords tenus, basse sur 1 et 3, laisse tout sonner."},
+  "Moonlight Serenade":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade très lente : rondes tenues, basse sur 1 et 3, tout doit sonner longtemps."},
   "Dark Eyes (Les Yeux Noirs)":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."},
   "Scarborough Fair":{m:"3/4", n:3, acc:[1], lbl:"Valse folk : 3 temps, arpèges qui sonnent, basse sur le 1."},
   "I Will Survive":{m:"4/4", n:4, acc:[2,4], lbl:"Disco : accords secs et réguliers, backbeat marqué sur 2 et 4."},
@@ -3867,7 +3905,7 @@ const SONG_BPM = {
   // Ajouts Stones / Clapton / Hendrix / Ray Charles + standards
   "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":116,
   "Layla":96, "Little Wing":68, "Hit the Road Jack":88,
-  "Corcovado":120, "Night and Day":128, "Take Five":176, "In the Mood":168
+  "Corcovado":120, "Night and Day":128, "Take Five":176, "In the Mood":160, "Moonlight Serenade":70, "Chattanooga Choo Choo":130
 };
 
 /* ============ Auteur / artiste (pour trier chaque zone) ============ */
@@ -3937,7 +3975,8 @@ const SONG_ARTIST = {
   "(I Can't Get No) Satisfaction":"Rolling Stones", "Jumpin' Jack Flash":"Rolling Stones",
   "Honky Tonk Women":"Rolling Stones", "Layla":"Eric Clapton", "Little Wing":"Jimi Hendrix",
   "Hit the Road Jack":"Ray Charles", "Corcovado":"Antônio Carlos Jobim",
-  "Night and Day":"Cole Porter", "Take Five":"Dave Brubeck", "In the Mood":"Glenn Miller"
+  "Night and Day":"Cole Porter", "Take Five":"Dave Brubeck", "In the Mood":"Glenn Miller",
+  "Moonlight Serenade":"Glenn Miller", "Chattanooga Choo Choo":"Glenn Miller"
 };
 function _artistKey(name){ return (name && name.length) ? name.toLowerCase().replace(/^the\s+/,"") : "￿"; }
 function byArtist(a,b){
@@ -3969,7 +4008,7 @@ function grooveHTML(s){
 const _ROWS=["G","D","A","E"];      // affichage haut -> bas
 const _ROWPC=[7,2,9,4];             // hauteur des cordes à vide (do=0)
 const _PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5","Mas Que Nada":"bossa","Chameleon":"root5"};
+const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5","Mas Que Nada":"bossa","Chameleon":"root5","Moonlight Serenade":"root5"};
 function _rootPC(tok){
   tok=tok.trim();
   if(tok.indexOf("/")>-1) tok=tok.split("/")[1].trim();  // slash : la basse est la note d'après
@@ -4502,11 +4541,12 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   const activeList=function(){ for(let i=0;i<SL.lists.length;i++){ if(SL.lists[i].id===SL.activeId) return SL.lists[i]; } return null; };
   const isFav=function(sl){ const l=activeList(); return !!l && l.songs.indexOf(sl)>-1; };
 
-  const sorted=[...SONGS].sort((a,b)=>_norm(a.title).localeCompare(_norm(b.title)));
+  const sorted=[...SONGS].sort(byArtist);
   const bySlug={};
   SONGS.forEach(function(s){ bySlug[slug(s.title)]=s; });
   document.getElementById("song-index").innerHTML = sorted.map(function(s){
-    return `<a href="#${slug(s.title)}" data-n="${_norm(s.title+" "+(s.key||"")+" "+(SONG_ARTIST[s.title]||""))}">${s.title}<span class="z">${ZL[s.zone]||s.zone}</span></a>`;
+    const art = SONG_ARTIST[s.title] || "";
+    return `<a href="#${slug(s.title)}" data-n="${_norm(s.title+" "+(s.key||"")+" "+art)}"><span class="ti">${s.title}${art?`<span class="ar">${art}</span>`:""}</span><span class="z">${ZL[s.zone]||s.zone}</span></a>`;
   }).join("");
   document.getElementById("idx-count").textContent = SONGS.length;
 
@@ -4563,7 +4603,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     });
     // panneau masqués
     const hid=Array.from(HIDDEN).map(function(sl){ return bySlug[sl]; }).filter(Boolean)
-      .sort(function(a,b){ return _norm(a.title).localeCompare(_norm(b.title)); });
+      .sort(byArtist);
     masqCount.textContent = hid.length;
     masques.hidden = hid.length===0;
     masqList.innerHTML = hid.map(function(s){
