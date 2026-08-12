@@ -823,6 +823,16 @@ const CHORDS = {
   "Bm7♭5":   ["x","2","3","2","3","x"],
   "Dm7♭5":   ["x","x","0","1","1","1"],
   "A♭":       ["4","6","6","5","4","4"],
+  "A5":       ["x", "0", "2", "x", "x", "x"],
+  "C5":       ["x", "3", "5", "x", "x", "x"],
+  "D5":       ["x", "5", "7", "x", "x", "x"],
+  "E5":       ["0", "2", "2", "x", "x", "x"],
+  "G5":       ["3", "5", "x", "x", "x", "x"],
+  "Dsus4":    ["x", "x", "0", "2", "3", "3"],
+  "Am/G#":    ["4", "0", "2", "2", "1", "0"],
+  "C/G":      ["3", "3", "2", "0", "1", "0"],
+  "G/B":      ["x", "2", "0", "0", "3", "3"],
+  "Em7/D":    ["x", "x", "0", "0", "0", "0"],
   "A♭6":      ["4", "6", "6", "5", "6", "4"],
   "D♭6":      ["x", "4", "3", "3", "2", "x"],
   "D6":       ["x", "x", "0", "2", "0", "2"],
@@ -1338,6 +1348,14 @@ E|--------|--------|--------|--------|`,
       {bars:["G","D","Em","F#7"]}
     ],
     chords:["Bm","F#7","A","E","G","D","Em"],
+    riff:{tab:
+`e|-7-----------------7-------|--------------9----------|
+B|-7-----------7-----------7-|-------7-----------7-----|
+G|-7-----7--------------7--9-|-9--9-----------9--------|
+D|-9--------9-----9----------|-8--------------------8--|
+A|-9--9----------------------|----------9--------------|
+E|-7-------------------------|-------------------------|`,
+      note:"L'arpège d'intro note à note d'après la tab officielle (♩=74), tel qu'écrit : <b>sans capo</b>, cases 7 à 12 — le Si mineur barré en 7e case, puis le Fa♯7 en 9e. Sur le disque c'est une douze cordes, d'où l'épaisseur ; à six cordes, laisse tout sonner et attaque aux doigts. La partition signale qu'on peut aussi le jouer <b>capo 7</b> en retirant 7 à chaque case, ce qui ramène tout en position ouverte."},
     tip:"La boucle du couplet est aussi celle des solos de fin : penta mineure de Si (case 7) + arpèges des accords. Le refrain inverse la donne : il part du Sol majeur et retombe sur le Si mineur. Au capo 7, tout se joue en accords ouverts : Em, B7, D, A, C, G, Am, B7.",
     bass:{tab:
 `G|--------|--------|--------|--------|
@@ -3167,15 +3185,16 @@ E|--------|--------|--------|--------|`,
   },
   {
     zone:"rock", title:"Papa's Got a Brand New Bag", key:"Mi · funk sur 12 mesures (James Brown)",
-    systems:[{bars:["E7","E7","E7","E7"]},{bars:["A7","A7","E7","E7"]},{bars:["B7","A7","E7","B7"]}],
-    chords:["E7","A7","B7"],
+    systems:[{bars:["E9","E9","E9","E9"]},{bars:["A7","A7","E9","E9"]},{bars:["B7","A7","E9","E9 · B7"]}],
+    chords:["E9","A7","B7"],
     riff:{tab:
-`e|---------------------------|
-B|--7---x--x---7---x--x--7---|
-G|--7---x--x---7---x--x--7---|
-D|--6---x--x---6---x--x--6---|
-A|--7---x--x---7---x--x--7---|`,
-      note:"La <b>cocotte</b> James Brown : l'accord E9 (la « dominante funk ») jabé court et sec, étouffé aussitôt, avec les frappes fantômes entre (les ×). Peu de notes, beaucoup de silence, le « chank » sur 2 et 4 — Jimmy Nolen a inventé un langage avec ça."},
+`e|--------7---------------7-------|
+B|--------7---------------7-------|
+G|--------7---------------7-------|
+D|--------6---------------6-------|
+A|--------------------------------|
+E|--------------------------------|`,
+      note:"La <b>cocotte</b> de Jimmy Nolen note à note d'après la tab officielle (♩=129) : l'accord de <b>E9 sur les quatre cordes aiguës</b> (ré 6, sol 7, si 7, mi 7 — soit Sol♯-Ré-Fa♯-Si, un E9 sans fondamentale), piqué en croches <b>uniquement sur les temps 2 et 4</b>. Rien d'autre de la mesure : c'est le silence qui fait le groove. Le La7 et le Si7 sont la même forme à trois doigts déplacée : La7 = ré 7 / sol 6 / si 8, Si7 = ré 9 / sol 8 / si 10. En fin de chaque tour de douze, une mesure entière de doubles-croches sur le même accord relance la machine."},
     tip:"L'acte de naissance du funk : un <b>12 mesures en Mi</b>, mais joué sec, étouffé, tout sur le contretemps. Penta de Mi mixte ; le secret n'est pas dans les notes mais dans le silence entre elles. « On the one ! » Même grille que le <b>Blues shuffle en Mi</b> — c'est le feel qui fait tout.",
     bass:{tab:
 `G|--------|--------|--------|--------|
@@ -3718,6 +3737,145 @@ E|-4-----------------4----|------------------------|------------------------|`,
     chords:["G","Am","D","C","G7","Cmaj7","G#m","G6"],
     tip:"Le train du swing : un couplet qui ne bouge pas (quatre mesures de Sol, puis Am-Ré pour relancer) et un refrain qui bascule sur le <b>Do</b> — le contraste fait tout, ne joue pas le couplet trop fort. Le <b>Sol♯m</b> de l'avant-dernière mesure est une surprise de passage entre Do et Sol : glisse-le, ne l'appuie pas. Gamme de Sol majeur partout, phrasé en croches swinguées. À deux : l'un fait la pompe façon chemin de fer (quatre temps égaux, étouffés), l'autre chante le thème.",
     note:"Grille relevée mesure par mesure sur la tab officielle (arrangement en Sol). Le refrain se termine par une première fin en Sol6 et une seconde qui repart sur Do.",
+  },
+  {
+    zone:"reggae", title:"D'yer Mak'er", key:"Do · faux reggae (Led Zeppelin)",
+    systems:[
+      {note:"couplet — la boucle, trois fois", bars:["C","Am","F","G"]},
+      {note:"puis quatre mesures de La mineur tenu", bars:["Am","Am","Am","Am"]},
+      {note:"refrain (« when I read the letter ») — trois fois", bars:["Am","Am","G","G"]},
+      {bars:["F","F","G","G"]}
+    ],
+    chords:["C","Am","F","G"],
+    riff:{tab:
+`e|--------10/12------|-------------------|--------3/-5-------|--------5/-7-------|
+B|----8--------------|----5--------------|----1--------------|----3--------------|
+G|--9---9-10/12------|--5---5--7/-8------|--2---2-3/-5-------|--4---4-5/-7-------|
+D|-----------------7-|-----------------3-|-----------------5-|-------------------|
+A|-------------------|-------------------|-------------------|-------------------|
+E|8------------------|5------------------|1------------------|3------------------|`,
+      note:"La figure de guitare de l'intro et des couplets, note à note d'après la tab officielle (♩=165) : pour chaque accord, <b>fondamentale grave — tierce — quinte — tierce</b> en palm mute, puis une double corde <b>glissée</b> qui monte vers la tierce et la quinte, un silence, et l'anacrouse sur la fondamentale de l'accord suivant. C'est ce glissé qui fait tout le balancement. Au refrain, la guitare passe aux barrés étouffés : La m case 5, Sol case 3, et un Fa en arpège sur trois cordes seulement."},
+    tip:"Le reggae vu par quatre Anglais qui n'en avaient jamais joué — et c'est ce décalage qui fait le charme. La boucle est un <b>I-vi-IV-V</b> de doo-wop (Do-La m-Fa-Sol) posé sur un contretemps jamaïcain. Gamme de Do majeur, mais vise le La mineur : les couplets et le refrain s'y posent tous les deux. Le vrai travail est rythmique, pas mélodique : reste en retard, étouffe, laisse le trou sur le temps.",
+    note:"Grille relevée mesure par mesure sur la tab officielle et recoupée avec la feuille d'accords. Le couplet fait 16 mesures : la boucle trois fois, puis quatre mesures de La mineur tenu sous le trait de chant. Le refrain fait 16 mesures aussi : La m-Sol trois fois, puis Fa-Sol.",
+  },
+  {
+    zone:"rock", title:"Rock and Roll", key:"La · rock'n'roll (Led Zeppelin) · blues de 12 mesures",
+    systems:[
+      {note:"le riff, en boucle", bars:["A","A","A","A"]},
+      {bars:["D","D","A","A"]},
+      {bars:["E","D","A","A"]}
+    ],
+    chords:["A","D","E"],
+    riff:{tab:
+`e|------------------------|------------------------|
+B|------------------------|------------------------|
+G|------------------------|------------------------|
+D|-2--2-----2--5--2--4----|----2--4--2--2--2--4--2-|
+A|-0--0--3--0--0--0--0--3-|----0--0--0--0--0--0--0-|
+E|------------------------|------------------------|`,
+      note:"Le riff de Jimmy Page note à note d'après la tab officielle (♩=170), croches serrées : la double corde <b>La+Mi</b> qui balance vers <b>La+Sol</b> (A7) et <b>La+Fa♯</b> (A6), avec le <b>Do</b> de la corde de la — la blue note — qui referme chaque cellule. Attention, il ne se répète pas à l'identique : plusieurs mesures remplacent ce Do par un <b>Do♯</b>, la tierce majeure. C'est ce va-et-vient majeur/mineur qui empêche le riff de tourner en rond."},
+    tip:"Un <b>12 mesures en La</b> lancé à 170 : le blues le plus direct du répertoire. Penta de La (mineure et majeure mélangées) plus la blue note — exactement ce que fait le riff. Une subtilité mesurée sur la partition : l'intro et le premier chorus de solo tiennent <b>une mesure par degré</b>, les couplets <b>deux</b> — la grille est la même, c'est le débit qui double. Et l'intro se termine Mi-Mi-La-La là où les couplets font Mi-Ré-La-La.",
+    note:"Grille relevée mesure par mesure sur la tab officielle et confirmée par la feuille d'accords, qui ne contient que La, Ré et Mi sur tout le morceau. Repères imprimés : couplet 1 mesure 18, couplet 2 mesure 42, solo mesure 62, couplet 3 mesure 102.",
+  },
+  {
+    zone:"blues", title:"Since I've Been Loving You", key:"Do mineur · slow blues en 6/8 (Led Zeppelin)",
+    systems:[
+      {note:"couplet (« I've really been the best of fools »)", bars:["Fm","Fm","Fm","Fm"]},
+      {bars:["Cm","Cm","Cm","Cm"]},
+      {note:"pré-refrain (« workin' from seven to eleven »)", bars:["Cm","Cm","Fm","Fm"]},
+      {bars:["Cm","Cm","Cm","Cm"]},
+      {note:"refrain (« since I've been loving you »)", bars:["Gm","Gm","A♭","Fm"]},
+      {note:"la descente qui referme tout", bars:["Cm · G","Cm · E♭7","D7 · D♭maj7","Cm"]}
+    ],
+    chords:["Fm","Cm","Gm","A♭","G","E♭7","D7","D♭maj7"],
+    riff:{tab:
+`e|-----8--------------|--------------------|
+B|--8-----11---8------|--11~~~~~~~~~~~~~~~-|
+G|--------------------|--------------------|
+D|--------------------|--------------------|
+A|--------------------|--------------------|
+E|--------------------|--------------------|`,
+      note:"Le lick d'entrée de Jimmy Page, note à note d'après la tab officielle : <b>Sol – Do – Si♭ – Sol</b>, l'arpège de Do m7 en 8e position. Puis le Si♭ est tenu et <b>tiré d'un ton entier</b> jusqu'au Do, avec un vibrato large, avant de retomber. Tout le morceau est là : quatre notes et un bend qui prend son temps."},
+    tip:"Le sommet du blues blanc, et une leçon de patience : <b>6/8 très lent</b>, chaque temps divisé en trois. La grille est un blues mineur en Do m (i-iv), mais ce qui la rend unique est la <b>descente de fin de refrain</b> : Do m — Sol, Do m — Mi♭7, Ré7 — Ré♭maj7, Do m. Un demi-ton à chaque fois, et ce Ré♭maj7 qui n'a rien à faire là. Penta de Do mineur + la blue note ; joue derrière le temps, laisse les bends monter lentement.",
+    note:"Grille relevée mesure par mesure sur la tab officielle et sur la feuille d'accords. Deux détails mesurés : le couplet 1 et le couplet 2 ne sont pas identiques (l'un commence sur Fa m, l'autre sur Do m), et le <b>La♭ du refrain n'apparaît que la première fois</b> — les deux refrains suivants l'omettent. Le tempo bouge sans arrêt (♩=66 puis 62, 59, et jusqu'à 44 sur la fin).",
+  },
+  {
+    zone:"rock", title:"Black Dog", key:"La · riff en question-réponse (Led Zeppelin)",
+    systems:[
+      {note:"le chant seul, puis le riff répond", bars:["A5","A5","A5","A5"]},
+      {note:"la réponse transposée, avant le retour", bars:["E5","E5","A5","A5"]},
+      {note:"refrain (« ah ah »)", bars:["A5","A5","A5","A5 · C5"]},
+      {note:"pont", bars:["A5 · C5","A5 · D","Dsus4 · D","A5"]}
+    ],
+    chords:["A5","E5","C5","D","Dsus4"],
+    riff:{tab:
+`e|--------------------------|--------------------------|
+B|--------------------------|--------------------------|
+G|--------------------------|-5-----------7--9--5--7--5|
+D|-------------5--6--7------|-------7------------------|
+A|----------7-----------7---|--------------------------|
+E|--------------------------|--------------------------|`,
+      note:"Le riff de Page note à note d'après la tab officielle (♩=160) : il démarre sur le « et » du temps 2, d'où l'impression qu'il tombe à côté. <b>Mi – Sol – Sol♯ – La – Mi</b>, puis <b>Do – La – Ré – Mi – Do – Ré – Do</b> : c'est de la penta de La mineur avec le Sol♯ qui frotte. Contrairement à la légende, il n'y a <b>aucun changement de mesure</b> : tout est en 4/4 (le seul 5/4 imprimé est la mesure 146, au début du solo). Ce qui décale, c'est l'accentuation, pas la métrique."},
+    tip:"La forme la plus dépouillée du rock : le chant <b>a cappella</b>, puis le riff répond, et personne ne joue en même temps. Le morceau est un blues de La sans accords — le A5 n'est là que pour dire « on est en La ». Penta de La mineur pour tout, avec la tierce majeure qui passe dans le riff. À deux guitares : jouez le riff <b>à l'unisson</b>, c'est le seul moyen que ça sonne.",
+    note:"Grille relevée sur la tab officielle : la partition est une tablature nue, sans nom d'accord, tous les accords sont déduits des hauteurs mesurées. Les couplets 2 et 4 ne recopient pas exactement le couplet 1. Le pont est écrit ici en deux accords par mesure ; l'original y fait descendre la basse La-Sol-Fa♯ sous le La5.",
+  },
+  {
+    zone:"rock", title:"Kashmir", key:"Ré · riff modal, accordage DADGAD (Led Zeppelin)",
+    systems:[
+      {note:"le riff — un cycle de 3 mesures contre une mesure à 4 temps", bars:["D5","D5","D5","D5"]},
+      {note:"la descente de transition", bars:["D · C","A · G","F · D","D5"]},
+      {note:"pont", bars:["G5","G5","A5","A5"]}
+    ],
+    chords:["D5","D","C","A","G","F","G5","A5"],
+    riff:{tab:
+`d|-------------------|-------------------|-------------------|
+a|-------------------|-------------------|-------------------|
+G|-7-7-7---2-2-2---3-|-3-3---4-4-4---4-4-|-4---5-5-5---5-5-5-|
+D|-0-0-0---0-0-0---0-|-0-0---0-0-0---0-0-|-0---0-0-0---0-0-0-|
+A|-5-5-5---5-5-5---5-|-5-5---5-5-5---5-5-|-5---5-5-5---5-5-5-|
+D|-----------0-------|---0---------------|---0-------------0-|`,
+      note:"Le riff note à note d'après la tab officielle (♩=80), en <b>DADGAD</b> — les lignes sont ici, de haut en bas : ré, la, sol, ré, la, ré grave. La corde de la case 5 et la corde de ré à vide donnent un <b>unisson de ré</b> tenu sans interruption ; par-dessus, une seule voix bouge sur la corde de sol : <b>ré – la – si♭ – si – do</b>, et retour. Il n'y a ni tierce ni quinte : ce n'est pas une suite d'accords, c'est un bourdon et une ligne chromatique. Le cycle fait <b>3 mesures</b> contre un 4/4 : il se décale à chaque tour, et c'est voulu."},
+    tip:"Le riff le plus hypnotique du rock, et il tient en une idée : un <b>bourdon de ré</b> qui ne bouge jamais, et une note qui monte chromatiquement au-dessus. Pas de tierce, donc ni majeur ni mineur — d'où cette couleur orientale. Le cycle de 3 mesures contre la mesure à 4 temps crée un décalage qui se résout tout seul toutes les 3 mesures. Pour improviser : reste sur ré, et cherche le si♭ et le do. Le pont, lui, est un vrai va-et-vient Sol-La.",
+    note:"Accordage <b>DADGAD</b> (ré la ré sol la ré, du grave à l'aigu) : la tablature du riff n'est jouable qu'ainsi. Les diagrammes d'accords de la carte, eux, sont en accordage standard. Grille relevée mesure par mesure sur la tab officielle ; les accords du riff sont écrits D5 parce que les hauteurs mesurées ne donnent qu'un ré et une note mobile — leur nommer une tierce serait une invention.",
+  },
+  {
+    zone:"rock", title:"Stairway to Heaven", key:"La mineur · arpèges (Led Zeppelin)",
+    systems:[
+      {note:"intro & couplet — la basse descend La-Sol♯-Sol-Fa♯", bars:["Am · Am/G#","C/G · D/F#","Fmaj7","G/B · Am"]},
+      {bars:["C · D","Fmaj7 · Am","C · G","D"]},
+      {note:"pont (« ooh, it makes me wonder »)", bars:["Am7 · C","D","Am7 · C","Em7/D · D"]},
+      {note:"couplet 2 (« there's a feeling I get »)", bars:["C · G/B","Am","C · G/B","Am"]}
+    ],
+    chords:["Am","Am/G#","C/G","D/F#","Fmaj7","G/B","C","D","G","Am7","Em7/D"],
+    riff:{tab:
+`e|-----------5--7---------7-|-8---------8--2---------2-|
+B|--------5--------5--------|-----5--------------3-----|
+G|-----5--------------5-----|--------5--------------2--|
+D|--7-----------6-----------|-5-----------4------------|
+A|--------------------------|--------------------------|
+E|--------------------------|--------------------------|`,
+      note:"L'arpège d'intro note à note d'après la tab officielle (♩=75). Tout le secret est dans la <b>basse qui descend chromatiquement</b> : La (ré case 7), Sol♯ (ré case 6), Sol (la case 5 dans la seconde mesure), Fa♯ (ré case 4) — pendant que la voix du dessus monte La-Si-Do. Deux mouvements contraires : c'est ce croisement qui fait le morceau, pas les accords. Joue-le aux doigts, laisse tout sonner."},
+    tip:"La ligne de basse descendante La-Sol♯-Sol-Fa♯-Fa-Mi est <b>l'idée entière</b> du morceau : les noms d'accords (Am, Am/Sol♯, Do/Sol, Ré/Fa♯…) ne sont que la conséquence. Ne cherche pas à plaquer ces accords, suis la basse. Gamme de La mineur naturel ; le pont bascule vers Do-Sol-Ré. À deux guitares : l'un tient l'arpège sans jamais accélérer, l'autre entre à la flûte — pardon, en notes longues sur les cordes aiguës.",
+    note:"Grille relevée mesure par mesure sur la tab officielle (tablature nue, sans nom d'accord : tout est déduit des hauteurs mesurées). Deux relevés indépendants ont été croisés ; le second a rectifié la fin de pont, qui n'est pas un Sol majeur mais un La m7 sur basse de Sol (aucun Si n'y est joué). Les pages couvrent jusqu'à la mesure 102 : le solo et la partie finale ne sont pas dans cette grille.",
+  },
+  {
+    zone:"rock", title:"Whole Lotta Love", key:"Mi · le riff (Led Zeppelin)",
+    systems:[
+      {note:"le riff, en boucle", bars:["E5","E5","E5","E5"]},
+      {note:"refrain (« wanna whole lotta love »)", bars:["E5 · D5","E5 · D5","E5 · D5","E5"]},
+      {note:"pont — les seuls vrais accords majeurs du morceau", bars:["E","E","E","A"]}
+    ],
+    chords:["E5","D5","E","A"],
+    riff:{tab:
+`e|----------------------------|
+B|----------------------------|
+G|----------------------------|
+D|-9-------9-------9-----0----|
+A|-7-------7-------7-----5----|
+E|---0-0-0---0-0-0---7--------|`,
+      note:"Le riff note à note d'après la tab officielle (♩≈89) : il tient en <b>une seule mesure</b>. La double corde <b>Mi+Si</b> (la case 7, ré case 9) frappée sur chaque temps, avec le mi grave à vide en doubles-croches étouffées entre les frappes — c'est lui qui fait le moteur. Au troisième temps, la descente : le Si du mi grave case 7, puis le <b>Ré à l'unisson</b> (ré à vide + la case 5) tiré d'un quart de ton. Ce quart de ton n'est pas une coquetterie : sans lui le riff ne sonne pas."},
+    tip:"Un <b>blues à un accord</b>, comme chez John Lee Hooker : tout tient sur le Mi, le Ré n'apparaît qu'au refrain. Penta de Mi mineur, blue note, et surtout beaucoup de silence — Page laisse la basse et la batterie occuper l'espace. Le pont est le seul endroit où l'on entend de vrais accords majeurs (Mi puis La). À deux : l'un tient le riff sans varier, l'autre répond dans les aigus.",
+    note:"Grille relevée mesure par mesure sur la tab officielle. Le tempo bouge en permanence entre 87 et 94 : 90 est une moyenne de travail. Les mesures 33 à 69 (le passage au thérémine) sont en jeu libre, sans grille exploitable.",
   }
 ];
 
@@ -3796,6 +3954,9 @@ const GROOVE_BY_TITLE = {
   "My Favorite Things (vamp)":{m:"3/4", n:3, acc:[1], lbl:"Valse jazz : 3 temps, appui franc sur le 1, accompagnement léger sur 2 et 3."},
   "Misty":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade lente : accords tenus, basse sur 1 et 3, laisse tout sonner."},
   "Moonlight Serenade":{m:"4/4", n:4, acc:[1,3], lbl:"Ballade très lente : rondes tenues, basse sur 1 et 3, tout doit sonner longtemps."},
+  "Since I've Been Loving You":{m:"6/8", n:6, acc:[1,4], lbl:"6/8 très lent : six croches senties comme deux grands balancements (1 et 4). Rien ne presse."},
+  "Stairway to Heaven":{m:"4/4", n:4, acc:[1], lbl:"Arpèges : une note par croche, appuie le 1, laisse tout sonner. N'accélère pas."},
+  "Kashmir":{m:"4/4", n:4, acc:[1,3], lbl:"Lourd et lent : le riff tourne en 3 mesures contre le 4 temps, tiens la pulsation coûte que coûte."},
   "Dark Eyes (Les Yeux Noirs)":{m:"4/4", n:4, acc:[2,4], lbl:"Pompe manouche : un coup vers le bas par temps, tous secs, 2 et 4 à peine plus forts."},
   "Scarborough Fair":{m:"3/4", n:3, acc:[1], lbl:"Valse folk : 3 temps, arpèges qui sonnent, basse sur le 1."},
   "I Will Survive":{m:"4/4", n:4, acc:[2,4], lbl:"Disco : accords secs et réguliers, backbeat marqué sur 2 et 4."},
@@ -3905,7 +4066,9 @@ const SONG_BPM = {
   // Ajouts Stones / Clapton / Hendrix / Ray Charles + standards
   "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":116,
   "Layla":96, "Little Wing":68, "Hit the Road Jack":88,
-  "Corcovado":120, "Night and Day":128, "Take Five":176, "In the Mood":160, "Moonlight Serenade":70, "Chattanooga Choo Choo":130
+  "Corcovado":120, "Night and Day":128, "Take Five":176, "In the Mood":160, "Moonlight Serenade":70, "Chattanooga Choo Choo":130,
+  "D'yer Mak'er":165, "Rock and Roll":170, "Since I've Been Loving You":59,
+  "Black Dog":160, "Kashmir":80, "Stairway to Heaven":75, "Whole Lotta Love":90
 };
 
 /* ============ Auteur / artiste (pour trier chaque zone) ============ */
@@ -3976,7 +4139,11 @@ const SONG_ARTIST = {
   "Honky Tonk Women":"Rolling Stones", "Layla":"Eric Clapton", "Little Wing":"Jimi Hendrix",
   "Hit the Road Jack":"Ray Charles", "Corcovado":"Antônio Carlos Jobim",
   "Night and Day":"Cole Porter", "Take Five":"Dave Brubeck", "In the Mood":"Glenn Miller",
-  "Moonlight Serenade":"Glenn Miller", "Chattanooga Choo Choo":"Glenn Miller"
+  "Moonlight Serenade":"Glenn Miller", "Chattanooga Choo Choo":"Glenn Miller",
+  "D'yer Mak'er":"Led Zeppelin", "Rock and Roll":"Led Zeppelin",
+  "Since I've Been Loving You":"Led Zeppelin", "Black Dog":"Led Zeppelin",
+  "Kashmir":"Led Zeppelin", "Stairway to Heaven":"Led Zeppelin",
+  "Whole Lotta Love":"Led Zeppelin"
 };
 function _artistKey(name){ return (name && name.length) ? name.toLowerCase().replace(/^the\s+/,"") : "￿"; }
 function byArtist(a,b){
@@ -4008,7 +4175,7 @@ function grooveHTML(s){
 const _ROWS=["G","D","A","E"];      // affichage haut -> bas
 const _ROWPC=[7,2,9,4];             // hauteur des cordes à vide (do=0)
 const _PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5","Mas Que Nada":"bossa","Chameleon":"root5","Moonlight Serenade":"root5"};
+const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5","Mas Que Nada":"bossa","Chameleon":"root5","Moonlight Serenade":"root5","Since I've Been Loving You":"root5","Stairway to Heaven":"root5","Kashmir":"pedal"};
 function _rootPC(tok){
   tok=tok.trim();
   if(tok.indexOf("/")>-1) tok=tok.split("/")[1].trim();  // slash : la basse est la note d'après
