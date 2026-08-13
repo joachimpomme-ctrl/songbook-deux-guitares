@@ -3563,28 +3563,43 @@ E|----------------|7-7---7---7-----|----------------|7-7---7---7-----|`,
   {
     zone:"rock", title:"Get Back", key:"La · blues-rock (Beatles)",
     systems:[
-      {note:"couplet — le riff (La)", bars:["A","A","A","A"]},
-      {note:"refrain « get back »", bars:["A","D","A","D"]},
-      {note:"turnaround", bars:["A","G","D","A"]}
+      {note:"intro — la cellule du morceau, puis le turnaround en fin de 4e mesure", bars:["A","A","A","A · G · D"]},
+      {note:"couplet (« Jo Jo was a man who thought he was a loner ») — ×2", bars:["A","A","D","A"]},
+      {note:"refrain (« get back to where you once belonged »)", bars:["A","A","D","A · G · D"]},
+      {note:"fin du refrain : les deux stabs de La7", bars:["A7","A7","D","A"]}
     ],
-    chords:["A","D","G"],
-    tip:"Groove blues-rock en La sur un riff obstiné (celui de Billy Preston au clavier). Penta mineure de La + blue note, ou mixolydien de La pour les solos type Harrison. Le turnaround descendant G-D-A referme chaque tour.",
+    chords:["A","D","A7","G"],
+    riff:{tab:
+`e|------------------------|------------------------|
+B|------------------------|------------------------|
+G|------------------------|------------------------|
+D|------------------------|------------------------|
+A|----7--9--7--7--7--9--7-|-12-12-14-12-12-12-14-12|
+E|-5--5--5--5--5--5--5--5-|-10-10-10-10-10-10-10-10|`,
+      note:"Le lick de John, en doubles cordes sur les deux cordes graves (tab officielle, ♩=123) : une <b>pédale de La</b> (case 5, corde de Mi) sous le va-et-vient mi ↔ fa♯ (cases 7 et 9, corde de La). Sur la mesure de Ré, la <b>même forme glisse</b> case 10 : pédale de ré, va-et-vient la ↔ si. Deux doigts, deux positions, tout le morceau. Pendant ce temps, l'autre guitare gratte les accords en croches très étouffées (le fameux X percussif) — c'est la répartition du disque."},
+    tip:"Tout le morceau tient dans <b>une cellule de 4 mesures : La-La-Ré-La</b> — couplet et refrain ont exactement la même grille, seul le turnaround change. Ce turnaround, c'est <b>Sol puis Ré serrés sur les temps 3 et 4</b> de la dernière mesure, qui retombent sur le La : ne lui donne pas deux mesures, il doit claquer. Les deux « get back » du refrain se posent sur un <b>La7</b> (la petite septième bluesy, x02223) suivi d'un silence — le silence fait autant que l'accord. Penta mineure de La + blue note, ou mixolydien de La pour les solos type Harrison.",
+    note:"Grille complète relevée sur les deux tabs officielles (78 mesures, ♩=123) : intro 4, couplets 8, refrains 8, solo de guitare, solo de claviers (Billy Preston) et outro sur la même cellule. Le morceau se termine sur un <b>accord de Ré tenu</b>, pas sur le La.",
     bass:{tab:
 `G|--------|--------|--------|--------|
-D|7-7-7-7-|7-7-7-7-|7-7-7-7-|7-7-5-7-|
-A|--------|--------|--------|--------|
-E|--------|--------|--------|--------|
+D|7-7-7-7-|7-7-7-7-|7-7-7-7-|7-7-----|
+A|--------|--------|--------|------5-|
+E|--------|--------|--------|----3---|
 
 G|--------|--------|--------|--------|
-D|7-7-7-7-|--------|7-7-7-7-|--------|
-A|--------|5-5-5-5-|--------|5-5-5-5-|
-E|--------|--------|--------|--------|
-
-G|--------|--------|--------|--------|
-D|7-7-7-7-|--------|--------|7-7-7-7-|
+D|7-7-7-7-|7-7-5-7-|--------|7-7-7-7-|
 A|--------|--------|5-5-5-5-|--------|
-E|--------|3-3-3-3-|--------|--------|`,
-      note:"D'après la transcription Basslines The Beatles (Wise, ♩=124) : une pulsation de croches CONSTANTE — le La à l'octave (corde Ré, case 7) en va-et-vient avec le La à vide, mp puis crescendo, très improvisé d'un tour à l'autre. Le hammer Sol→La (case 5→7, écrit ici mesure 4) est le fill signature ; sur le refrain et le turnaround, même pompe sur Ré et Sol. Médiator conseillé, comme Paul."},
+E|--------|--------|--------|--------|
+
+G|--------|--------|--------|--------|
+D|7-7-7-7-|7-7-7-7-|--------|7-7-----|
+A|--------|--------|5-5-5-5-|------5-|
+E|--------|--------|--------|----3---|
+
+G|--------|--------|--------|--------|
+D|7-7-7-7-|7-7-7-5-|--------|7-7-7-7-|
+A|--------|--------|5-5-5-5-|--------|
+E|--------|--------|--------|--------|`,
+      note:"Un bloc par ligne de grille, d'après la transcription Basslines The Beatles recalée sur la tab officielle (♩=123) : une pulsation CONSTANTE, le La à l'octave (corde Ré, case 7), mp puis crescendo, très improvisé d'un tour à l'autre. Le hammer <b>Sol→La</b> (cases 5→7) est le fill signature ; il devient la vraie septième sur les mesures de La7 (bloc 4). Au turnaround, Paul suit la guitare au plus serré : deux temps de La, puis Sol et Ré sur les temps 3 et 4. Médiator conseillé, comme lui."},
   },
   // Ajouts : Stones, Clapton, Hendrix, Ray Charles + standards jazz
   {
@@ -4215,7 +4230,7 @@ const SONG_BPM = {
   // Beatles (ajouts)
   "Come Together":84, "Here Comes the Sun":129, "Something":66, "Ob-La-Di, Ob-La-Da":113,
   "A Hard Day's Night":137, "In My Life":104, "All My Loving":158, "Eight Days a Week":138,
-  "I Saw Her Standing There":160, "Get Back":124,
+  "I Saw Her Standing There":160, "Get Back":123,
   // Ajouts Stones / Clapton / Hendrix / Ray Charles + standards
   "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":120,
   "Brown Sugar":127, "Start Me Up":122, "Paint It Black":159,
