@@ -841,6 +841,8 @@ const CHORDS = {
   "Dsus2":    ["x", "x", "0", "2", "3", "0"],
   "Am/G#":    ["4", "0", "2", "2", "1", "0"],
   "C/G":      ["3", "3", "2", "0", "1", "0"],
+  "Cadd9":    ["x", "3", "2", "0", "3", "3"],
+  "C#m/G#":   ["4", "4", "6", "6", "5", "4"],
   "F/C":      ["x", "3", "3", "2", "1", "1"],
   "G/B":      ["x", "2", "0", "0", "3", "3"],
   "Em7/D":    ["x", "x", "0", "0", "0", "0"],
@@ -1204,20 +1206,21 @@ E|--------|--------|5-5-----|--------|`,
     systems:[{note:"boucle", bars:["C · G","D · A","E","E"]}],
     chords:["C","G","D","A","E"],
     riff:{tab:
-`e|------------------------------------------|
-B|------------------------------------------|
-G|------------------------------------------|
-D|------------------------------------------|
-A|--------------0--1--2--3--4--5--6--7------|
-E|--0--1--2--3------------------------------|`,
-      note:"La grande <b>montée chromatique</b> Mi→Mi (celle du milieu du morceau, guitare et basse à l'unisson) : douze notes en croches, un doigt par case, qui traversent toute la grille et retombent sur le Mi. Entre les accords, des bouts de cette même montée servent de relances (Do→Sol : Mi-Fa♯-Sol ; Sol→Ré, etc.)."},
-    tip:"Montée en quintes jusqu'au Mi : la tension grimpe, puis deux mesures pour phraser. Penta mineure de Mi (ou majeure pour le côté doux). Terrain de solo infini.",
+`e|--------------------------|--------------------------|----|
+B|--------------------------|--------------------------|----|
+G|--------------------------|--------------------------|----|
+D|--------------------------|--------------------------|----|
+A|--3--------------2--3--4--|--5--------------4--5--6--|----|
+E|-----0--1--2--3-----------|-----2--3--4--5-----------|--0-|`,
+      note:"La montée signature (guitare et basse à l'unisson), vérifiée note à note : elle part de <b>Do</b> — pas de Mi — et grimpe en quatre groupes chromatiques de quatre notes dont chaque arrivée tombe sur un temps fort : mi-fa-fa♯-<b>Sol</b>, si-do-do♯-<b>Ré</b>, fa♯-sol-sol♯-<b>La</b>, do♯-ré-ré♯-<b>Mi</b>. Elle épelle donc le cycle d'accords lui-même, sur les deux mesures |C·G|D·A|, et retombe sur le Mi. Jouée dans le solo et trois fois dans l'outro."},
+    tip:"Montée en quintes jusqu'au Mi : la tension grimpe, puis deux mesures pleines de Mi pour phraser. Penta mineure de Mi (ou majeure pour le côté doux). Terrain de solo infini.",
+    note:"Boucle vérifiée sur la tab officielle (♩=82) : tout le morceau — 3 couplets, solo, outro en fade — tourne sur ce cycle de 4 mesures. Intro : un lick d'amorce d'une mesure, puis deux mesures de Mi avant le premier cycle.",
     bass:{tab:
 `G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
 A|3-3---2-|5-5---6-|7-7-7-7-|7-7-7-5-|
 E|----3---|----5---|--------|--------|`,
-      note:"La boucle complète, d'après la tab (la ligne de Noel Redding) : deux fondamentales par accord — Do, Sol, Ré, La — reliées par des approches chromatiques (Si vers Ré, Ré♯ vers Mi), puis le Mi pompé en croches sur les deux dernières mesures, le Ré redescendant vers le Do. L'intro se lance avec le hammer La→Si (cases 7-9, corde Ré)."},
+      note:"La boucle complète, d'après la tab (la ligne de Noel Redding) : deux fondamentales par accord — Do, Sol, Ré, La — reliées par des approches chromatiques (Si vers Ré, Ré♯ vers Mi), puis le Mi pompé en croches sur les deux dernières mesures, le Ré redescendant vers le Do. Le hammer La→Si (cases 7-9, corde Ré) arrive mesure 3, dans l'empilement accentué avant le premier cycle."},
   },
   {
     zone:"rock", title:"All Along the Watchtower", key:"La mineur · nerveux (Dylan / Hendrix)",
@@ -1233,17 +1236,18 @@ E|----3---|----5---|--------|--------|`,
   },
   {
     zone:"rock", title:"Sweet Home Alabama", key:"Sol / Ré mixolydien · médium (Lynyrd Skynyrd)",
-    systems:[{note:"boucle", bars:["D · C","G","D · C","G"]}],
-    chords:["D","C","G"],
+    systems:[{note:"boucle — tout le morceau", bars:["D · Cadd9","G","D · Cadd9","G"]}],
+    chords:["D","Cadd9","G"],
     riff:{tab:
-`e|-------------------------|
-B|-----3---------3---------|
-G|-------2----------0------|
-D|-0-0---------------------|
-A|----------3-3------------|
-E|-------------------------|`,
-      note:"Le lick d'intro qui répond aux accords Ré–Do–Sol : une petite broderie sur chaque accord. Penta majeure de Sol ; c'est la réponse mélodique entre les accords qui fait le morceau."},
-    tip:"Penta majeure de Sol (= penta mineure de Mi) sonne parfaitement. Débat célèbre sur la tonalité (Ré ou Sol) : jouez ce qui sonne, les deux mondes se croisent.",
+`e|---------------------------------|---------------------------------------|
+B|------3-----------------3--------|---------------------------------------|
+G|---------2-----------------0-----|---------0--0--------------------2p0---|
+D|0--0--------0-----------------0--|---------------------0--2p0------------|
+A|---------------3--x--3-----------|---------------0h2------------2--------|
+E|---------------------------------|3--x--3--------------------------------|`,
+      note:"Le riff d'intro complet, vérifié note à note (♩=100) : mesure 1 — basse Ré + broderie ré-mi-fa♯ (le « x » est une ghost note étouffée), puis basse Do avec le double-stop Ré/Sol ; mesure 2 — basse Sol (3-x-3) et la vraie dentelle : sol-sol sur la corde de Sol, le hammer 0h2 (la→si) et les pull-offs 2p0. Ce sont ces hammer/pull sur le Sol qui font tout le charme — travaillez la mesure 2 lentement."},
+    tip:"Penta majeure de Sol (= penta mineure de Mi) sonne parfaitement. Le « Do » du riff est en réalité un <b>Cadd9 sans tierce</b> (do-sol-ré) : c'est pour ça que le débat Ré-ou-Sol reste ouvert — jouez ce qui sonne, les deux mondes se croisent. Aux turnarounds (avant les couplets 2 et 4), la montée chromatique mi-fa-fa♯ (cases 7-8-9, corde La) ramène au Ré.",
+    note:"Boucle vérifiée sur la tab officielle (114 mesures, ♩=100) : couplets, refrains, solos (4 puis 16 mesures) et outro en fade tournent tous sur ces 4 mesures — seuls les turnarounds chromatiques s'en écartent.",
     bass:{tab:
 `G|--------|--------|--------|--------|
 D|0-0-----|--------|0-0-----|--------|
@@ -1274,18 +1278,32 @@ E|-------------|----------------------|--3--3-3-3-3----------|`,
   {
     zone:"rock", title:"While My Guitar Gently Weeps", key:"La mineur · lent (Beatles)",
     systems:[
-      {note:"couplet", bars:["Am","Am/G","D/F#","Fmaj7"]},
-      {bars:["Am","G","C","E"]},
-      {note:"pont (La majeur)", bars:["A","C#m","F#m","C#m"]},
+      {note:"couplet — la descente (mesures 1-4 et 9-12)", bars:["Am","Am/G","F#m7♭5","F"]},
+      {note:"1re réponse (mesures 5-8) — par Ré", bars:["Am","G","D","E"]},
+      {note:"2e réponse (fin du couplet) — par Do", bars:["Am","G","C","E"]},
+      {note:"pont (La majeur) — ×2", bars:["A","C#m","F#m","C#m"]},
       {bars:["Bm","Bm","E","E"]}
     ],
-    chords:["Am","Am/G","D/F#","Fmaj7","G","C","E","A","C#m","F#m","Bm"],
-    tip:"La descente de basse La → Sol → Fa♯ → Fa porte le couplet, puis le pont bascule en La majeur : le soleil entre deux averses. Penta mineure de La qui pleure sur le couplet, gamme de La majeur sur le pont.",
+    chords:["Am","Am/G","F#m7♭5","F","G","D","C","E","A","C#m","F#m","Bm"],
+    riff:{tab:
+`e|--0--0--0--0--|--0--0--0--0--|--0--0--0--0--|--1--1--1--1--|
+B|--1--1--1--1--|--1--1--1--1--|--1--1--1--1--|--1--1--1--1--|
+G|--2--2--2--2--|--2--2--2--2--|--2--2--2--2--|--2--2--2--2--|
+D|--2--2--2--2--|--2--2--2--2--|--2--2--2--2--|--3--3--3--3--|
+A|--0--0--0--0--|--x--x--x--x--|--x--x--x--x--|--3--3--3--3--|
+E|--------------|--3--3--3--3--|--2--2--2--2--|--1--1--1--1--|`,
+      note:"La descente signature, formes vérifiées au pixel : quatre accords dont seule la basse bouge — La, Sol, Fa♯, Fa — grattés en croches régulières. La 3e forme (basse Fa♯, x-x-2-2-1-0) n'a <b>pas de Ré</b> : c'est un F♯m7♭5, pas un D/F♯. La 4e est le F barré complet (pas de Mi : F majeur, pas Fmaj7)."},
+    tip:"La descente de basse La → Sol → Fa♯ → Fa porte le couplet — 16 mesures : la descente, une réponse par <b>Ré</b>, la descente encore, une réponse par <b>Do</b> — puis le pont bascule en La majeur : le soleil entre deux averses. Penta mineure de La qui pleure sur le couplet, gamme de La majeur sur le pont.",
     bass:{tab:
 `G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
 A|0---0---|--------|--------|--------|
 E|--------|3---3---|2---2---|1---1---|
+
+G|--------|--------|--------|--------|
+D|--------|--------|0---0---|--------|
+A|0---0---|--------|--------|--------|
+E|--------|3---3---|--------|0---0---|
 
 G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
@@ -1301,23 +1319,26 @@ G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
 A|2---2---|2---2---|--------|--------|
 E|--------|--------|0---0---|0---0---|`,
-      note:"Un bloc par ligne : couplet (2 lignes) puis pont en La majeur (2 lignes). La descente La → Sol → Fa♯ → Fa fait tout le couplet — une note par accord, tenue — puis la 2e ligne redescend La-Sol vers Do-Mi (vérifié sur la transcription Play Bass with the Beatles : c'est bien Do majeur, pas Ré). Au pont, suis les toniques La-Do♯-Fa♯-Do♯ puis Si-Si-Mi-Mi."},
-    note:"Découpage du pont approximatif ; on retombe ensuite sur le couplet.",
+      note:"Un bloc par ligne : la descente, les deux réponses (l'une passe par <b>Ré</b>, l'autre par <b>Do</b> — les deux existent, en alternance), puis le pont en La majeur (2 lignes). La descente La → Sol → Fa♯ → Fa fait tout le couplet — une note par accord, tenue. Au pont, suis les toniques La-Do♯-Fa♯-Do♯ puis Si-Si-Mi-Mi."},
+    note:"Grille vérifiée sur les deux tabs officielles (♩=112) : couplet 16 mesures (descente + Ré, descente + Do), pont 16 (la boucle ×2), intro = demi-couplet, solo 16 sur la grille du couplet, outro en boucle avec fade — et un accord final de Do majeur.",
   },
   {
     zone:"rock", title:"Cocaine", key:"Mi · blues rock (J.J. Cale / Clapton)",
-    systems:[{bars:["E · D","E · D","E · D","E · D"]},{bars:["E · D","E · D","C · B","E"]}],
+    systems:[
+      {note:"le vamp — un accord par mesure (le Ré est anticipé sur le « 4-et » du Mi)", bars:["E","D","E","D"]},
+      {note:"refrain (« she don't lie ») : la descente, puis deux mesures de vamp avant le couplet", bars:["E · D","C · B","E","D"]}
+    ],
     chords:["E","D","C","B"],
     riff:{tab:
-`e|-----------------|
-B|-----------------|
-G|--9--9--7--9--7--|
-D|--9--9--7--9--7--|
-A|--7--7--5--7--5--|
-E|-----------------|`,
-      note:"Deux power chords qui se balancent : Mi5 (case 7) ↔ Ré5 (case 5), tout étouffé à la paume. Le pattern Mi-Mi-Ré-Mi-Ré, sec et carré — c'est ça, tout le morceau."},
-    tip:"Vamp Mi ↔ Ré au médiator, sec et carré, puis la descente Mi-Ré-Do-Si qui fait le hook. Penta mineure de Mi, gros son même en acoustique.",
-    note:"Structure simplifiée.",
+`e|------------------------|-----------|
+B|--9--9--7--9--------7~--|--(7)------|
+G|--9--9--7--9--------7~--|--(7)------|
+D|--9--9--7--9--------7~--|--(7)------|
+A|------------------------|-----------|
+E|------------------------|-----------|`,
+      note:"Le riff vérifié note à note (♩=107) : des <b>triades</b> sur les cordes Ré-Sol-Si — case 9 = Mi (si-mi-sol♯), case 7 = Ré (la-ré-fa♯) — pas des power chords. Croches sur les temps 1-2 (Mi-Mi-Ré-Mi), <b>silence au temps 3</b>, puis le Ré poussé sur le « 4-et », tenu toute la mesure suivante. C'est le silence et l'anticipation qui font le groove."},
+    tip:"Vamp Mi ↔ Ré au médiator, sec et carré, puis la descente <b>Mi-Ré-Do-Si</b> qui fait le hook — le Si est un <b>si majeur simple</b> (2-4-4), pas un B7, une demi-mesure seulement. Penta mineure de Mi, gros son même en acoustique. Au refrain final doublé, la 2e descente s'arrête sur Do tenu, sans Si.",
+    note:"Structure vérifiée sur la tab officielle (92 mesures, ♩=107) : intro 8, couplets 8, refrains 6 (descente + 4 mesures de vamp), solo 24 sur le vamp, refrain final doublé, outro 12 — fin sur Ré.",
   },
   {
     zone:"rock", title:"Ain't No Sunshine", key:"La mineur · lent, groove (Bill Withers)",
@@ -3307,9 +3328,10 @@ E|------------5-5-|3-3-3-3-5-------|----------------|----------------|`,
   {
     zone:"pop", title:"Here Comes the Sun", key:"Ré · lumineux (George Harrison / Beatles)",
     systems:[
-      {note:"couplet", bars:["D","G","A7","D"]},
-      {note:"refrain « here comes the sun... and I say it's all right »", bars:["D","G · E7","D","A7"]},
-      {note:"pont « sun, sun, sun » — mesures asymétriques", bars:["F","C","G","D · A7"]}
+      {note:"intro & couplets — la même boucle, jouée 2 fois", bars:["D","D","G","A7"]},
+      {note:"refrain (« here comes the sun... it's all right ») — 7 mesures + 1 de lien", bars:["D","D","G","E7"]},
+      {bars:["D","A7","A7","D"]},
+      {note:"pont « sun, sun, sun » ×6 — La7 relance chaque cycle ; mesures asymétriques (voir tip)", bars:["A7","F · C","G","D"]}
     ],
     chords:["D","G","A7","E7","F","C"],
     riff:{tab:
@@ -3319,60 +3341,65 @@ G|------2--------------2--|(2)---------------2-----|
 D|------0-----0-----0--0--|0--0--------0--0--------|
 A|------------------------|---------------------0-2|
 E|------------------------|---------------------0-3|`,
-      note:"L'intro note à note d'après la tab officielle (♩=129), let ring : l'accord de Ré arpégé, la mélodie Fa♯-Mi-Fa♯ sur la chanterelle, la pédale de Ré à vide, et la petite montée des basses qui relance la boucle. Positions en formes de Ré — capo 7 pour sonner comme le disque (cf. tip)."},
-    tip:"Soleil en Ré majeur : penta majeure de Ré et arpèges qui scintillent sur les cordes aiguës. Le pont « sun sun sun » (F-C-G-D-A7) change de métrique sans prévenir — comptez ensemble, c'est le piège du morceau. Capo 7 sur l'original.",
+      note:"L'intro note à note d'après la tab officielle (♩=129), let ring : l'accord de Ré arpégé, la mélodie Fa♯-Mi-Fa♯ sur la chanterelle, la pédale de Ré à vide, et la petite montée des basses qui relance la boucle. Positions en formes de Ré — capo 7 pour sonner comme le disque (cf. tip). L'outro cite le pont (arpèges de Fa puis Do, Sol-Ré) avant l'accord final brossé, avec un rallentando à ♩=80."},
+    tip:"Soleil en Ré majeur : penta majeure de Ré et arpèges qui scintillent sur les cordes aiguës. Le pont « sun sun sun » se compte ainsi : La7 en 2/4+3/8, puis <b>Fa 3 croches, Do 3 croches, Sol 5 croches</b>, et une mesure pleine de Ré — six fois, puis 4 mesures de La7 pour sortir. Comptez les croches ensemble, c'est le piège (et le régal) du morceau. Capo 7 sur l'original.",
     bass:{tab:
 `G|--------|--------|--------|--------|
-D|0---0---|--------|--------|0---0---|
-A|--------|--------|0---2-4-|--------|
-E|--------|3---3---|--------|--------|
-
-G|--------|--------|--------|--------|
-D|0---0---|--------|0---0---|--------|
+D|0---0---|0---0---|--------|--------|
 A|--------|--------|--------|0---2-4-|
-E|--------|3---0---|--------|--------|
+E|--------|--------|3---3---|--------|
 
 G|--------|--------|--------|--------|
-D|--------|--------|--------|0-------|
-A|--------|3---3---|--------|----0---|
-E|1---1---|--------|3---3---|--------|`,
-      note:"Un bloc par ligne (couplet, refrain, pont « sun sun sun »). Au refrain : Ré, puis Sol et Mi (le E7 de « and I say »), Ré, et la remontée La-Si-Do♯ du A7 qui retombe sur le Ré. Fondamentales sur 1 et 3, légères. Tab dans la tonalité de la grille (Ré) ; le disque sonne une quinte plus haut (capo 7)."},
+D|0---0---|0---0---|--------|--------|
+A|--------|--------|--------|--------|
+E|--------|--------|3---3---|0---0---|
+
+G|--------|--------|--------|--------|
+D|0---0---|--------|--------|0---0---|
+A|--------|0---0---|0---2-4-|--------|
+E|--------|--------|--------|--------|
+
+G|--------|--------|--------|--------|
+D|--------|--------|--------|0---0---|
+A|0---0---|----3---|--------|--------|
+E|--------|1-------|3---3---|--------|`,
+      note:"Un bloc par ligne (couplet, refrain — avec le Mi grave du E7 —, fin de refrain, pont). La remontée La-Si-Do♯ du A7 ramène toujours au Ré. Au pont : La, puis Fa-Do, Sol, Ré — une fondamentale par accord, en suivant les métriques impaires. Fondamentales sur 1 et 3, légères. Tab dans la tonalité de la grille (Ré) ; le disque sonne une quinte plus haut (capo 7)."},
   },
   {
     zone:"pop", title:"Something", key:"Do · ballade (George Harrison / Beatles)",
     systems:[
-      {note:"intro", bars:["F","F","E♭","G7"]},
-      {note:"couplet", bars:["C · Cmaj7","C7 · F","D7","G"]},
-      {bars:["Am · Am/G","D/F#","F · E♭","G7"]},
-      {note:"pont « you're asking me »", bars:["A · C#m","F#m · A","D","G · A"]}
+      {note:"couplet (« something in the way she moves ») — un accord par mesure", bars:["C","Cmaj7","C7","F"]},
+      {note:"fin du couplet, puis le refrain : la 2e descente", bars:["D7","G","Am · Am/G#","Am/G · D/F#"]},
+      {note:"le riff — UNE mesure (Fa, Mi♭, Sol7) : il ouvre le morceau et conclut chaque tour ; les Do = le couplet qui repart (ou l'accord final)", bars:["F · E♭ · G7","C","C","C"]},
+      {note:"pont (« you're asking me will my love grow ») — ×2, la 2e fois retombe sur Do", bars:["A","A · C#m/G#","F#m","D · G"]}
     ],
-    chords:["C","Cmaj7","C7","F","D7","G","Am","Am/G","D/F#","E♭","G7","A","C#m","F#m","D"],
+    chords:["C","Cmaj7","C7","F","D7","G","Am","Am/G#","Am/G","D/F#","E♭","G7","A","C#m/G#","F#m","D"],
     riff:{tab:
-`e|---------------------------|
-B|--10--12b--10--11--12--13--|`,
-      note:"LE riff de George, cinq notes sur la corde de Si (sur F → E♭ → G7, il ramène au Do du couplet) : La, Do (case 12 tirée), La, Si♭, Si, Do. Le bend de la case 12 doit monter d'un ton — chante-le en le jouant, c'est lui la signature du morceau."},
-    tip:"Le chef-d'œuvre de Harrison. La basse descend Do→Si→Si♭→La sous les accords du couplet (C-Cmaj7-C7-F) : c'est ELLE qu'il faut faire chanter. Solo mélodique en gamme de Do, visez les tierces ; le pont module vers La majeur.",
+`e|--------------------------------|-------|
+B|--10--12b(½)--(P)10--11--12-----|--13~--|`,
+      note:"LE riff de George, sur la corde de Si (sur la mesure Fa → Mi♭ → Sol7, il ramène au Do du couplet) : La, Si <b>bendé d'un demi-ton</b> vers Do (marque ½ sur la tab officielle) avec pull-off vers La, puis Si♭, Si, et l'arrivée Do (case 13) tenue. Chante-le en le jouant — c'est lui la signature du morceau."},
+    tip:"Le chef-d'œuvre de Harrison. Deux descentes de basse à faire chanter : Do→Si→Si♭→La sous le couplet (C-Cmaj7-C7-F), puis <b>La→Sol♯→Sol→Fa♯</b> sous le refrain (Am, Am/G♯, Am7/G, D/F♯). Solo mélodique en gamme de Do sur la grille couplet+refrain ; le pont module en La majeur, avec le Sol♯ à la basse du Do♯m. L'outro s'offre un accord de <b>La majeur surprise</b> avant le riff et le Do final.",
     bass:{tab:
 `G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
-A|--------|--------|6---6---|--------|
-E|1---1---|1---1---|--------|3---3---|
+A|3---3---|2---2---|1---1---|0---0---|
+E|--------|--------|--------|--------|
 
 G|--------|--------|--------|--------|
-D|--------|--------|0---0---|--------|
-A|3---2---|1---0---|--------|--------|
-E|--------|--------|--------|3---3-4-|
+D|0---0---|--------|--------|--------|
+A|--------|--------|0-------|--------|
+E|--------|3---3---|----4---|3---2---|
 
 G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
-A|0-------|--------|----6---|--------|
-E|--4-3---|2---2---|1-------|3---3---|
+A|--------|3---3---|3---3---|3---3---|
+E|1--6-3--|--------|--------|--------|
 
 G|--------|--------|--------|--------|
-D|--------|--------|0---0---|--------|
-A|0---4---|----0---|--------|----0---|
-E|--------|2-------|--------|3-------|`,
-      note:"Un bloc par ligne : intro, couplet (2 lignes), pont. LA descente Do→Si→Si♭→La porte le couplet — le La est la tierce du Fa — puis la deuxième descente, vérifiée sur la transcription Play Bass with the Beatles : <b>La→Sol♯→Sol→Fa♯</b> (le Sol♯ de « Am(maj7) », que la grille simplifie), Fa, Mi♭, Sol. McCartney brode énormément autour (♩=66) : ce double fil descendant est la colonne vertébrale à faire chanter."},
+D|--------|--------|--------|0-------|
+A|0---0---|0-------|--------|--------|
+E|--------|----4---|2---2---|----3---|`,
+      note:"Un bloc par ligne, calé sur la grille : couplet (la descente Do→Si→Si♭→La, le La étant la tierce du Fa), fin de couplet et refrain (la 2e descente <b>La→Sol♯→Sol→Fa♯</b>, confirmée par la tab officielle qui écrit Am/G♯), le riff (Fa, Mi♭, Sol en une mesure), puis le pont en La majeur avec le Sol♯ sous le Do♯m. McCartney brode énormément autour (♩=66) : ce double fil descendant est la colonne vertébrale à faire chanter."},
   },
   {
     zone:"pop", title:"Ob-La-Di, Ob-La-Da", key:"La · ska-pop enjoué (Beatles)",
@@ -3717,21 +3744,21 @@ D|------------------|---------------------|`,
   {
     zone:"rock", title:"Layla", key:"Ré mineur · unplugged, shuffle (Clapton / Derek and the Dominos)",
     systems:[
-      {note:"riff & refrain (« Layla »)", bars:["Dm","B♭ · C","Dm","B♭ · C"]},
-      {note:"couplet (« what'll you do when you get lonely »)", bars:["C#m7","G#7","C#m7 · C","D · E"]},
-      {bars:["F#m · B","E · A","F#m · B","E7"]}
+      {note:"riff & refrain (« Layla ») — le Do plaqué sur le temps 1, le B♭ anticipé en fin de mesure", bars:["Dm · B♭","C · Dm","Dm · B♭","C · Dm"]},
+      {note:"couplet (« what'll you do when you get lonely »)", bars:["C#m7","G#7","C#m7 · C · D","E · E7"]},
+      {bars:["F#m · B","E · A","F#m · B","E · A"]}
     ],
     chords:["Dm","B♭","C","C#m7","G#7","D","E","F#m","B","A","E7"],
     riff:{tab:
-`e|----------------|
-B|----------------|
-G|----------------|
-D|-0---0--3-0-----|
-A|---3--------1-3-|
-E|----------------|`,
-      note:"Le hook, version unplugged (simplifié) : Ré-Do-Ré-Fa-Ré puis la remontée Si♭-Do qui relance. Chante-le en le jouant — c'est un cri devenu riff."},
-    tip:"Le couplet vit en Do♯ mineur, puis le E7 bascule d'un demi-ton en Ré mineur pour le cri « Layla » — tout le drame tient dans cette marche. Version unplugged : shuffle décontracté, penta de Ré m + arpèges, et la montée Do-Ré-Mi qui enjambe les couplets.",
-    note:"Structure d'après la version Unplugged (1992).",
+`e|-------------|--------------------------|-----------------------|------1---------------------|
+B|-------------|-----------------3--3-----|--5--5--5--------------|------3---------3--3--------|
+G|----------2--|-(2)-------------3--3-----|--5--5--5--2-----------|-(2)--2---------3--3--------|
+D|----------0--|-(0)--0-------3--3--3-----|--5--5--5--2-----------|-(0)---------3--3--3--------|
+A|----0--3-----|---------3----1--1--1--3--|--3--3--3-----0--3-----|---------3---1--1--1-----X--|
+E|-------------|--------------------------|-----------------------|----------------------------|`,
+      note:"Le riff unplugged vérifié au pixel (♩=92, croches swing) : le pickup la-do (0-3, corde La), la dyade de Ré tenue à cheval sur la barre, puis les <b>accords plaqués</b> qui font le hook dans cet arrangement — B♭ (1-3-3) anticipé en fin de mesure, C (3-5-5-5) plaqué sur le temps 1, retour au Rém. Chante-le en le jouant — c'est un cri devenu riff."},
+    tip:"Le couplet vit en Do♯ mineur, puis la montée Do-Ré-Mi (fin de la mesure 3 du couplet) hisse vers Mi et le cri « Layla » retombe en Ré mineur — tout le drame tient dans cette marche, et le petit La en levée (« E · A ») est le tremplin du cri. Version unplugged : shuffle décontracté, penta de Ré m + arpèges.",
+    note:"Structure vérifiée sur la tab officielle Unplugged (104 mesures, ♩=92) : intro 13, couplets 8, refrains 8, double refrain 16, solo 16 sur le riff, refrain final, fin ralentie (♩=80 puis 97) sur une descente de gamme — pas de coda piano dans cette version. La feuille d'accords qui écrit « Dm C B♭ » est contredite par la tab : l'ordre est bien Dm→B♭→C.",
   },
   {
     zone:"rock", title:"Little Wing", key:"Mi mineur · lent, rubato (Jimi Hendrix)",
@@ -4162,8 +4189,8 @@ const SONG_BPM = {
   "Chameleon":108, "Sweet Georgia Brown":180, "Dinah":180, "Mas Que Nada":128,
   // Rock
   "Sympathy for the Devil":116, "Angie":70, "Hey Joe":82, "All Along the Watchtower":116,
-  "Knockin' on Heaven's Door":72, "Sweet Home Alabama":98, "Wish You Were Here":63,
-  "While My Guitar Gently Weeps":115, "Cocaine":106, "Ain't No Sunshine":78, "Stand By Me":118,
+  "Knockin' on Heaven's Door":72, "Sweet Home Alabama":100, "Wish You Were Here":63,
+  "While My Guitar Gently Weeps":112, "Cocaine":107, "Ain't No Sunshine":78, "Stand By Me":118,
   "Hotel California":75, "Rock'n'roll 12 mesures":160, "La Bamba / Twist and Shout":150,
   "Bad Moon Rising":96, "House of the Rising Sun":76, "Let It Be":72, "Wonderful Tonight":96,
   "Creep":92, "Zombie":84, "Wicked Game":112, "Stir It Up":66, "Feelin' Alright":88,
@@ -4192,7 +4219,7 @@ const SONG_BPM = {
   // Ajouts Stones / Clapton / Hendrix / Ray Charles + standards
   "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":120,
   "Brown Sugar":127, "Start Me Up":122, "Paint It Black":159,
-  "Layla":96, "Little Wing":68, "Hit the Road Jack":88,
+  "Layla":92, "Little Wing":68, "Hit the Road Jack":88,
   "Corcovado":120, "Night and Day":128, "Take Five":176, "In the Mood":160, "Moonlight Serenade":70, "Chattanooga Choo Choo":130,
   "D'yer Mak'er":165, "Rock and Roll":170, "Since I've Been Loving You":59,
   "Black Dog":160, "Kashmir":80, "Stairway to Heaven":75, "Whole Lotta Love":90
