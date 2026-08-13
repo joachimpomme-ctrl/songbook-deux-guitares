@@ -837,9 +837,11 @@ const CHORDS = {
   "E5":       ["0", "2", "2", "x", "x", "x"],
   "G5":       ["3", "5", "x", "x", "x", "x"],
   "Dsus4":    ["x", "x", "0", "2", "3", "3"],
+  "Asus4":    ["x", "0", "2", "2", "3", "0"],
   "Dsus2":    ["x", "x", "0", "2", "3", "0"],
   "Am/G#":    ["4", "0", "2", "2", "1", "0"],
   "C/G":      ["3", "3", "2", "0", "1", "0"],
+  "F/C":      ["x", "3", "3", "2", "1", "1"],
   "G/B":      ["x", "2", "0", "0", "3", "3"],
   "Em7/D":    ["x", "x", "0", "0", "0", "0"],
   "A♭6":      ["4", "6", "6", "5", "6", "4"],
@@ -3551,28 +3553,32 @@ E|--------|3-3-3-3-|--------|--------|`,
   {
     zone:"rock", title:"(I Can't Get No) Satisfaction", key:"Mi · riff fuzz (Rolling Stones)",
     systems:[
-      {note:"refrain (« I can't get no satisfaction »)", bars:["E","A","E","A"]},
-      {note:"« 'cause I try, and I try... »", bars:["E","B7","E · D","A"]},
-      {note:"couplet parlé, sur le riff", bars:["E · D","A","E · D","A"]}
+      {note:"refrain (« I can't get no satisfaction ») — chaque accord tient 2 mesures", bars:["E","E","A","A"]},
+      {note:"« 'cause I try, and I try... »", bars:["E","B7","E","A"]},
+      {note:"couplet parlé, sur le riff — le La poussé sur le temps 4 de chaque mesure", bars:["E · A","D · A","E · A","D · A"]},
+      {note:"pont (« hey hey hey, that's what I say ») : mesures 2-3 en break, le riff seul", bars:["D · A","E","E","E"]},
+      {note:"fin du pont — la 4e mesure est déjà le retour du refrain", bars:["D · A","E · A","D · A","E"]}
     ],
     chords:["E","A","B7","D"],
     riff:{tab:
-`e|-----------------|
-B|-----------------|
-G|-----------------|
-D|-----------------|
-A|-2--2-4--5--5-4-2|
-E|-----------------|`,
-      note:"LE riff fuzz de Keith : Si–Do♯–Ré et retour, martelé en croches sur la corde de La (la basse le double à l'unisson). Il tourne en boucle sur le couplet parlé (E-D-A) : l'un le tient, l'autre chante."},
-    tip:"Trois accords et un riff qui a inventé le rock moderne. Refrain en balancier Mi↔La, le B7 relance (« 'cause I try »), puis le couplet parlé vamp sur E-D-A pendant que le riff gronde. Penta de Mi mixte pour broder.",
-    note:"Structure resserrée (refrain, relance, couplet-vamp).",
+`e|----------------|----------------|
+B|----------------|----------------|
+G|----------------|----------------|
+D|----------------|----------------|
+A|-2--2--2-4-5~---|-5--5-5-4-4-(2)-|
+E|----------------|----------------|`,
+      note:"LE riff fuzz de Keith, boucle de 2 mesures entièrement sur la corde de La : si·si·si-do♯-ré | ré·ré·do♯-do♯-(si) — pull-offs sur la fin, la basse le double à l'unisson. Il tourne sur l'intro, le couplet parlé et le pont : l'un le tient, l'autre chante."},
+    tip:"Trois accords et un riff qui a inventé le rock moderne. Refrain <b>lent en harmonie</b> : Mi deux mesures, La deux mesures — ne le précipite pas. Le B7 relance (« 'cause I try »), puis le couplet parlé vamp Mi/Ré, avec le <b>La poussé sur le temps 4</b> seulement (deux croches, pas une demi-mesure) pendant que le riff gronde. Au pont, tout le monde se tait deux mesures sauf le riff : les fameux stops des « no no no ». Penta de Mi mixte pour broder.",
+    note:"Grille complète relevée sur la tab officielle (♩=136) : refrain, relance, couplet-vamp (16 mesures sur le disque), pont. Le vamp final s'éteint en fade sur Mi/Ré.",
   },
   {
     zone:"rock", title:"Jumpin' Jack Flash", key:"Si · riff ouvert (Rolling Stones)",
     systems:[
-      {note:"intro · le riff", bars:["B","E · D","B","E · D"]},
-      {note:"couplet (« I was born in a cross-fire hurricane »)", bars:["B","A","B","A"]},
-      {note:"refrain (« but it's all right now... it's a gas »)", bars:["D","A","E","B"]}
+      {note:"intro · le riff (l'outro tourne sur la même boucle)", bars:["B","E · A","B","E · A"]},
+      {note:"couplet (« I was born in a cross-fire hurricane ») — ×2", bars:["B","A","B","A"]},
+      {note:"refrain (« but it's all right now... »)", bars:["D","A","E","E"]},
+      {note:"fin du refrain (« it's a gas, gas, gas »)", bars:["D","A","E","B"]},
+      {note:"pont instrumental : la boucle de l'intro, puis Si tenu", bars:["B","E · A","B","B"]}
     ],
     chords:["B","E","D","A"],
     riff:{tab:
@@ -3582,20 +3588,121 @@ G|-0-------0~-------------0---3~--|(3)-----0---3~----------0---3---|
 D|-0-------0~-------------0---3~--|(3)-----0---3~----------0---3---|
 G|-0-------0~---------5-----------|----5---------------5-----------|
 D|--------------------------------|--------------------------------|`,
-      note:"Riff du couplet note à note (tab officielle, ♩=137) en <b>open de Sol</b> — lignes de bas en haut : Ré grave, Sol, Ré, Sol, Si, Ré aigu. L'accord plaqué qui sonne, les doubles cordes martelées 0h3 (le claquement Keith Richards) et la basse qui répond case 5. Sur le disque ça sonne en Si (accordé plus haut / capo) ; en accordage standard, gardez la grille."},
-    tip:"Le riff tourne Si→Mi-Ré, le couplet balance Si↔La, et le refrain déboule D-A-E-B — quatre marches qui remontent vers le Si. Penta de Si (majeure/mineure mélangées) ; jouez percussif, cordes ouvertes qui sonnent, c'est un riff de guitariste rythmique.",
-    note:"Grille en Si ; le disque sonne entre Si♭ et Si (guitares en open tuning).",
+      note:"Riff du couplet note à note (tab officielle, ♩=137) en <b>open de Sol</b> — lignes de bas en haut : Ré grave, Sol, Ré, Sol, Si, Ré aigu. L'accord plaqué qui sonne, les doubles cordes martelées 0h3 (le claquement Keith Richards) et la basse qui répond case 5. Attention : jouée telle quelle, cette tab sonne en <b>Sol</b> — <b>capo 4 en open G</b> pour rejoindre le Si du disque ; en accordage standard, gardez la grille."},
+    tip:"Le riff tourne Si→Mi-La, le couplet balance Si↔La, et le refrain fait <b>8 mesures</b> : D-A-E-E puis D-A-E-B — deux marches qui remontent vers le Si. Penta de Si (majeure/mineure mélangées) ; jouez percussif, cordes ouvertes qui sonnent, c'est un riff de guitariste rythmique. Le pont instrumental reprend la boucle de l'intro : place au solo.",
+    note:"Grille en Si, tonalité du disque (vérifiée sur la tab en accordage standard : barrés de Si case 7). Couplet 3 = ×4 avec les « yeah yeah ».",
+    bass:{tab:
+`G|----------------|9-----7-----6---|----------------|9-----7-----6---|
+D|9-----9---9-----|----------------|9-9-9-9-9-9-9-9-|----------------|
+A|----------------|----------------|----------------|----------------|
+E|----------------|----------------|----------------|----------------|
+
+G|----------------|----------------|----------------|----------------|
+D|----------------|----------------|----------------|----------------|
+A|----------------|----------------|----------------|--------7---5-4-|
+E|7-7-7-7-7-7-7-7-|--7-7-7-7-7-7---|7-7-7-7-7-7-7-7-|--7-7-7---------|
+
+G|----------------|----------------|----------------|----------------|
+D|----------------|----------------|2---2---2---0---|----------------|
+A|5---5---5---5-4-|0---0---0---2-4-|----------------|2-----2-----2---|
+E|----------------|----------------|----------------|----------------|
+
+G|----------------|----------------|----------------|----------------|
+D|----------------|----------------|2---2-2---2-2-0-|9-9-9-9-9-9-9-9-|
+A|5---5---5---5-4-|0---0---0---2-4-|----------------|----------------|
+E|----------------|----------------|----------------|----------------|
+
+G|----------------|9-----7-----6---|----------------|----------------|
+D|9-----9---9-----|----------------|9-9-9-9-9-9-9-9-|9---------------|
+A|----------------|----------------|----------------|----------------|
+E|----------------|----------------|----------------|----------------|`,
+      note:"D'après la tab de basse officielle (♩=137, tonalité réelle Si, basse en accordage standard) : Wyman martèle la <b>pédale de Si</b> sur tout le couplet (case 7, corde Mi) — il la garde même quand la guitare passe sur La (temps 1 lié, d'où le départ en l'air des mesures de La), c'est voulu — avec la descente mi-ré-do♯ en fin de couplet (cases 7-5-4, corde La). L'intro et le pont montent à l'octave (case 9, corde Ré) avec la descente mi-ré-do♯ aiguë sur la corde de Sol. Refrain : fondamentales ré-la-mi avec les montées la-si-do♯ (0-2-4) et do♯ (case 4) en approche ; le « gas gas gas » final tourne en croches sur le Si aigu."},
+  },
+  {
+    zone:"rock", title:"Brown Sugar", key:"Do · open G (Rolling Stones)",
+    systems:[
+      {note:"intro — le riff, ×2", bars:["C/G · G","C · F/C","C/G · G","C · F/C"]},
+      {note:"la réponse de l'intro, ×2", bars:["E♭","C","A♭ · B♭","F/C · C"]},
+      {note:"couplet (« Gold Coast slave ship bound for cotton fields »)", bars:["C","C","F","F"]},
+      {bars:["C","C","B♭","C"]},
+      {note:"refrain (« brown sugar, how come you taste so good »)", bars:["G","G · C","C","C"]},
+      {note:"2e fois, avec le tag", bars:["G","G · C","C","C · E♭"]},
+      {note:"tag du refrain = grille du solo de sax (×4)", bars:["E♭","C","A♭ · B♭","C"]}
+    ],
+    chords:["C/G","G","C","F/C","E♭","A♭","B♭","F"],
+    riff:{tab:
+`d|----------------|----------------|
+B|-13-12--5-------|--5--6--6--5----|
+G|-12-12--5-------|--5--5--5--5----|
+D|-14-12--5-------|--5--7--7--5----|
+G|-12-12--5-------|--5--5--5--5----|
+D|----------------|----------------|`,
+      note:"Le riff d'intro en <b>open de Sol</b> (Ré Sol Ré Sol Si Ré, lignes de bas en haut) : le voicing aigu de Do avec sol à la basse (cases 12-14), la descente sur le Sol barré 12, puis le barré 5 = Do avec le double « add » signature — 6 sur si + 7 sur ré = Fa/Do. Attaques syncopées : le barré 5 tombe sur le « et » du temps. En standard, gardez la grille."},
+    tip:"L'ouverture de disque la plus efficace des Stones : un riff d'accords en open G qui balance Do↔Sol puis Do↔Fa/Do, et sa réponse Mi♭-Do-La♭-Si♭ — tout le morceau est là. Couplet qui laisse respirer (Do, Fa), refrain qui monte sur <b>Sol</b>. Penta majeure de Do pour chanter dessus ; le solo de sax tourne sur le tag (E♭-C-A♭-B♭-C) : idéal pour improviser à deux. Le ♭III-♭VI-♭VII (E♭, A♭, B♭) donne la couleur gospel-boogie.",
+    note:"Grille complète relevée sur la tab officielle (♩=127, open G) : intro ×2 + réponse ×2, couplet 8, refrain 12 avec tag, solo sax = tag ×4. Outro : vamp Sol/Do à vide jusqu'au fade.",
+  },
+  {
+    zone:"rock", title:"Start Me Up", key:"Do · open G (Rolling Stones)",
+    systems:[
+      {note:"intro / couplet — le riff (« if you start me up »)", bars:["C · F","C · F","B♭","B♭ · E♭"]},
+      {note:"refrain (« you make a grown man cry ») — 10 mesures", bars:["C","F","C","F"]},
+      {bars:["C","F","C · F","C · F"]},
+      {note:"les 2 dernières mesures du refrain, puis retour du riff", bars:["C","E♭ · D","C · F","C · F"]},
+      {note:"pont (« start it up »)", bars:["C · F","C · F","B♭","B♭"]}
+    ],
+    chords:["C","F","B♭","E♭","D"],
+    riff:{tab:
+`d|----------------|----------------|----------------|----------------|
+B|-5---6-6------5-|-5--6-6--5-5-6--|-3---4--------3-|-3--4-3--3-3-5--|
+G|-5---5-5------5-|-5--5-5--5-5-0--|-3---3--------3-|-3--3-3--3-3-5--|
+D|-5---7-7------5-|-5--7-7--5-7-0--|-3---5--------3-|-3--5-3--3-3-5--|
+G|-5------------5-|-5-------5---0--|-3------------3-|-3-------3-3-5--|
+D|----------------|----------------|----------------|----------------|`,
+      note:"Le riff signature en <b>open de Sol</b> (Ré Sol Ré Sol Si Ré, lignes de bas en haut) : barré 5 = Do avec le push Fa (6/5/7 : le geste Keith Richards), pull-offs vers les cordes à vide, puis la réponse barré 3 = Si♭ avec le push Mi♭ (4/3/5), et la remontée 3→5 qui ramène le Do. Tout le morceau tient dans ces 4 mesures. En standard : Fa grave 133211, balancement sol↔la sous les aigus tenus, réponse Si♭ x13331."},
+    tip:"Un seul riff, réharmonisé par la section rythmique : couplet Do·Fa / Si♭ (avec le push Mi♭), refrain qui martèle Do-Fa en accords pleins et retombe sur <b>Mi♭·Ré</b> — la seule surprise de la grille, savoure-la. Le refrain fait <b>10 mesures</b> (pas 8) : compte-les. Penta majeure de Do ; à deux, l'un fait le riff en open G, l'autre la pompe en standard — les deux voicings s'empilent comme sur le disque.",
+    note:"Grille complète relevée sur la tab officielle (♩=122, open G) : couplet 16 (le riff ×4), refrain 10, pont 4. Le couplet 4 part sur Si♭ ; outro = couplet jusqu'au fade. La version standard imprimée est ancrée sur Fa : même dessin, autre nom.",
+  },
+  {
+    zone:"rock", title:"Paint It Black", key:"Ré m · rock raga (Rolling Stones)",
+    systems:[
+      {note:"couplet (« I see a red door... ») — ×2", bars:["Dm","Dm","Asus4","A"]},
+      {note:"refrain (« I see the girls walk by... »)", bars:["Dm · C","F · C","Dm","Dm"]},
+      {bars:["Dm · C","F · C","G","A"]},
+      {note:"pont (« hmm hmm hmm ») : le couplet ×4 — et le final", bars:["Dm","Dm","A","A"]}
+    ],
+    chords:["Dm","A","Asus4","C","F","G"],
+    riff:{tab:
+`e|----0---1---3---|1---0-----------|----------------|----------------|
+B|3---------------|------------3---|2---3---3/5-----|0-2-3-5-3-2-0-2-|
+G|----------------|--------2-------|----------------|----------------|
+D|--0---0---0---0-|--0-------------|----------------|----------------|
+A|----------------|----------------|----------------|----------------|
+E|----------------|----------------|----------------|----------------|`,
+      note:"La mélodie sitar de l'intro, note à note : ré-mi-fa-sol sur <b>bourdon de ré</b> (corde Ré à vide entre chaque note, tout en let ring), puis la réponse qui redescend, le slide do♯-ré-ré~mi, et la montée-descente en hammer/pull sur la corde de si. Le do♯ (sensible) sur le mineur, c'est lui la couleur raga. Reprise variée au pont et à l'outro."},
+    tip:"Un couplet hypnotique Ré m avec la cadence <b>Asus4→A</b> (le sus4 qui se résout, tout le suspense est là), un refrain qui marche Dm-C-F-C — la basse descend, la mélodie monte — et qui s'échappe par <b>Sol puis La</b> pour retomber. Gamme : ré mineur avec le do♯ du La majeur (mineur harmonique) ; laisse sonner le bourdon de ré dès que tu peux. À deux : l'un joue la mélodie sitar, l'autre gratte le galop en croches étouffées.",
+    note:"Arrangement en Ré mineur (tab officielle, ♩=159) ; le disque sonne un ton plus haut, en Mi m : <b>capo 2</b> pour jouer avec. Structure : intro 9, couplets 8, refrains 8, pont 16 = couplet ×4, couplet final, outro Dm/A jusqu'au « swoosh ».",
   },
   {
     zone:"rock", title:"Honky Tonk Women", key:"Sol · cloche et swagger (Rolling Stones)",
     systems:[
+      {note:"intro : la cloche seule 3 mesures, puis la guitare entre sur le riff", bars:["G","G","G","G"]},
       {note:"couplet (« I met a gin-soaked barroom queen »)", bars:["G","G","C","C"]},
       {bars:["G","A","D","D"]},
-      {note:"refrain (« it's the honky tonk women »)", bars:["G","D","G","G"]}
+      {note:"seconde moitié du couplet (« she had to heave me... »)", bars:["G","G","C","C"]},
+      {bars:["G","D","G","G"]},
+      {note:"refrain (« it's the honky tonk women ») — ×2", bars:["G","D","G","G"]}
     ],
     chords:["G","C","A","D"],
-    tip:"Lancé par la cloche, porté par le swagger : couplet G-C puis la montée G-A-D (le II majeur qui pousse), refrain qui retombe G-D-G. Penta majeure de Sol, doubles cordes traînées à la Keith ; le groove est derrière le temps, jamais devant.",
-    note:"Structure simplifiée (couplet + refrain).",
+    riff:{tab:
+`d|-0-----0--0--0--0-|-0--0--0--0--0--0--0-|
+B|------------------|---------------------|
+G|-2b----2--0--2--0-|-2r-0-----0--2--0--0-|
+D|------------------|-------2-------------|
+G|------------------|---------------------|
+D|------------------|---------------------|`,
+      note:"Le riff de Keith en <b>open de Sol</b> (Ré Sol Ré Sol Si Ré, lignes de bas en haut) : pédale de Ré à vide sur la corde aiguë, dessin sol-la-mi sur les cordes 3 et 4, <b>bend d'un ton</b> case 2 (la→si) puis bend-release d'un demi. Pentatonique majeure de Sol — il revient à chaque fin de refrain et sous les mesures marquées riff. En accordage standard, contentez-vous de la grille."},
+    tip:"Lancé par la cloche, porté par le swagger : le couplet fait <b>16 mesures</b> — G-C, la montée G-A-D (le II majeur qui pousse), G-C encore, puis une retombée G-D-G <b>identique au refrain</b> : quand elle revient chantée (« it's the honky tonk women »), c'est ×2. Penta majeure de Sol, doubles cordes traînées à la Keith ; le groove est derrière le temps, jamais devant. Sur les mesures de Sol, alternez Sol et Do en pushes — l'ornement signature.",
+    note:"Grille complète relevée sur la tab officielle (♩=120, open G) : intro, couplet 16 mesures, refrain 8. Solo = la forme entière du couplet ; fin = refrain ×2 + une mesure de Sol tenu.",
   },
   {
     zone:"rock", title:"Layla", key:"Ré mineur · unplugged, shuffle (Clapton / Derek and the Dominos)",
@@ -4073,7 +4180,8 @@ const SONG_BPM = {
   "A Hard Day's Night":137, "In My Life":104, "All My Loving":158, "Eight Days a Week":138,
   "I Saw Her Standing There":160, "Get Back":124,
   // Ajouts Stones / Clapton / Hendrix / Ray Charles + standards
-  "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":116,
+  "(I Can't Get No) Satisfaction":136, "Jumpin' Jack Flash":137, "Honky Tonk Women":120,
+  "Brown Sugar":127, "Start Me Up":122, "Paint It Black":159,
   "Layla":96, "Little Wing":68, "Hit the Road Jack":88,
   "Corcovado":120, "Night and Day":128, "Take Five":176, "In the Mood":160, "Moonlight Serenade":70, "Chattanooga Choo Choo":130,
   "D'yer Mak'er":165, "Rock and Roll":170, "Since I've Been Loving You":59,
@@ -4145,6 +4253,7 @@ const SONG_ARTIST = {
   "Osez Joséphine":"Alain Bashung", "Comme toi":"Jean-Jacques Goldman", "Le Métèque":"Georges Moustaki",
   "Here Comes the Sun":"Beatles", "Something":"Beatles", "Ob-La-Di, Ob-La-Da":"Beatles", "In My Life":"Beatles",
   "(I Can't Get No) Satisfaction":"Rolling Stones", "Jumpin' Jack Flash":"Rolling Stones",
+  "Brown Sugar":"Rolling Stones", "Start Me Up":"Rolling Stones", "Paint It Black":"Rolling Stones",
   "Honky Tonk Women":"Rolling Stones", "Layla":"Eric Clapton", "Little Wing":"Jimi Hendrix",
   "Hit the Road Jack":"Ray Charles", "Corcovado":"Antônio Carlos Jobim",
   "Night and Day":"Cole Porter", "Take Five":"Dave Brubeck", "In the Mood":"Glenn Miller",
@@ -4157,6 +4266,8 @@ const SONG_ARTIST = {
 const SONG_TUNING = {
   "Jumpin' Jack Flash":"Open G",
   "Honky Tonk Women":"Open G",
+  "Brown Sugar":"Open G",
+  "Start Me Up":"Open G",
   "Kashmir":"DADGAD",
   "Little Wing":"Mi♭ (½ ton bas)"
 };
