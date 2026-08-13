@@ -472,6 +472,13 @@
     color:var(--ink-soft);padding:12px 6px;margin:-12px -2px}
   .chart .eyebrow .full-btn:active{color:var(--rust)}
   /* chip tonalité à côté du titre */
+  .tuning-chip{display:inline-block;vertical-align:2px;margin-left:6px;padding:1px 9px;border-radius:999px;
+    font-size:.62rem;font-style:normal;font-weight:600;letter-spacing:.03em;
+    background:rgba(168,64,44,.16);color:var(--rust);border:1px solid rgba(168,64,44,.4);white-space:nowrap}
+  .tune-chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}
+  .tune-chips button{flex:0 0 auto;font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:999px;
+    border:1px solid #3A4A5A;background:transparent;color:#9AA7B4;cursor:pointer}
+  .tune-chips button.on{border-color:var(--brass);color:var(--brass);background:rgba(201,144,58,.12)}
   .key-chip{display:inline-block;vertical-align:2px;margin-left:8px;padding:1px 9px;border-radius:999px;
     background:rgba(168,64,44,.12);color:var(--rust);font-size:.68rem;font-weight:800;letter-spacing:.02em;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-style:normal;white-space:nowrap}
@@ -570,6 +577,7 @@
   <input id="song-search" type="search" placeholder="Chercher un morceau, un artiste…" aria-label="Chercher un morceau ou un artiste" autocomplete="off" autocapitalize="off" spellcheck="false">
   <details id="idx-details">
     <summary class="idx-summary">📖 Répertoire — <span id="idx-count"></span> morceaux</summary>
+    <div class="tune-chips" id="tune-chips" role="group" aria-label="Filtrer par accordage"></div>
     <div id="song-index"></div>
     <div class="idx-empty" id="idx-empty" hidden>Aucun morceau trouvé.</div>
   </details>
@@ -829,6 +837,7 @@ const CHORDS = {
   "E5":       ["0", "2", "2", "x", "x", "x"],
   "G5":       ["3", "5", "x", "x", "x", "x"],
   "Dsus4":    ["x", "x", "0", "2", "3", "3"],
+  "Dsus2":    ["x", "x", "0", "2", "3", "0"],
   "Am/G#":    ["4", "0", "2", "2", "1", "0"],
   "C/G":      ["3", "3", "2", "0", "1", "0"],
   "G/B":      ["x", "2", "0", "0", "3", "3"],
@@ -2751,10 +2760,10 @@ E|5--8--5-|5--8--5-|5--8--5-|0-7-5---|`,
     systems:[
       {note:"intro", bars:["G","Am","G","Am"]},
       {note:"couplet (« childhood living »)", bars:["Bm","G","Bm","G"]},
-      {bars:["Am","C · D","G","D"]},
+      {bars:["Am","C · D","G","Dsus2 · C"]},
       {note:"refrain (« wild horses »)", bars:["Am","C · D","G · F","C"]}
     ],
-    chords:["G","Am","Bm","C","D","F"],
+    chords:["G","Am","Bm","C","D","F","Dsus2"],
     tip:"La plus belle ballade des Stones, taillée pour deux acoustiques. L'intro balance Sol ↔ Lam, puis le <b>Bm → G</b> du couplet fait toute la mélancolie. Gamme de Sol majeur, arpèges amples ; le refrain se chante à deux voix.",
     note:"Structure simplifiée.",
   },
@@ -4145,6 +4154,12 @@ const SONG_ARTIST = {
   "Kashmir":"Led Zeppelin", "Stairway to Heaven":"Led Zeppelin",
   "Whole Lotta Love":"Led Zeppelin"
 };
+const SONG_TUNING = {
+  "Jumpin' Jack Flash":"Open G",
+  "Honky Tonk Women":"Open G",
+  "Kashmir":"DADGAD",
+  "Little Wing":"Mi♭ (½ ton bas)"
+};
 function _artistKey(name){ return (name && name.length) ? name.toLowerCase().replace(/^the\s+/,"") : "￿"; }
 function byArtist(a,b){
   const x=_artistKey(SONG_ARTIST[a.title]), y=_artistKey(SONG_ARTIST[b.title]);
@@ -4661,7 +4676,7 @@ function songHTML(s){
   const bassHTML = bass ? `<details><summary>Ligne de basse</summary><pre class="tab">${bass.tab}</pre><div class="footnote piano-lh"${INSTR==="piano"?"":" hidden"}>🎹 Main gauche, note à note : ${bassNoteNames(bass.tab)}</div><div class="footnote bass-orig" hidden>Tablature de basse en tonalité d'origine (les accords ci-dessus sont transposés).</div><div class="footnote">${bass.note}</div></details>` : "";
   return `<div class="chart" id="${sl}">
     <div class="eyebrow"><span>${s.key}</span><span class="eb-actions"><button type="button" class="fav-btn" data-slug="${sl}" aria-pressed="false" title="Ajouter à ma setlist">☆</button><button type="button" class="full-btn" data-slug="${sl}" title="Plein écran (mode concert)" aria-label="Afficher en plein écran">⛶</button><button type="button" class="hide-btn" data-slug="${sl}" title="Masquer ce morceau du carnet (réversible)">✕ masquer</button></span></div>
-    <h2>${s.title}<span class="key-chip">${(s.key||"").split("·")[0].trim()}</span></h2>
+    <h2>${s.title}<span class="key-chip">${(s.key||"").split("·")[0].trim()}</span>${SONG_TUNING[s.title]?`<span class="tuning-chip">🔧 ${SONG_TUNING[s.title]}</span>`:""}</h2>
     ${grooveHTML(s)}
     ${tpose}
     ${systems}
@@ -4713,7 +4728,8 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   SONGS.forEach(function(s){ bySlug[slug(s.title)]=s; });
   document.getElementById("song-index").innerHTML = sorted.map(function(s){
     const art = SONG_ARTIST[s.title] || "";
-    return `<a href="#${slug(s.title)}" data-n="${_norm(s.title+" "+(s.key||"")+" "+art)}"><span class="ti">${s.title}${art?`<span class="ar">${art}</span>`:""}</span><span class="z">${ZL[s.zone]||s.zone}</span></a>`;
+    const tun = SONG_TUNING[s.title] || "";
+    return `<a href="#${slug(s.title)}" data-n="${_norm(s.title+" "+(s.key||"")+" "+art+" "+tun)}" data-t="${_norm(tun)||"standard"}"><span class="ti">${s.title}${art?`<span class="ar">${art}${tun?` · ${tun}`:""}</span>`:""}</span><span class="z">${ZL[s.zone]||s.zone}</span></a>`;
   }).join("");
   document.getElementById("idx-count").textContent = SONGS.length;
 
@@ -4750,11 +4766,28 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(el) scrollToCard(el);
   });
 
+  let tuneFilter = "";
+  (function(){
+    const box=document.getElementById("tune-chips");
+    if(!box) return;
+    const tunings=[...new Set(Object.values(SONG_TUNING))];
+    box.innerHTML = `<button type="button" data-t="" class="on">Tous</button>` +
+      tunings.map(t=>`<button type="button" data-t="${_norm(t)}">${t}</button>`).join("") +
+      `<button type="button" data-t="standard">Standard</button>`;
+    box.addEventListener("click",function(e){
+      const b=e.target.closest("button"); if(!b) return;
+      tuneFilter=b.dataset.t;
+      box.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+      const d=document.getElementById("idx-details"); if(d && tuneFilter) d.open=true;
+      filterIndex();
+    });
+  })();
   function filterIndex(){
     const q=_norm(search.value.trim());
     let shown=0;
     links.forEach(function(a){
-      const m = shownState(slugOf(a)) && a.dataset.n.indexOf(q)>-1;
+      const m = shownState(slugOf(a)) && a.dataset.n.indexOf(q)>-1 &&
+        (!tuneFilter || a.dataset.t===tuneFilter);
       a.hidden=!m; if(m) shown++;
     });
     empty.hidden = shown>0;
