@@ -841,6 +841,10 @@ const CHORDS = {
   "Dsus2":    ["x", "x", "0", "2", "3", "0"],
   "Am/G#":    ["4", "0", "2", "2", "1", "0"],
   "C/G":      ["3", "3", "2", "0", "1", "0"],
+  "C/E":      ["0", "3", "2", "0", "1", "0"],
+  "Dm/F":     ["1", "x", "0", "2", "3", "1"],
+  "B♭/D":     ["x", "5", "3", "3", "3", "1"],
+  "B♭/C":     ["x", "3", "3", "3", "3", "1"],
   "Cadd9":    ["x", "3", "2", "0", "3", "3"],
   "C#m/G#":   ["4", "4", "6", "6", "5", "4"],
   "F/C":      ["x", "3", "3", "2", "1", "1"],
@@ -2291,12 +2295,15 @@ E|--------|1---1---|--------|3---3---|`,
   {
     zone:"pop", title:"La vie en rose", key:"Do · swing musette lent (Édith Piaf)",
     systems:[
-      {bars:["C · Cmaj7","Dm7 · G7","Dm7 · G7","C"]},
-      {bars:["C7","F","Fm","C · G7"]}
+      {note:"couplet (« hold me close and hold me fast ») — trois mesures pleines de Do", bars:["C","C","C","Dm · G"]},
+      {note:"« when you kiss me, heaven sighs »", bars:["Dm","G7","Dm · G7","C · F · Fm"]},
+      {note:"« when you press me to your heart »", bars:["C","C","C","F"]},
+      {note:"le Fa s'assombrit, puis le <b>Ré7</b> (« everyday words seem to turn into love songs »)", bars:["F","Fm · C","D7","Dm · G"]},
+      {note:"« and life will always be… La Vie en rose »", bars:["C","C","Dm · G7","C"]}
     ],
-    chords:["C","Cmaj7","Dm7","G7","C7","F","Fm"],
-    tip:"Le standard mondial : le Do qui s'adoucit en Cmaj7, la balançoire Dm7-G7, puis le C7 qui ouvre vers le Fa et le <b>Fm qui fait fondre</b> au retour. Vise les tierces, gamme de Do majeur, legato, jamais pressé.",
-    note:"Version en Do (celle d'Armstrong) ; l'original de Piaf est en Fa.",
+    chords:["C","Dm","G","G7","F","Fm","D7"],
+    tip:"Le standard mondial, et une leçon de patience : le Do <b>tient trois mesures</b> avant que le Ré m ne bouge. Ensuite la balançoire Dm-G7, puis la couleur du morceau — le Fa qui s'assombrit en <b>Fa mineur</b> juste avant de retomber sur le Do (sur le disque, deux voix seulement descendent : la → la♭ et ré → ré♭, garde le Fa à la basse). Et n'oublie pas le <b>Ré7</b> de « everyday words » : c'est la seule vraie surprise de la grille, une dominante qui pousse vers le Sol. Vise les tierces, gamme de Do majeur, legato, jamais pressé.",
+    note:"Grille relevée mesure par mesure sur la tab officielle d'Armstrong (12/8, ♩=105 au couplet) : version en Do, l'original de Piaf est en Fa. La tab ne contient <b>ni Cmaj7 ni C7</b> — le Do va droit au Fa. L'intro et le solo tournent sur la même grille ; l'outro passe par Si♭m et Sol m avant le Fa final.",
   },
   {
     zone:"pop", title:"Emmenez-moi", key:"La mineur / Do · uptempo (Aznavour)",
@@ -2511,14 +2518,15 @@ E|--------|0-0-0-0-|2-2-2-2-|--------|`,
   {
     zone:"pop", title:"What a Wonderful World", key:"Fa · ballade jazz (Louis Armstrong)",
     systems:[
-      {note:"couplet", bars:["F","Am","B♭","Am"]},
-      {note:"« I see them bloom, for me and you »", bars:["Gm7","F","A7","Dm"]},
-      {note:"« and I think to myself... »", bars:["D♭","Gm7","C7","F"]},
-      {note:"pont (« the colors of the rainbow »)", bars:["C7","F","C7","F"]},
-      {bars:["Dm","C","Dm","C7"]}
+      {note:"couplet (« I see trees of green »)", bars:["F","Am","B♭","Am"]},
+      {note:"« I see them bloom, for me and you »", bars:["Gm","F","A7","Dm"]},
+      {note:"refrain (« and I think to myself ») — le Ré♭ entre en sus2 avant de se poser", bars:["D♭","B♭/D","C7","F"]},
+      {note:"pont (« the colors of a rainbow ») — puis ×2 sur « are also on the faces »", bars:["Gm","B♭/C","C7","F"]},
+      {note:"la marche chromatique de la basse (« I see friends shaking hands »)", bars:["Dm","C/E","Dm/F","C/E"]},
+      {note:"elle continue jusqu'au Sol mineur (« I love you »)", bars:["Dm/F","D#°7","Gm","B♭/D · C7"]}
     ],
-    chords:["F","Am","B♭","Gm7","A7","Dm","D♭","C7","C"],
-    tip:"La ballade jazz d'Armstrong. La montée Fa-Lam-Si♭, puis le A7 qui bascule vers Ré mineur, et surtout le <b>Ré♭ de « and I think to myself »</b> — le frisson du morceau. Gamme de Fa majeur, vise les tierces ; le pont balance C7-F comme une conversation. Legato, sourire dans la voix.",
+    chords:["F","Am","B♭","Gm","A7","Dm","D♭","B♭/D","C7","B♭/C","C/E","Dm/F","D#°7"],
+    tip:"La ballade jazz d'Armstrong. La montée Fa-Lam-Si♭, puis le A7 qui bascule vers Ré mineur, et surtout le <b>Ré♭ de « and I think to myself »</b> — le frisson du morceau : il arrive d'abord sans sa tierce (sus2), puis se pose. Ce qui suit n'est pas un Sol m7 mais un <b>Si♭ avec le Ré à la basse</b> : la basse descend Ré♭ → Ré → Do → Fa, c'est elle qui fait la phrase. Le vrai trésor est au pont : sous « I see friends shaking hands », la basse <b>marche chromatiquement Ré-Mi-Fa-Fa♯-Sol</b> pendant que les accords glissent au-dessus (Dm, C/E, Dm/F, D♯°7, Gm) — joue-la lentement, une note par temps fort, c'est là que le morceau sourit. Gamme de Fa majeur, vise les tierces, legato.",
     bass:{tab:
 `G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
@@ -2532,19 +2540,24 @@ E|3---3---|1---1---|--------|--------|
 
 G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
-A|4---4---|--------|3---3---|--------|
-E|--------|3---3---|--------|1---1---|
+A|4---4---|5---5---|3---3---|--------|
+E|--------|--------|--------|1---1---|
 
 G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
-A|3---3---|--------|3---3---|--------|
-E|--------|1---1---|--------|1---1---|
+A|--------|3---3---|3---3---|--------|
+E|3---3---|--------|--------|1---1---|
 
 G|--------|--------|--------|--------|
-D|0---0---|--------|0---0---|--------|
-A|--------|3---3---|--------|3---3---|
-E|--------|--------|--------|------0-|`,
-      note:"Toute la forme (12 mesures de couplet + pont) : la basse monte Fa-La-Si♭ puis redescend, le La (A7) appelle le Ré mineur, et le <b>Ré♭</b> tombe sur « and I think to myself » avant Sol-Do-Fa. Le pont balance Do-Fa comme la conversation du texte. Rondes et blanches, très legato, le Mi de passage ramène au Fa. Une basse qui sourit, comme la voix."},
+D|--------|--------|--------|--------|
+A|5---5---|7---7---|8---8---|7---7---|
+E|--------|--------|--------|--------|
+
+G|--------|--------|--------|--------|
+D|--------|--------|--------|--------|
+A|8---8---|9---9---|--------|5---3---|
+E|--------|--------|3---3---|--------|`,
+      note:"Un bloc par ligne de grille, relevé sur la tab officielle (♩=70, croches ternaires). La basse monte Fa-La-Si♭ puis redescend ; le La (A7) appelle le Ré mineur ; au refrain elle descend <b>Ré♭ → Ré → Do → Fa</b> (c'est le Ré qui trahit le Si♭/Ré, pas un Sol m7). Les deux derniers blocs sont le cœur du morceau : la <b>marche chromatique Ré-Mi-Fa-Mi, Fa-Fa♯-Sol</b> sous « I see friends shaking hands… I love you », qui retombe sur Ré-Do puis le Fa. Rondes et blanches, très legato. Une basse qui sourit, comme la voix."},
   },
   {
     zone:"pop", title:"Quelqu'un m'a dit", key:"Sol · ballade acoustique (Carla Bruni)",
@@ -3303,13 +3316,13 @@ E|--------|0-----0-|---0----|---0----|`,
     systems:[
       {note:"couplet — le riff (« here come old flat top »)", bars:["Dm7","Dm7","Dm7","Dm7"]},
       {note:"« he got hair down to his knee… »", bars:["A","A","G","G"]},
-      {note:"refrain « come together, right now, over me » — et le riff revient", bars:["Bm","G","Dm7","Dm7"]}
+      {note:"refrain (« come together, right now ») — deux mesures seulement, puis le riff revient sur « over me »", bars:["Bm · A","G · A","Dm7","Dm7"]}
     ],
     chords:["Dm7","Bm","A","G"],
-    tip:"Tout part du riff de basse en Ré mineur : laissez respirer, c'est le silence qui groove. Solo en penta mineure de Ré (Ré dorien pour la couleur bluesy). Au refrain, la basse martèle Si puis Sol en croches (La en passage) et le riff repart aussitôt sur « over me ».",
+    tip:"Tout part du riff de basse en Ré mineur — un <b>arpège</b> (ré, la, fa, ré), pas une gamme : laissez respirer, c'est le silence qui groove. Solo en penta mineure de Ré (Ré dorien pour la couleur bluesy). Au refrain, la basse martèle Si puis Sol en croches (La en passage) et le riff repart aussitôt sur « over me ».",
     bass:{tab:
-`G|------------5-7-|------------5-7-|------------5-7-|------------5-7-|
-D|0-0---5-7-------|0-0---5-7-------|0-0---5-7-------|0-0---5-7-------|
+`G|----------------|----------------|----------------|----------------|
+D|0-0---0-7---3-0-|0-0---0-7---3-0-|0-0---0-7---3-0-|0-0---0-7---3-0-|
 A|----------------|----------------|----------------|----------------|
 E|----------------|----------------|----------------|----------------|
 
@@ -3318,12 +3331,12 @@ D|------------7---|------------7---|----------------|----------------|
 A|----------------|----------------|----------------|----------------|
 E|5-5-------------|5-5-------------|3---------------|3---------------|
 
-G|----------------|----------------|------------5-7-|------------5-7-|
-D|----------------|----------------|0-0---5-7-------|0-0---5-7-------|
+G|----------------|----------------|----------------|----------------|
+D|----------------|----------------|0-0---0-7---3-0-|0-0---0-7---3-0-|
 A|2-2-2-2-2-2-----|----------------|----------------|----------------|
 E|------------5-5-|3-3-3-3-5-------|----------------|----------------|`,
-      note:"Note à note d'après la transcription (grille en doubles-croches, le book la joue cases 10-12, ici en bas de manche — mêmes notes). <b>Le riff</b>, une phrase par mesure : Ré-Ré (croches), <b>glissé Sol→La</b> sur la corde de Ré, puis Do-Ré à l'octave avec une chute sur le dernier Ré. Sur « hair down to his knees » : La-La, puis la <b>tierce bluesy Do frottée (bend ¼)</b> tenue, et chute depuis l'octave La. Le Sol se tient toute la mesure, lié jusqu'au 1 de la suivante (le second 3 est ce même Sol qui sonne encore, pas une rattaque), puis SILENCE — le trou d'air avant « shoot me ». Refrain : Si martelé six fois, La-La qui tombe sur Sol martelé, La de relance, et le riff repart. Notes courtes et étouffées, au médiator sur le disque, jamais pressé."},
-    note:"Forme réelle du couplet : riff ×4, puis La ×2 et Sol ×2, et le riff revient ×2 sur « shoot me ».",
+      note:"Relevé note à note sur la tab de basse officielle (♩=84). <b>Le riff</b>, une phrase par mesure : <b>trois Ré</b> (le troisième lié), <b>glissé jusqu'au La</b>, puis <b>Fa</b> et retour au Ré — un arpège de Ré mineur, pas une gamme. Sur le disque, McCartney joue la réponse à l'octave supérieure (Fa case 10 et Ré case 12 de la corde de Sol, après un glissé case 5→12 sur la corde de La) ; elle est écrite ici une octave plus bas pour rester sous la cinquième case — mêmes notes, plus facile, et ça sonne. Sur « hair down to his knees » : La-La, puis la <b>tierce bluesy Do frottée (bend ¼)</b> tenue, et chute depuis l'octave La. Le Sol se tient toute la mesure, lié jusqu'au 1 de la suivante (le second 3 est ce même Sol qui sonne encore, pas une rattaque), puis SILENCE — le trou d'air avant « shoot me ». Refrain : Si martelé six fois puis <b>deux La</b>, Sol martelé quatre fois puis un <b>La</b> glissé — deux mesures, pas quatre — et le riff repart aussitôt sur « over me ». Notes courtes et étouffées, au médiator sur le disque, jamais pressé."},
+    note:"Grille relevée sur la tab officielle (♩=84) : couplet = riff ×4, puis La ×2 et Sol tenu 2 mesures ; refrain = seulement 2 mesures (Si-La, Sol-La) avant le retour du riff. Interludes et solo tournent sur le riff. La feuille d'accords écrit Ré m ; le riff n'a pas de septième — le Ré m7 vient de la guitare.",
   },
   {
     zone:"pop", title:"Here Comes the Sun", key:"Ré · lumineux (George Harrison / Beatles)",
@@ -4230,10 +4243,10 @@ const SONG_BPM = {
   "Every Breath You Take":117, "Perfect":63, "Riptide":102, "Someone Like You":67, "Let Her Go":75,
   "With or Without You":110, "Wonderwall":87, "Don't Look Back in Anger":82, "Fast Car":104,
   "Ho Hey":80, "The Scientist":73, "Mistral gagnant":76, "Dernière danse":120, "Les Champs-Élysées":118,
-  "Aline":60, "Toi + Moi":96, "Je veux":120, "La vie en rose":100, "Emmenez-moi":160, "Santiano":120,
+  "Aline":60, "Toi + Moi":96, "Je veux":120, "La vie en rose":105, "Emmenez-moi":160, "Santiano":120,
   "Il est où le bonheur":81, "Sweet Caroline":127, "Country Roads":82, "Hey Jude":74, "Imagine":76,
   "Yesterday":96, "Killing Me Softly":82, "Lean on Me":76, "What's Up":132, "Take On Me":169,
-  "What a Wonderful World":72, "Quelqu'un m'a dit":120, "Les Lacs du Connemara":128,
+  "What a Wonderful World":70, "Quelqu'un m'a dit":120, "Les Lacs du Connemara":128,
   "Manhattan-Kaboul":110, "On écrit sur les murs":120, "Une belle histoire":132, "Salut les amoureux":120,
   "Belle":72, "Osez Joséphine":116, "Comme toi":92, "Le Métèque":130,
   // Beatles (ajouts)
