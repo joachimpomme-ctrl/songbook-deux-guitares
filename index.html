@@ -849,6 +849,8 @@ const CHORDS = {
   "D6":       ["x", "x", "0", "2", "0", "2"],
   "Dmaj7":    ["x", "x", "0", "2", "2", "2"],
   "F°7":      ["x", "x", "3", "4", "3", "4"],
+  "F♯°7":     ["x", "x", "4", "5", "4", "5"],
+  "E°7":      ["x", "x", "2", "3", "2", "3"],
   "C#°7":     ["x", "x", "2", "3", "2", "3"],
   "D#°7":     ["x", "x", "1", "2", "1", "2"],
   "Bm6":      ["x", "2", "4", "4", "3", "4"],
@@ -884,6 +886,7 @@ const CHORDS = {
   "F#°7":    ["2","x","1","2","1","x"],
   "Em7♭5":   ["x","x","2","3","3","3"],
   "B♭":      ["x","1","3","3","3","1"],
+  "B♭m":     ["x","1","3","3","2","1"],
   "E♭maj7":  ["x","6","8","7","8","6"],
   "A♭maj7":  ["4","6","5","5","4","4"],
   "C#m":     ["x","4","6","6","5","4"],
@@ -1134,14 +1137,17 @@ E|--------|3---3---|1---1---|0---0---|`,
     note:"Version jam courante. En jazz straight, les majeurs se jouent maj7.",
   },
   {
-    zone:"jazz", title:"Fly Me to the Moon", key:"La m / Do · swing · boucle 16 mesures",
+    zone:"jazz", title:"Fly Me to the Moon", key:"La m / Do · swing · forme 32 mesures",
     systems:[
-      {bars:["Am7","Dm7","G7","Cmaj7"]},{bars:["Fmaj7","Bm7♭5","E7","Am7 · A7"]},
-      {bars:["Dm7","G7","Cmaj7","Am7"]},{bars:["Dm7 · G7","Cmaj7","Bm7♭5","E7"]}
+      {note:"« fly me to the moon... »", bars:["Am7 · A7","Dm7","G7","Cmaj7"]},
+      {bars:["Fmaj7","Bm7♭5","E7","Am7 · A7"]},
+      {note:"« in other words » — 1re fois : on repart en haut", bars:["Dm7","G7","Cmaj7","Em7 · A7"]},
+      {note:"2e fois : demi-cadence, et on rejoue les 16 mesures", bars:["Dm7","G7","Cmaj7","Bm7♭5 · E7"]},
+      {note:"la vraie fin (« in other words, I love you »)", bars:["Dm7 · G7","F","A7 · G7","C"]}
     ],
-    chords:["Am7","Dm7","G7","Cmaj7","Fmaj7","Bm7♭5","E7","A7"],
-    tip:"L'anatole par excellence : les accords descendent en quintes, tout coule. Gamme de Do majeur partout, ajoute le Sol♯ sur les E7. Idéal pour travailler les cibles de tierces.",
-    note:"Boucle simplifiée du standard.",
+    chords:["Am7","Dm7","G7","Cmaj7","Fmaj7","Bm7♭5","E7","A7","Em7","F","C"],
+    tip:"L'anatole par excellence : les accords descendent en quintes, tout coule. Le <b>La7 de passage</b> (fin des mesures 1 et 8) tire vers le Ré m — c'est lui qui donne l'élan. Gamme de Do majeur partout, ajoute le Sol♯ sur les E7 et le Do♯ sur les A7. La fin déraille exprès par <b>Fa puis La7-Sol7</b> avant le Do : le petit clin d'œil blues de Sinatra.",
+    note:"Forme complète vérifiée sur la feuille officielle (version Sinatra) : 16 mesures jouées deux fois — 1re fin Em7-A7, 2e fin Bm7♭5-E7 — puis la coda. En jam, on boucle souvent les 16 premières.",
   },
   {
     zone:"jazz", title:"Oye Como Va (groove)", key:"La dorien · latin rock, médium",
@@ -1487,20 +1493,20 @@ E|--2---2-|--2---2-|0---0---|0---0---|`,
       {bars:["D7","D7","Dm7","G7"]}
     ],
     chords:["C","D7","Dm7","G7","F"],
-    tip:"L'hymne d'Ellington. La surprise, c'est le D7 aux mesures 3-4 : vise son Fa♯. Le reste : gamme de Do majeur. Après le B, on rejoue un A.",
-    note:"Version jam simplifiée.",
+    tip:"L'hymne d'Ellington. La surprise, c'est le D7 des mesures 3-4 : la mélodie y chante le <b>sol♯ — la ♯11</b>, la note la plus célèbre du morceau. Vise-la, puis retombe sur le fa♯ (sa tierce). Le reste : gamme de Do majeur. Après le B, on rejoue un A.",
+    note:"Forme A A B A vérifiée sur la partition officielle (♩=162) : pont = 4 mesures de Fa puis D7, D7, Dm7-G7. Il existe aussi un couplet chanté d'introduction (« If you want to go to Harlem »), rarement joué.",
   },
   {
     zone:"jazz", title:"Satin Doll", key:"Do · swing feutré · A + pont",
     systems:[
       {label:"A", note:"jouer 2 fois", bars:["Dm7 · G7","Dm7 · G7","Em7 · A7","Em7 · A7"]},
-      {bars:["Am7 · D7","A♭m7 · D♭7","C","C"]},
+      {bars:["Am7 · D7","A♭m7 · D♭7","C","Em7 · A7"]},
       {label:"B", bars:["Gm7 · C7","Gm7 · C7","F","F"]},
       {bars:["Am7 · D7","Am7 · D7","G7","G7"]}
     ],
     chords:["Dm7","G7","Em7","A7","Am7","D7","A♭m7","D♭7","C","Gm7","C7","F"],
-    tip:"Que des paires ii-V qui montent puis glissent en chromatique (A♭m7 · D♭7) : le morceau parfait pour entendre les cadences. Forme A A B A.",
-    note:"Version jam simplifiée.",
+    tip:"Que des paires ii-V qui montent puis glissent en chromatique (A♭m7 · D♭7) : le morceau parfait pour entendre les cadences. La remontée <b>Em7-A7</b> de la mesure 8 relance le tour — au tout dernier, reste sur Do. Forme A A B A.",
+    note:"Grille vérifiée sur la feuille officielle. Fin de morceau à l'Ellington : D7 → G7 → C7, plaqués.",
   },
   {
     zone:"jazz", title:"Sunny", key:"La mineur · soul jazz, médium",
@@ -1907,10 +1913,14 @@ E|1-----1-|--------|--------|4-------|`,
   },
   {
     zone:"jazz", title:"Nature Boy", key:"Ré mineur · ballade lente, rubato (eden ahbez)",
-    systems:[{note:"boucle", bars:["Dm","Em7♭5 · A7","Dm","Em7♭5 · A7"]}],
-    chords:["Dm","Em7♭5","A7"],
-    tip:"Une ballade mineure hypnotique, beaucoup d'espace. Penta de Ré m + Do♯ sur le A7 (mineur harmonique de Ré). Le morceau où une seule note bien placée vaut un chorus entier.",
-    note:"Boucle simplifiée du couplet.",
+    systems:[
+      {note:"« there was a boy... » — rubato, beaucoup d'air", bars:["Dm","Dm","A7","Dm"]},
+      {note:"la descente Ré m → Ré m7 → Ré m6, puis le diminué", bars:["Dm","Dm7 · Dm6","E°7","Dm · Gm6"]},
+      {note:"« a little shy... but very wise was he »", bars:["A7","Dm","E7","A7"]}
+    ],
+    chords:["Dm","A7","Dm7","Dm6","E°7","Gm6","E7"],
+    tip:"Une ballade mineure hypnotique, beaucoup d'espace. Deux gestes font le morceau : le <b>A7 qui répond au Ré m</b> (la feuille écrit Gdim/A — c'est un A7♭9, joue A7), et la <b>descente intérieure</b> Ré m → Ré m7 → Ré m6 : une seule voix bouge, ré-do-si. Le E°7 et le Gm6 sont les deux ombres du couplet. Penta de Ré m + Do♯ sur les A7 (mineur harmonique). Le morceau où une seule note bien placée vaut un chorus entier.",
+    note:"Couplet complet (12 mesures) vérifié sur la feuille officielle, en Ré m comme Nat King Cole. Tout le morceau = ce couplet ×2 + un instrumental sur la même grille ; dernier tour : E7 · A7 puis Ré m pour conclure.",
   },
   {
     zone:"jazz", title:"Rhythm changes en Si♭", key:"Si♭ · swing rapide · forme A A B A",
@@ -1944,7 +1954,7 @@ E|1-----1-|--------|--------|4-------|`,
     ],
     chords:["E♭maj7","B♭m7","E♭7","A♭maj7","A♭m7","D♭7","Cm7","Fm7","B♭7","Gm7","C7","Am7","D7"],
     tip:"Une chaîne de ii-V, presque un par mesure : le morceau qui apprend à entendre les cadences. Le pont s'échappe par B♭m7-E♭7 vers le La♭, puis une échelle de ii-V (Am7-D7, Gm7-C7, Fm7-B♭7) redescend vers le A final. Gamme de Mi♭ majeur comme fil, vise la tierce du deuxième accord de chaque paire.",
-    note:"Après le pont, on rejoue un A. Voicings simplifiés.",
+    note:"Forme A A B A vérifiée mesure par mesure sur l'arrangement officiel — qui module d'un demi-ton en cours de route, à la Ella ; nous restons en Mi♭ d'un bout à l'autre. Après le pont, on rejoue un A.",
   },
   {
     zone:"jazz", title:"Dark Eyes (Les Yeux Noirs)", key:"Ré mineur · swing manouche (traditionnel)",
@@ -2609,35 +2619,35 @@ E|--------|--------|--------|------0-|`,
   {
     zone:"jazz", title:"Georgia on My Mind", key:"Fa · ballade du Sud (Hoagy Carmichael / Ray Charles)",
     systems:[
-      {label:"A", bars:["F","A7","Dm","B♭ · B°7"]},
-      {bars:["F · D7","Gm7 · C7","F","Gm7 · C7"]},
-      {label:"B", note:"pont (« other arms reach out to me »)", bars:["Dm","G7","Dm","B♭7"]},
-      {bars:["Dm","G7","F · D7","Gm7 · C7"]}
+      {label:"A", note:"« Georgia, Georgia... » — deux accords par mesure", bars:["F · A7","Dm · C7","B♭ · B♭m","F · A♭°7"]},
+      {bars:["Gm · C7","F · F♯°7","Gm · C7","F · A7"]},
+      {label:"B", note:"pont (« other arms reach out to me ») : Ré m rumine", bars:["Dm","Dm · A7","Dm","Dm · G7"]},
+      {bars:["Dm","Dm · E7","Am · A♭°7","Gm · C7"]}
     ],
-    chords:["F","A7","Dm","B♭","B°7","D7","Gm7","C7","G7","B♭7"],
-    tip:"La ballade des ballades. Le <b>A7 qui tombe sur le Dm</b> (mesure 2) est le soupir du morceau ; le B°7 relie le Si♭ au Fa. Le pont rumine Dm-G7 avant que le turnaround ne ramène au Fa. Gamme de Fa majeur, vise les tierces, et prends ton temps : personne ne presse Ray Charles.",
-    note:"Pont simplifié ; après lui, on rejoue un A.",
+    chords:["F","A7","Dm","C7","B♭","B♭m","A♭°7","Gm","F♯°7","G7","E7","Am"],
+    tip:"La ballade des ballades, et une leçon d'harmonie : le A avance par <b>deux accords par mesure</b> — Fa-La7 (le soupir vers Ré m), l'emprunt <b>Si♭ m</b>, puis les diminués de passage A♭°7 et F♯°7 qui font marcher la basse par demi-tons. Le pont ne quitte presque pas le Ré m : chaque dominante (A7, G7, E7) est une relance, pas un départ. Gamme de Fa majeur, vise les tierces, et prends ton temps : personne ne presse Ray Charles. <b>Capo 2</b> = la tonalité de Ray (Sol).",
+    note:"Grille complète vérifiée sur deux feuilles officielles (la version Django — ici en Fa, sa 2e grille instrumentale — et la version Ray Charles en Sol). Forme A A B A ; le A qui mène au pont finit | F · B♭m | F · A7 |. Ray ajoute des couleurs (C/E, A7♭5) : mêmes fonctions.",
     bass:{tab:
 `G|--------|--------|--------|--------|
+D|--------|0-------|--------|--------|
+A|----0---|----3---|1---1---|--------|
+E|1-------|--------|--------|1---4---|
+
+G|--------|--------|--------|--------|
 D|--------|--------|--------|--------|
-A|--------|7---7---|5---3---|1---2---|
-E|1---1---|--------|--------|--------|
+A|----3---|--------|----3---|----0---|
+E|3-------|1---2---|3-------|1-------|
 
 G|--------|--------|--------|--------|
-D|----0---|--------|--------|--------|
-A|--------|----3---|--------|----3---|
-E|1-------|3-------|1---1---|3-------|
+D|0---0---|0-------|0---0---|0-------|
+A|--------|----0---|--------|--------|
+E|--------|--------|--------|----3---|
 
 G|--------|--------|--------|--------|
-D|0---0---|--------|0---0---|--------|
-A|--------|--------|--------|1---1---|
-E|--------|3---3---|--------|--------|
-
-G|--------|--------|--------|--------|
-D|0---0---|--------|----0---|--------|
-A|--------|--------|--------|----3---|
-E|--------|3---3---|1-------|3-------|`,
-      note:"Toute la forme A-A-B-A, un bloc par ligne. Bloc 1 : la <b>descente emblématique</b> Fa–Mi–Ré(–Do)–Si♭, un pas par mesure, et le Si bécarre du B°7 qui remonte vers le Fa. Ensuite une fondamentale par accord, tenue, avec les turnarounds Sol→Do. Le pont rumine Ré-Sol. Notes rondes, tempo qui prend son temps : personne ne presse Ray Charles."},
+D|0---0---|0-------|--------|--------|
+A|--------|--------|0-------|----3---|
+E|--------|----0---|----4---|3-------|`,
+      note:"Un bloc par ligne, une fondamentale par accord — c'est déjà une vraie ligne : Fa-La | Ré-Do | Si♭ | Fa-La♭ (le diminué !), puis Sol-Do, Fa-Fa♯, Sol-Do, Fa. Le pont tient le Ré et pose chaque dominante en passant (La, Sol, Mi). Notes rondes, deux par mesure maximum : personne ne presse Ray Charles."},
   },
   {
     zone:"jazz", title:"Softly, As in a Morning Sunrise", key:"Do mineur · swing (Romberg) · forme A A B A",
@@ -4142,7 +4152,7 @@ const SONG_BPM = {
   // Jazz
   "Minor Swing":180, "Autumn Leaves":132, "Summertime":72, "Blue Bossa":140, "Black Orpheus":130,
   "Cantaloupe Island":98, "So What":138, "All of Me":140, "Fly Me to the Moon":120,
-  "Oye Como Va (groove)":116, "Cycle de dominantes":180, "Take the A Train":160, "Satin Doll":112,
+  "Oye Como Va (groove)":116, "Cycle de dominantes":180, "Take the A Train":162, "Satin Doll":112,
   "Sunny":108, "Watermelon Man":120, "Song for My Father":128, "The Girl from Ipanema":130,
   "Isn't She Lovely":118, "L'anatole en Do":140, "C Jam Blues":140, "All Blues":84, "Caravan":160,
   "Honeysuckle Rose":140, "Lady Bird":160, "Nature Boy":80, "Rhythm changes en Si♭":200,
@@ -4301,7 +4311,7 @@ function grooveHTML(s){
 const _ROWS=["G","D","A","E"];      // affichage haut -> bas
 const _ROWPC=[7,2,9,4];             // hauteur des cordes à vide (do=0)
 const _PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-const BASS_FEEL={"Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5","Mas Que Nada":"bossa","Chameleon":"root5","Moonlight Serenade":"root5","Since I've Been Loving You":"root5","Stairway to Heaven":"root5","Kashmir":"pedal"};
+const BASS_FEEL={"Nature Boy":"root5","Blues jazz en Fa":"walk","Stormy Monday":"walk","Rock'n'roll 12 mesures":"boogie","Caravan":"pedal","Misty":"root5","Georgia on My Mind":"root5","Bésame Mucho":"root5","St. Thomas":"root5","Fever":"root5","Everyday I Have the Blues":"walk","Blues mineur jazz en Do":"walk","Hoochie Coochie Man":"root5","Mas Que Nada":"bossa","Chameleon":"root5","Moonlight Serenade":"root5","Since I've Been Loving You":"root5","Stairway to Heaven":"root5","Kashmir":"pedal"};
 function _rootPC(tok){
   tok=tok.trim();
   if(tok.indexOf("/")>-1) tok=tok.split("/")[1].trim();  // slash : la basse est la note d'après
