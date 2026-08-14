@@ -569,15 +569,29 @@
     /* export d'une setlist : n'imprime que #printarea */
     body.printing-setlist>*:not(#printarea){display:none !important}
     body.printing-setlist #printarea{display:block !important}
-    #printarea .p-song{page-break-inside:avoid;margin:0 0 18px;padding-bottom:10px;border-bottom:1px solid #ccc}
+    #printarea .p-song{page-break-after:always;page-break-inside:avoid;margin:0}
+    #printarea .p-song:last-child{page-break-after:auto}
     #printarea .c-title{font-family:Georgia,serif;font-style:italic;font-size:1.4rem;margin-bottom:4px}
     #printarea .c-sub{margin-bottom:8px;font-size:.8rem;color:#333;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
     #printarea .c-sub .tempo{border:none;background:none;padding:0;color:#000;font-weight:700}
     #printarea .p-toc{font-size:.92rem;line-height:1.7;margin:6px 0 0;page-break-after:always}
     #printarea .bar{border:1px solid #888;min-height:34px;font-size:1rem;font-weight:700}
-    #printarea .c-tip,#printarea .c-diags,#printarea .solo-d{display:none}   /* l'essentiel : grilles, riff, basse — pas les gammes ni les diagrammes */
-    #printarea .riff-d>*,#printarea .bass-d>*{display:block !important}   /* déplie riff & basse dans le PDF */
-    #printarea .riff-d summary,#printarea .bass-d summary{list-style:none;color:#000;margin-bottom:4px}
+    /* l'essentiel sur un A4 : grille, positions d'accords, riff — la basse seulement si elle est particulière */
+    #printarea .c-tip,#printarea .solo-d,#printarea .bass-auto{display:none}
+    #printarea .riff-d>*,#printarea .bass-d>*{display:block !important}
+    #printarea .riff-d summary,#printarea .bass-d summary{list-style:none;color:#000;margin:2px 0;font-size:.78rem;font-weight:700}
+    #printarea .c-diags{display:flex;flex-wrap:wrap;gap:4px 10px;padding:6px 0 0}
+    #printarea .diag{background:none;border:none;padding:0 2px;color:#000}
+    #printarea .diag .nm{font-size:.62rem;margin-bottom:0}
+    #printarea .diag svg{width:44px;height:auto}
+    /* compact : tout doit tenir sur la page */
+    #printarea .grid{gap:3px;margin:3px 0}
+    #printarea .bar{min-height:26px;font-size:.88rem;padding:2px}
+    #printarea .sys-note,#printarea .sys-label{font-size:.66rem;color:#333}
+    #printarea .c-note{font-size:.72rem;margin:2px 0 4px}
+    #printarea pre.tab{font-size:.62rem;line-height:1.25;margin:2px 0;border:none;background:none;padding:0;color:#000}
+    #printarea .footnote{font-size:.6rem;line-height:1.35;color:#333;margin:2px 0}
+    #printarea .piano-lh[hidden],#printarea .bass-orig[hidden],#printarea .riff-orig[hidden]{display:none !important}
     #printarea .p-head{margin-bottom:14px}
     #printarea .p-head h1{font-family:Georgia,serif;font-style:italic;font-size:1.7rem}
     #printarea .p-head .p-sub{color:#333;font-size:.85rem;margin-top:2px}
@@ -5439,7 +5453,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
       : "";
     const bass = s.bass||autoBass(s);
     const bassHTML = bass
-      ? `<details class="bass-d"><summary>Ligne de basse</summary><pre class="tab">${bass.tab}</pre>`+
+      ? `<details class="bass-d${s.bass?"":" bass-auto"}"><summary>Ligne de basse</summary><pre class="tab">${bass.tab}</pre>`+
         `<div class="footnote piano-lh"${INSTR==="piano"?"":" hidden"}>🎹 Main gauche, note à note : ${bassNoteNames(bass.tab)}</div>`+
         (off?`<div class="footnote">Tablature de basse en tonalité d'origine (les accords ci-dessus sont transposés).</div>`:"")+
         `<div class="footnote">${bass.note}</div></details>`
