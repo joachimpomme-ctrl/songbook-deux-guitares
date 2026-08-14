@@ -858,6 +858,7 @@ const CHORDS = {
   "F♯°7":     ["x", "x", "4", "5", "4", "5"],
   "E°7":      ["x", "x", "2", "3", "2", "3"],
   "C#°7":     ["x", "x", "2", "3", "2", "3"],
+  "D°7":      ["x", "x", "0", "1", "0", "1"],
   "D#°7":     ["x", "x", "1", "2", "1", "2"],
   "Bm6":      ["x", "2", "4", "4", "3", "4"],
   "C#7":      ["x", "4", "3", "4", "2", "x"],
@@ -2773,12 +2774,15 @@ E|--------------|--------------|--------------|--------------|`,
   {
     zone:"jazz", title:"Nuages", key:"Sol · manouche lent (Django Reinhardt)",
     systems:[
-      {note:"le thème, 8 mesures (simplifié)", bars:["E♭7","D7","G6","G6"]},
-      {bars:["Am7","Cm6","G6","Am7 · D7"]}
+      {note:"le thème : la cadence manouche par excellence, et le Mi♭ qui glisse", bars:["Am7♭5 · D7","Gmaj7 · E♭7","Am7♭5 · D7","Gmaj7"]},
+      {note:"la réponse (« …et le ciel se dégage »)", bars:["Gmaj7 · B7","Em · A7","D9","D9"]},
+      {note:"2e partie : le Mi♭ revient, puis les deux diminués de passage", bars:["E♭7","Am7♭5 · D7","Gmaj7 · D#°7","D°7 · G7"]},
+      {note:"la couleur qui voile le ciel : le Do qui passe en mineur", bars:["Cmaj7","Cm6","G6","E♭7"]},
+      {note:"et le thème se referme", bars:["Am7♭5 · D7","Gmaj7","Gmaj7","G6"]}
     ],
-    chords:["E♭7","D7","G6","Am7","Cm6"],
-    tip:"Le troisième manouche du carnet, le plus doux. Tout est dans la <b>descente chromatique E♭7 → D7 → G</b>, puis le <b>Cm</b> (le mineur emprunté) qui voile le ciel avant le retour. Gamme de Sol majeur + arpèges des dominantes, legato, vibrato ; pompe douce (section Manouche).",
-    note:"Grille simplifiée d'un thème aux nombreuses variantes — Django lui-même en changeait.",
+    chords:["Am7♭5","D7","Gmaj7","E♭7","B7","Em","A7","D9","D#°7","D°7","G7","Cmaj7","Cm6","G6"],
+    tip:"Le troisième manouche du carnet, et le plus doux. Le cœur du thème n'est pas le Ré7 seul mais la paire <b>Am7♭5 → D7</b> : ce demi-diminué, c'est la brume de Django. Ensuite le <b>Mi♭7 qui glisse</b> vers lui (la substitution tritonique du Ré7, d'où la descente mi♭ → ré). En seconde partie, deux <b>diminués de passage</b> (Mi♭°7 puis Ré°7) descendent vers le Sol7, et le <b>Do qui passe en Do m6</b> voile le ciel avant le retour. Gamme de Sol majeur + arpèges des dominantes, legato, vibrato ; pompe douce (section Manouche). Sur le disque, ajoute les ♭9 aux Ré7 et le ♯5 au Si7 : c'est écrit ainsi sur la partition.",
+    note:"Thème complet relevé sur la feuille d'accords et la tab officielles, transposé en Sol (la source est en Fa — Django l'a joué dans les deux). L'intro fait deux mesures de dominantes glissées (Do♯9 puis Ré9). Les ♭9 et ♯5 de la partition sont simplifiés ici en Ré7 et Si7 : mêmes fonctions, doigtés jouables.",
   },
   {
     zone:"jazz", title:"Moondance", key:"La mineur · jazz-soul (Van Morrison)",
@@ -2823,12 +2827,18 @@ E|5--8--5-|5--8--5-|5--8--5-|0-7-5---|`,
   {
     zone:"jazz", title:"Bye Bye Blackbird", key:"Fa · swing médium (standard)",
     systems:[
-      {bars:["F","F","Gm7 · C7","F"]},
-      {bars:["F7","B♭ · B°7","F · D7","Gm7 · C7"]}
+      {note:"A (« pack up all my cares and woe, here I go singing low »)", bars:["F","D7","Gm7","C7"]},
+      {note:"« bye bye blackbird »", bars:["F","F","Gm7","C7"]},
+      {note:"« where somebody waits for me, sugar's sweet so is she »", bars:["Gm","Gm7","Gm7","C7"]},
+      {note:"« bye bye blackbird » — le F7 lance le pont", bars:["Gm7","C7","F","F7"]},
+      {note:"pont (« no one here can love and understand me »)", bars:["B♭","B°7","F","D7"]},
+      {note:"« oh, what hard luck stories they all hand me »", bars:["Gm","Gm7","C7","C7"]},
+      {note:"« make my bed and light the light, I'll arrive late tonight »", bars:["F","F","E♭7","D7"]},
+      {note:"la chute (« blackbird, bye bye ») et le turnaround", bars:["Gm7","C7","F · Dm7","Gm7 · C7"]}
     ],
-    chords:["F","Gm7","C7","F7","B♭","B°7","D7"],
-    tip:"Le standard qui chante tout seul, grand favori des jams. Gamme de Fa majeur ; savoure la mesure 6 : le <b>B°7 qui glisse entre Si♭ et Fa</b>, la couleur vintage par excellence. Après lui, le turnaround F-D7-Gm7-C7 ramène tout le monde.",
-    note:"8 premières mesures simplifiées, la forme complète fait 32 mesures.",
+    chords:["F","D7","Gm7","C7","Gm","F7","B♭","B°7","E♭7","Dm7"],
+    tip:"Le standard qui chante tout seul, grand favori des jams. Gamme de Fa majeur, et trois moments à savourer : le <b>Ré7 sur « woe »</b> dès la 2e mesure (le VI7 qui colore tout de suite), le <b>B°7 qui glisse entre Si♭ et Fa</b> au pont — la couleur vintage par excellence — et surtout le <b>Mi♭7 de « I'll arrive late tonight »</b>, une substitution tritonique du Ré7 : la basse descend mi♭ → ré, pur frisson. Le turnaround final F-Dm7-Gm7-C7 relance le tour.",
+    note:"Forme complète (32 mesures) relevée sur la feuille d'accords officielle, ici en Fa. Le pont est donné avec ses accords de passage Si♭-Si°7 ; les versions chantées les simplifient souvent en F7 tenu vers le Ré7.",
   },
   {
     zone:"rock", title:"Wild Horses", key:"Sol · ballade (Stones)",
