@@ -443,6 +443,43 @@
   #pick .pick-new{display:flex;gap:6px;margin-top:8px;border-top:1px solid #223040;padding-top:8px}
   #pick .pick-name{flex:1 1 auto;min-width:0;background:var(--night);color:var(--paper);border:1px solid var(--ink-soft);border-radius:6px;padding:6px 7px;font:inherit;font-size:.8rem}
   #pick .pick-add{flex:0 0 auto;width:32px;border:1px solid var(--brass);background:transparent;color:var(--brass);border-radius:6px;font-size:1rem;cursor:pointer}
+  /* ---- ajout groupé de morceaux ---- */
+  #bulk-veil{position:fixed;inset:0;z-index:74;background:rgba(0,0,0,.55)}
+  #bulk-veil[hidden]{display:none}
+  #bulk{position:fixed;z-index:75;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:min(460px,calc(100vw - 16px));max-height:calc(100dvh - 24px);display:flex;flex-direction:column;
+    background:var(--night2);border:1px solid var(--brass);border-radius:12px;
+    box-shadow:0 12px 32px rgba(0,0,0,.6);padding:12px;color:var(--paper)}
+  #bulk[hidden]{display:none}
+  #bulk .bk-hd{display:flex;justify-content:space-between;align-items:center;font-weight:700;
+    font-size:.82rem;color:var(--brass);margin-bottom:8px}
+  #bulk .bk-x{background:none;border:none;color:#9AA7B4;font-size:1.05rem;cursor:pointer;padding:2px 6px}
+  #bulk .bk-search{width:100%;background:var(--night);color:var(--paper);border:1px solid var(--ink-soft);
+    border-radius:8px;padding:7px 9px;font:inherit;font-size:.85rem;margin-bottom:6px}
+  #bulk .bk-songs{flex:1 1 auto;min-height:120px;overflow-y:auto;display:flex;flex-direction:column;
+    gap:1px;border:1px solid #223040;border-radius:8px;padding:4px}
+  #bulk .bk-row{display:flex;align-items:center;gap:8px;padding:5px 6px;font-size:.84rem;cursor:pointer;border-radius:6px}
+  #bulk .bk-row:hover{background:rgba(255,255,255,.05)}
+  #bulk .bk-row[hidden]{display:none}
+  #bulk .bk-row input{flex:0 0 auto;width:16px;height:16px;accent-color:var(--brass)}
+  #bulk .bk-row .t{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #bulk .bk-row .ar{color:#9AA7B4;font-size:.7rem;flex:0 0 auto;max-width:38%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #bulk .bk-dest-h{font-size:.72rem;font-weight:700;color:#9AA7B4;text-transform:uppercase;letter-spacing:.05em;margin:10px 0 4px}
+  #bulk .bk-dests{display:flex;flex-wrap:wrap;gap:6px;max-height:96px;overflow-y:auto}
+  #bulk .bk-dest{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ink-soft);
+    border-radius:999px;padding:4px 10px;font-size:.78rem;cursor:pointer;user-select:none}
+  #bulk .bk-dest input{width:14px;height:14px;accent-color:var(--brass)}
+  #bulk .bk-dest:has(input:checked){border-color:var(--brass);color:var(--brass)}
+  #bulk .bk-new{display:flex;gap:6px;margin-top:8px}
+  #bulk .bk-new input{flex:1 1 auto;min-width:0;background:var(--night);color:var(--paper);
+    border:1px solid var(--ink-soft);border-radius:6px;padding:6px 8px;font:inherit;font-size:.8rem}
+  #bulk .bk-new button{flex:0 0 auto;width:32px;border:1px solid var(--brass);background:transparent;
+    color:var(--brass);border-radius:6px;font-size:1rem;cursor:pointer}
+  #bulk .bk-ft{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+  #bulk .bk-count{font-size:.76rem;color:#9AA7B4}
+  #bulk .bk-go{border:1px solid var(--rust);background:var(--rust);color:#fff;border-radius:999px;
+    padding:8px 16px;font:inherit;font-weight:700;font-size:.82rem;cursor:pointer}
+  #bulk .bk-go:disabled{background:transparent;border-color:var(--ink-soft);color:var(--ink-soft);cursor:default}
   /* ---- riff signature (replié par défaut) ---- */
   .riff-d .riff-orig[hidden]{display:none}
   .riff-d pre.tab{margin-top:8px}
@@ -595,10 +632,11 @@
       <button type="button" id="sl-cancel" title="Annuler" aria-label="Annuler">✕</button>
     </div>
     <div class="masq-list" id="fav-list"></div>
-    <div class="sl-empty" id="sl-empty" hidden>Crée ta première setlist : touche l'étoile ☆ d'un morceau, ou le bouton ＋ ci-dessus.</div>
+    <div class="sl-empty" id="sl-empty" hidden>Crée ta première setlist : touche l'étoile ☆ d'un morceau, le bouton ＋ ci-dessus, ou « ＋ Morceaux » pour en ajouter plusieurs d'un coup.</div>
     <div class="sl-foot">
       <label class="fav-only-row"><input type="checkbox" id="fav-only"> N'afficher que cette setlist</label>
       <div class="sl-actions">
+        <button type="button" id="sl-bulk" class="sl-btn" title="Ajouter plusieurs morceaux d'un coup à une ou plusieurs setlists">＋ Morceaux</button>
         <button type="button" id="sl-play" class="sl-btn" title="Fait défiler la setlist dans le carnet, morceau par morceau">▶ Répète</button>
         <button type="button" id="sl-concert" class="sl-btn">🎤 Concert</button>
         <button type="button" id="sl-mail" class="sl-btn">✉ Mail</button>
@@ -5210,6 +5248,89 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(!pick.hidden && Date.now()-pickOpenedAt>400) closePicker();
   },{passive:true});
   pick.addEventListener("keydown",function(e){ if(e.key==="Escape") closePicker(); });
+  /* ---- Ajout groupé : plusieurs morceaux vers une ou plusieurs setlists ---- */
+  const bulkVeil=document.createElement("div"); bulkVeil.id="bulk-veil"; bulkVeil.hidden=true;
+  const bulk=document.createElement("div");
+  bulk.id="bulk"; bulk.hidden=true; bulk.setAttribute("role","dialog");
+  bulk.setAttribute("aria-label","Ajouter plusieurs morceaux");
+  bulk.innerHTML =
+    '<div class="bk-hd">Ajouter plusieurs morceaux<button type="button" class="bk-x" aria-label="Fermer">✕</button></div>'+
+    '<input class="bk-search" type="search" placeholder="Filtrer les morceaux…" autocomplete="off" spellcheck="false">'+
+    '<div class="bk-songs"></div>'+
+    '<div class="bk-dest-h">Vers ces setlists</div>'+
+    '<div class="bk-dests"></div>'+
+    '<div class="bk-new"><input type="text" maxlength="40" placeholder="Nouvelle setlist…" autocomplete="off" spellcheck="false"><button type="button" aria-label="Créer">＋</button></div>'+
+    '<div class="bk-ft"><span class="bk-count"></span><button type="button" class="bk-go">Ajouter</button></div>';
+  document.body.appendChild(bulkVeil); document.body.appendChild(bulk);
+  const bkSongs=bulk.querySelector(".bk-songs"), bkDests=bulk.querySelector(".bk-dests"),
+        bkSearch=bulk.querySelector(".bk-search"), bkCount=bulk.querySelector(".bk-count"),
+        bkGo=bulk.querySelector(".bk-go"), bkNewIn=bulk.querySelector(".bk-new input"),
+        bkNewBt=bulk.querySelector(".bk-new button");
+  function bkRenderSongs(){
+    const sorted=[...SONGS].sort(byArtist);
+    bkSongs.innerHTML = sorted.map(function(s){
+      const slg=slug(s.title), art=SONG_ARTIST[s.title]||"";
+      return `<label class="bk-row" data-n="${_norm(s.title+" "+(s.key||"")+" "+art)}"><input type="checkbox" data-slug="${slg}"><span class="t">${esc(s.title)}</span><span class="ar">${esc(art)}</span></label>`;
+    }).join("");
+  }
+  function bkRenderDests(){
+    if(!SL.lists.length){ bkDests.innerHTML='<span class="pick-empty">Aucune setlist — crée-en une ci-dessous.</span>'; return; }
+    bkDests.innerHTML = SL.lists.map(function(l){
+      const on = l.id===SL.activeId ? " checked" : "";
+      return `<label class="bk-dest"><input type="checkbox" data-lid="${l.id}"${on}>${esc(l.name)} <span style="opacity:.6">(${l.songs.length})</span></label>`;
+    }).join("");
+  }
+  function bkChecked(sel){ return Array.from(bulk.querySelectorAll(sel+":checked")); }
+  function bkUpdate(){
+    const n=bkChecked(".bk-row input").length, m=bkChecked(".bk-dest input").length;
+    bkCount.textContent = n ? (n+" morceau"+(n>1?"x":"")+" → "+m+" setlist"+(m>1?"s":"")) : "Coche des morceaux ci-dessus";
+    bkGo.disabled = !(n && m);
+    bkGo.textContent = n ? "Ajouter ("+n+")" : "Ajouter";
+  }
+  function openBulk(){
+    bkRenderSongs(); bkRenderDests(); bkSearch.value=""; bkNewIn.value="";
+    bulkVeil.hidden=false; bulk.hidden=false; bkUpdate(); bkSearch.focus();
+  }
+  function closeBulk(){ bulk.hidden=true; bulkVeil.hidden=true; }
+  bkSearch.addEventListener("input",function(){
+    const q=_norm(bkSearch.value.trim());
+    bulk.querySelectorAll(".bk-row").forEach(function(r){ r.hidden = q && r.dataset.n.indexOf(q)<0; });
+  });
+  bkSongs.addEventListener("change", bkUpdate);
+  bkDests.addEventListener("change", bkUpdate);
+  function bkCreateList(){
+    const name=bkNewIn.value.trim(); if(!name) return;
+    const l={id:newId(), name:name, songs:[]};
+    SL.lists.push(l);
+    if(!activeList()) SL.activeId=l.id;
+    saveSL(); renderSetlists();
+    const keep=bkChecked(".bk-dest input").map(function(c){ return c.dataset.lid; });
+    bkRenderDests();
+    bkDests.querySelectorAll("input").forEach(function(c){
+      if(keep.indexOf(c.dataset.lid)>-1 || c.dataset.lid===l.id) c.checked=true;
+      else if(c.dataset.lid!==l.id && keep.indexOf(c.dataset.lid)<0) c.checked=false;
+    });
+    bkNewIn.value=""; bkUpdate();
+  }
+  bkNewBt.addEventListener("click", bkCreateList);
+  bkNewIn.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); bkCreateList(); } });
+  bkGo.addEventListener("click",function(){
+    const slugs=bkChecked(".bk-row input").map(function(c){ return c.dataset.slug; });
+    const lids=bkChecked(".bk-dest input").map(function(c){ return c.dataset.lid; });
+    if(!slugs.length || !lids.length) return;
+    let added=0;
+    lids.forEach(function(lid){
+      const l=SL.lists.filter(function(x){ return x.id===lid; })[0]; if(!l) return;
+      slugs.forEach(function(sg){ if(l.songs.indexOf(sg)<0){ l.songs.push(sg); added++; } });
+    });
+    saveSL(); refreshStars(); applyView();
+    toast(slugs.length+" morceau"+(slugs.length>1?"x":"")+" → "+lids.length+" setlist"+(lids.length>1?"s":"")+(added<slugs.length*lids.length?" (déjà présents ignorés)":"")+".");
+    closeBulk();
+  });
+  bulk.querySelector(".bk-x").addEventListener("click", closeBulk);
+  bulkVeil.addEventListener("click", closeBulk);
+  bulk.addEventListener("keydown",function(e){ if(e.key==="Escape") closeBulk(); });
+  document.getElementById("sl-bulk").addEventListener("click", openBulk);
   function moveInList(sl,dir){
     const l=activeList(); if(!l) return;
     const i=l.songs.indexOf(sl); if(i<0) return;
