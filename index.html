@@ -426,6 +426,36 @@
     padding:7px 14px;font:inherit;font-weight:700;font-size:.8rem;cursor:pointer}
   .sl-btn#sl-play,.sl-btn#sl-concert{background:var(--rust);border-color:var(--rust);color:#fff}
   .sl-btn:disabled{background:transparent;color:var(--ink-soft);border-color:var(--ink-soft);cursor:default}
+  /* ---- dojo : s'entraîner ---- */
+  .dojo .dj-pick{margin:6px 0 10px}
+  .dojo #dj-scale{width:100%;background:var(--night2);color:var(--paper);border:1px solid var(--brass);
+    border-radius:8px;padding:7px 9px;font:inherit;font-size:.84rem}
+  .dj-flex{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}
+  .dj-diag{flex:0 1 210px}
+  .dj-diag svg{width:100%;max-width:210px;height:auto}
+  .dj-side{flex:1 1 200px;min-width:170px;display:flex;flex-direction:column;gap:8px}
+  .dj-songs{font-size:.76rem;color:#9AA7B4;line-height:1.45}
+  .dj-songs b{color:var(--paper)}
+  .dj-best{font-size:.8rem;font-weight:700;color:var(--brass)}
+  .dj-btns{display:flex;flex-wrap:wrap;gap:8px}
+  .dj-btns button{border:1px solid var(--brass);background:transparent;color:var(--paper);border-radius:999px;
+    padding:8px 13px;font:inherit;font-weight:700;font-size:.78rem;cursor:pointer}
+  #dj-drone.on{background:var(--brass);color:#101820;border-color:var(--brass)}
+  #dj-valid{border-color:var(--rust);color:#E08b76}
+  .dj-ex{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:14px}
+  .dj-card{border:1px solid #2C3A48;border-radius:10px;padding:9px 11px;font-size:.76rem;color:#C6CFD8;line-height:1.5}
+  .dj-card b{display:block;color:var(--paper);font-size:.79rem;margin-bottom:3px}
+  .dj-card b .n{color:var(--brass)}
+  .dj-card a{color:var(--brass)}
+  .dj-prog-h{font-size:.72rem;font-weight:700;color:#9AA7B4;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 5px}
+  .dj-prog{display:flex;flex-direction:column;gap:5px}
+  .dj-row{display:flex;align-items:center;gap:8px;font-size:.74rem;color:var(--paper)}
+  .dj-row .lb{flex:0 0 46%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+  .dj-row.cur .lb{color:var(--brass);font-weight:700}
+  .dj-row .track{flex:1 1 auto;height:6px;background:#223040;border-radius:999px;overflow:hidden}
+  .dj-row .fill{height:100%;background:var(--brass);border-radius:999px}
+  .dj-row .v{flex:0 0 auto;color:#9AA7B4;min-width:40px;text-align:right;font-variant-numeric:tabular-nums}
+  .dj-legend{font-size:.68rem;color:#9AA7B4;font-style:italic;margin-top:12px}
   /* ---- sélecteur de setlist (à l'étoile d'un morceau) ---- */
   #pick{position:fixed;z-index:70;width:250px;max-width:calc(100vw - 16px);background:var(--night2);
     border:1px solid var(--brass);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);padding:10px;color:var(--paper)}
@@ -668,6 +698,26 @@
         <label class="sl-btn sl-load-lbl" title="Restaurer une sauvegarde">📂 Restaurer<input id="sl-load" type="file" accept=".json,application/json" hidden></label>
       </div>
     </div>
+  </details>
+  <details class="setlist dojo" id="dojo">
+    <summary>🏋️ S'entraîner — <span id="dj-sub">gammes pour le solo</span></summary>
+    <div class="dj-pick"><select id="dj-scale" aria-label="Choisir la gamme à travailler"></select></div>
+    <div class="dj-flex">
+      <div class="dj-diag" id="dj-diag"></div>
+      <div class="dj-side">
+        <div class="dj-songs" id="dj-songs"></div>
+        <div class="dj-best" id="dj-best"></div>
+        <div class="dj-btns">
+          <button type="button" id="dj-drone">◉ Bourdon</button>
+          <button type="button" id="dj-metro" class="metro-btn" data-bpm="60" data-beats="4">▶ Métronome</button>
+          <button type="button" id="dj-valid">✓ Propre à ce tempo</button>
+        </div>
+      </div>
+    </div>
+    <div class="dj-ex" id="dj-ex"></div>
+    <div class="dj-prog-h">Progression</div>
+    <div class="dj-prog" id="dj-prog"></div>
+    <p class="dj-legend">Doré = tonique, rouge = note caractéristique. Valide un tempo quand la gamme passe <b>propre trois fois de suite</b> au clic — puis +4 BPM. La régularité bat la vitesse.</p>
   </details>
   <details class="masques" id="masques" hidden>
     <summary>🗑 Morceaux masqués — <span id="masq-count">0</span></summary>
@@ -5354,6 +5404,125 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   bulkVeil.addEventListener("click", closeBulk);
   bulk.addEventListener("keydown",function(e){ if(e.key==="Escape") closeBulk(); });
   document.getElementById("sl-bulk").addEventListener("click", openBulk);
+  /* ---- Dojo : s'entraîner sur les gammes du répertoire ---- */
+  const dojo=document.getElementById("dojo"), djScaleSel=document.getElementById("dj-scale"),
+        djDiag=document.getElementById("dj-diag"), djSongs=document.getElementById("dj-songs"),
+        djBest=document.getElementById("dj-best"), djEx=document.getElementById("dj-ex"),
+        djProg=document.getElementById("dj-prog"), djSub=document.getElementById("dj-sub"),
+        djDroneBtn=document.getElementById("dj-drone"), djMetroBtn=document.getElementById("dj-metro"),
+        djValidBtn=document.getElementById("dj-valid");
+  let DJP=loadJSON("songbook-dojo",{});                 // { cléGamme : {bpm,date,label} }
+  let djPoolCache=[], djKey=null;
+  function djPool(){
+    const l=activeList();
+    const fromSL = l && l.songs.length;
+    const source = fromSL ? l.songs.map(function(x){ return bySlug[x]; }).filter(Boolean) : SONGS;
+    const seen={}, pool=[];
+    source.forEach(function(s){
+      const scs=soloScales(s, TP[slug(s.title)]||0); if(!scs.length) return;
+      const sc=scs[0], k=sc.root+"|"+sc.pcs.join(",");
+      if(!seen[k]){
+        let lbl=sc.label; if(lbl.indexOf("(")<0) lbl+=" ("+_FRPC[sc.root]+")";
+        seen[k]={key:k,label:lbl,sc:sc,songs:[]}; pool.push(seen[k]);
+      }
+      if(seen[k].songs.indexOf(s.title)<0) seen[k].songs.push(s.title);
+    });
+    if(!fromSL) pool.sort(function(a,b){ return b.songs.length-a.songs.length; });
+    pool.fromSetlist=fromSL;
+    return pool;
+  }
+  function djCur(){ return djPoolCache.filter(function(p){ return p.key===djKey; })[0]||djPoolCache[0]; }
+  function djRefresh(){
+    djPoolCache=djPool();
+    if(!djPoolCache.length){ djSub.textContent="gammes pour le solo"; djScaleSel.innerHTML=""; return; }
+    if(!djKey || !djPoolCache.some(function(p){ return p.key===djKey; })){
+      djKey = loadJSON("songbook-dojo-last",null);
+      if(!djKey || !djPoolCache.some(function(p){ return p.key===djKey; })) djKey=djPoolCache[0].key;
+    }
+    djSub.textContent = djPoolCache.length+" gamme"+(djPoolCache.length>1?"s":"")+(djPoolCache.fromSetlist?" de ta setlist":" du répertoire");
+    djScaleSel.innerHTML = djPoolCache.map(function(p){
+      const best=DJP[p.key];
+      return `<option value="${p.key}"${p.key===djKey?" selected":""}>${esc(p.label)} — ${p.songs.length} morceau${p.songs.length>1?"x":""}${best?" · ✓ "+best.bpm:""}</option>`;
+    }).join("");
+    djRenderScale();
+  }
+  function djRenderScale(){
+    const c=djCur(); if(!c) return;
+    djKey=c.key; setLS("songbook-dojo-last", djKey);
+    const sc=c.sc;
+    djDiag.innerHTML = scaleSVGFor(sc.root, sc.pcs, sc.color, sc.start, sc.frets)||"";
+    const shown=c.songs.slice(0,5);
+    djSongs.innerHTML = "<b>"+esc(c.label)+"</b><br>"+shown.map(esc).join(" · ")+(c.songs.length>5?" · +"+(c.songs.length-5):"");
+    const best=DJP[c.key];
+    djBest.textContent = best ? ("Record : "+best.bpm+" BPM propre ("+best.date+")") : "Pas encore de tempo validé — départ 60.";
+    const startBpm = best ? best.bpm : 60;
+    djMetroBtn.dataset.bpm=startBpm; djMetroBtn.dataset.beats=4;
+    djMetroBtn.dataset.title="Dojo · "+c.label;
+    djMetroBtn.dataset.sub=shown[0]||"";
+    djMetroBtn.textContent="▶ Métronome "+startBpm;
+    const tonic=_FRPC[sc.root], carac=sc.color.length?_FRPC[sc.color[0]]:"";
+    djDroneBtn.innerHTML="◉ Bourdon "+esc(tonic);
+    const songLink=c.songs[0]?`<a href="#${slug(c.songs[0])}">${esc(c.songs[0])}</a>`:"";
+    djEx.innerHTML =
+      `<div class="dj-card"><b><span class="n">1 ·</span> La forme</b>Monte et descends la gamme en croches, au clic. Chaque note nette, étouffe les cordes voisines. Propre trois fois de suite → +4 BPM, sinon −6.</div>`+
+      `<div class="dj-card"><b><span class="n">2 ·</span> Les tierces</b>La gamme par paires : 1-3, 2-4, 3-5… puis redescends pareil. C'est l'exercice qui déverrouille le phrasé — lent d'abord, le doigté ne doit jamais hésiter.</div>`+
+      `<div class="dj-card"><b><span class="n">3 ·</span> Question / réponse</b>Allume le bourdon (${esc(tonic)}), coupe le métronome : deux mesures de phrase, deux mesures de silence. Termine chaque phrase sur la tonique${carac?", puis ose la note rouge ("+esc(carac)+")":""}.</div>`+
+      `<div class="dj-card"><b><span class="n">4 ·</span> Sur le morceau</b>${songLink?"Ouvre "+songLink+" et joue sur la grille (▶ Répète) : ":""}le solo, c'est cette gamme + le silence. Une phrase par ligne de grille, pas plus.</div>`;
+    djRenderProg();
+  }
+  function djRenderProg(){
+    djProg.innerHTML = djPoolCache.map(function(p){
+      const best=DJP[p.key], v=best?best.bpm:0;
+      const w=Math.round(Math.min(1, v/160)*100);
+      return `<div class="dj-row${p.key===djKey?" cur":""}" data-k="${p.key}"><span class="lb" title="${esc(p.songs.join(", "))}">${esc(p.label)}</span><span class="track"><span class="fill" style="width:${w}%"></span></span><span class="v">${v?v+" ♩":"—"}</span></div>`;
+    }).join("");
+  }
+  djScaleSel.addEventListener("change",function(){ djKey=djScaleSel.value; djDroneRetune(); djRenderScale(); });
+  djProg.addEventListener("click",function(e){
+    const r=e.target.closest(".dj-row"); if(!r) return;
+    djKey=r.dataset.k; djDroneRetune(); djRefresh();
+  });
+  djValidBtn.addEventListener("click",function(){
+    const c=djCur(); if(!c) return;
+    const v = (window.__metro && window.__metro.bpm) ? window.__metro.bpm : (+djMetroBtn.dataset.bpm||60);
+    const best=DJP[c.key];
+    if(best && v<=best.bpm){ toast("Déjà validé à "+best.bpm+" BPM — pousse le métronome plus haut."); return; }
+    DJP[c.key]={bpm:v, date:new Date().toISOString().slice(0,10), label:c.label};
+    setLS("songbook-dojo", DJP);
+    toast("✓ "+c.label+" propre à "+v+" BPM — record !");
+    djRefresh();
+  });
+  /* bourdon : la tonique tenue (WebAudio), racine + octave douce */
+  let djCtx=null, djDrone=null;
+  function djDroneStart(){
+    const c=djCur(); if(!c) return;
+    if(!djCtx) djCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(djCtx.state==="suspended") djCtx.resume();
+    const pc=c.sc.root, midi=40+((pc-4+12)%12);            // entre Mi grave (E2) et Ré#3
+    const f=440*Math.pow(2,(midi-69)/12);
+    const o1=djCtx.createOscillator(), o2=djCtx.createOscillator(), g=djCtx.createGain(), g2=djCtx.createGain();
+    o1.type="triangle"; o1.frequency.value=f;
+    o2.type="sine"; o2.frequency.value=f*2; g2.gain.value=0.35;
+    g.gain.setValueAtTime(0.0001, djCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.13, djCtx.currentTime+0.4);
+    o1.connect(g); o2.connect(g2); g2.connect(g); g.connect(djCtx.destination);
+    o1.start(); o2.start();
+    djDrone={o1:o1,o2:o2,g:g};
+    djDroneBtn.classList.add("on");
+    if(window.__wake) window.__wake.on("drone");
+  }
+  function djDroneStop(){
+    if(!djDrone) return;
+    const d=djDrone; djDrone=null;
+    d.g.gain.setTargetAtTime(0.0001, djCtx.currentTime, 0.08);
+    setTimeout(function(){ try{ d.o1.stop(); d.o2.stop(); }catch(_){} }, 400);
+    djDroneBtn.classList.remove("on");
+    if(window.__wake) window.__wake.off("drone");
+  }
+  function djDroneRetune(){ if(djDrone){ djDroneStop(); setTimeout(djDroneStart, 120); } }
+  djDroneBtn.addEventListener("click",function(){ djDrone ? djDroneStop() : djDroneStart(); });
+  dojo.addEventListener("toggle",function(){ if(dojo.open) djRefresh(); else djDroneStop(); });
+  djRefresh();
   function moveInList(sl,dir){
     const l=activeList(); if(!l) return;
     const i=l.songs.indexOf(sl); if(i<0) return;
@@ -5959,6 +6128,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   }
   bindHold(q(".m-plus"), +1);
   bindHold(q(".m-minus"), -1);
+  window.__metro = { get bpm(){ return bpm; }, get running(){ return running; } };
   const muteBtn=q(".m-mute");
   muteBtn.addEventListener("click", function(){
     silent=!silent;
