@@ -592,6 +592,16 @@
     #printarea pre.tab{font-size:.62rem;line-height:1.25;margin:2px 0;border:none;background:none;padding:0;color:#000}
     #printarea .footnote{font-size:.6rem;line-height:1.35;color:#333;margin:2px 0}
     #printarea .piano-lh[hidden],#printarea .bass-orig[hidden],#printarea .riff-orig[hidden]{display:none !important}
+    /* annexe finale : les gammes du corpus, une fois chacune */
+    #printarea .p-annex{page-break-before:always}
+    #printarea .p-annex .c-title{margin-bottom:2px}
+    #printarea .p-annex-sub{font-size:.68rem;color:#333;margin-bottom:10px}
+    #printarea .p-annex-grid{display:flex;flex-wrap:wrap;gap:14px 20px}
+    #printarea .p-sc{width:150px;text-align:center;page-break-inside:avoid}
+    #printarea .p-sc .nm{font-size:.7rem;font-weight:700;margin-bottom:2px}
+    #printarea .p-sc svg{width:100%;height:auto}
+    #printarea .p-sc-songs{font-size:.6rem;color:#333;line-height:1.3;margin-top:2px}
+    #printarea .p-annex-tun{margin-top:14px;font-size:.72rem;border-top:1px solid #ccc;padding-top:8px}
     #printarea .p-head{margin-bottom:14px}
     #printarea .p-head h1{font-family:Georgia,serif;font-style:italic;font-size:1.7rem}
     #printarea .p-head .p-sub{color:#333;font-size:.85rem;margin-top:2px}
@@ -5547,6 +5557,34 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     const items=l.songs.map(function(sl){ return bySlug[sl]; }).filter(Boolean);
     html+=`<div class="p-toc">${items.map(function(s,i){ return `<div>${esc(slLine(s,i))}</div>`; }).join("")}</div>`;
     l.songs.forEach(function(sl){ const s=bySlug[sl]; if(s) html+=`<section class="p-song">${concertHTML(s)}</section>`; });
+    // annexe finale : les gammes indispensables du corpus (dédupliquées) + accordages particuliers
+    const seen={}, ann=[];
+    items.forEach(function(s){
+      const off=TP[slug(s.title)]||0;
+      const scs=soloScales(s, off); if(!scs.length) return;
+      const sc=scs[0];                                   // la gamme principale du morceau
+      const k=sc.root+"|"+sc.pcs.join(",");
+      if(!seen[k]){ seen[k]={sc:sc, label:sc.label, songs:[]}; ann.push(seen[k]); }
+      if(seen[k].songs.indexOf(s.title)<0) seen[k].songs.push(s.title);
+    });
+    if(ann.length){
+      html+='<section class="p-annex"><h2 class="c-title">Gammes pour les solos</h2>'+
+        '<div class="p-annex-sub">Une forme par gamme, déplaçable le long du manche — doré = tonique, rouge = note caractéristique.</div>'+
+        '<div class="p-annex-grid">'+
+        ann.map(function(a){
+          let lbl=a.label;
+          if(lbl.indexOf("(")<0){ const nm=_FRPC[a.sc.root]; lbl+=" ("+nm.charAt(0).toUpperCase()+nm.slice(1)+")"; }
+          return '<div class="p-sc"><div class="nm">'+esc(lbl)+'</div>'+
+            scaleSVGFor(a.sc.root,a.sc.pcs,a.sc.color,a.sc.start,a.sc.frets)+
+            '<div class="p-sc-songs">'+a.songs.map(esc).join(" · ")+'</div></div>';
+        }).join("")+'</div>';
+      const tun=items.filter(function(s){ return SONG_TUNING[s.title]; });
+      if(tun.length){
+        html+='<div class="p-annex-tun"><b>Accordages particuliers :</b> '+
+          tun.map(function(s){ return esc(s.title)+" — "+esc(SONG_TUNING[s.title]); }).join(" · ")+'</div>';
+      }
+      html+='</section>';
+    }
     printarea.innerHTML=html;
     // les <details> fermés ne s'impriment pas : déplier riff et basse (les gammes, elles, sont exclues du PDF)
     printarea.querySelectorAll("details").forEach(function(d){ d.open=true; });
