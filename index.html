@@ -440,6 +440,12 @@
     padding:3px 9px;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer}
   .dj-pos button.on{border-color:var(--brass);color:var(--brass);background:rgba(201,144,58,.12)}
   #dj-loop.on{background:var(--rust);border-color:var(--rust);color:#fff}
+  .dj-tempo{display:flex;align-items:center;gap:8px}
+  .dj-tempo .dt-lbl{font-size:.7rem;font-weight:700;color:#9AA7B4;text-transform:uppercase;letter-spacing:.04em}
+  .dj-tempo button{width:34px;height:34px;border:1px solid var(--ink-soft);background:transparent;color:var(--paper);
+    border-radius:8px;font:inherit;font-size:1rem;font-weight:700;cursor:pointer;padding:0}
+  .dj-tempo button:hover{border-color:var(--brass)}
+  .dj-tempo #dj-bpm{font-size:1rem;min-width:40px;text-align:center;color:var(--brass);font-variant-numeric:tabular-nums}
   .dj-side{flex:1 1 200px;min-width:170px;display:flex;flex-direction:column;gap:8px}
   .dj-songs{font-size:.76rem;color:#9AA7B4;line-height:1.45}
   .dj-songs b{color:var(--paper)}
@@ -722,6 +728,13 @@
           <button type="button" id="dj-metro" class="metro-btn" data-bpm="60" data-beats="4">▶ Métronome</button>
           <button type="button" id="dj-loop">▶ Boucle</button>
           <button type="button" id="dj-valid">✓ Propre à ce tempo</button>
+        </div>
+        <div class="dj-tempo" id="dj-tempo" hidden>
+          <span class="dt-lbl">Tempo boucle</span>
+          <button type="button" id="dt-minus" aria-label="Boucle plus lente (maintenir pour accélérer)">−</button>
+          <b id="dj-bpm">100</b>
+          <button type="button" id="dt-plus" aria-label="Boucle plus rapide (maintenir pour accélérer)">+</button>
+          <button type="button" id="dt-reset" title="Revenir au tempo du morceau">↺</button>
         </div>
       </div>
     </div>
@@ -5490,6 +5503,11 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     djDroneBtn.innerHTML="◉ Bourdon "+esc(tonic);
     const loopSong=c.songs[0]?bySlug[slug(c.songs[0])]:null;
     djLoopBtn.hidden=!loopSong;
+    djTempoRow.hidden=!loopSong;
+    if(loopSong && loopSong.title!==djLoopSongTitle){    // nouveau morceau cible : tempo du disque
+      djLoopSongTitle=loopSong.title;
+      djSetLoopBpm(SONG_BPM[loopSong.title]||100);
+    }
     if(loopSong){
       const on = djLoop && djLoop.title===loopSong.title;
       djLoopBtn.classList.toggle("on", !!on);
@@ -5531,8 +5549,11 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     djRefresh();
   });
   /* boucle d'accompagnement : basse (1 et 3) + pompe d'accords (2 et 4) sur la grille du morceau */
-  const djLoopBtn=document.getElementById("dj-loop");
+  const djLoopBtn=document.getElementById("dj-loop"),
+        djTempoRow=document.getElementById("dj-tempo"), djBpmEl=document.getElementById("dj-bpm");
   let djLoop=null;                                       // {title,seq,idx,nextTime,timer}
+  let djLoopBpm=100, djLoopSongTitle=null;
+  function djSetLoopBpm(v){ djLoopBpm=Math.max(30,Math.min(240,Math.round(v))); djBpmEl.textContent=djLoopBpm; }
   function djLoopSeq(s){
     const off=TP[slug(s.title)]||0, g=grooveOf(s), n=(g&&g.n)||4;
     const ev=[];
@@ -5547,8 +5568,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
         else ev.push({chord:info.arp.slice(0,4).map(function(iv){ return (pc+iv)%12; })});
       }
     });});
-    const dotted=(g&&(g.m==="6/8"||g.m==="12/8"));
-    return {ev:ev, bpm:SONG_BPM[s.title]||100, dotted:dotted};
+    return {ev:ev};
   }
   function djLoopHit(e,t){
     if(!e) return;
@@ -5570,10 +5590,10 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
   }
   function djLoopSched(){
     if(!djLoop) return;
-    const step=60/djLoop.bpm;
     while(djLoop.nextTime < djCtx.currentTime + 0.12){
       djLoopHit(djLoop.ev[djLoop.idx % djLoop.ev.length], djLoop.nextTime);
-      djLoop.nextTime+=step; djLoop.idx++;
+      djLoop.nextTime+=60/djLoopBpm;                     // lu en direct : le tempo bouge pendant que ça tourne
+      djLoop.idx++;
     }
     djLoop.timer=setTimeout(djLoopSched, 30);
   }
@@ -5584,7 +5604,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     if(djCtx.state==="suspended") djCtx.resume();
     const sq=djLoopSeq(s);
     if(!sq.ev.some(Boolean)) return;
-    djLoop={title:s.title, ev:sq.ev, bpm:sq.bpm, idx:0, nextTime:djCtx.currentTime+0.08, timer:null};
+    djLoop={title:s.title, ev:sq.ev, idx:0, nextTime:djCtx.currentTime+0.08, timer:null};
     djLoopSched();
     if(window.__wake) window.__wake.on("djloop");
     djRenderScale();
@@ -5597,6 +5617,22 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     djRenderScale();
   }
   djLoopBtn.addEventListener("click",function(){ djLoop ? djLoopStop() : djLoopStart(); });
+  /* ± : un clic = 2 BPM ; appui maintenu = défilement */
+  function djBindHold(btn, step){
+    let t1=null,t2=null;
+    btn.addEventListener("click",function(){ if(btn._held){ btn._held=false; return; } djSetLoopBpm(djLoopBpm+step); });
+    btn.addEventListener("pointerdown",function(){
+      t1=setTimeout(function(){ btn._held=true; t2=setInterval(function(){ djSetLoopBpm(djLoopBpm+step); },80); },450);
+    });
+    ["pointerup","pointerleave","pointercancel"].forEach(function(ev){
+      btn.addEventListener(ev,function(){ clearTimeout(t1); if(t2){ clearInterval(t2); t2=null; } });
+    });
+  }
+  djBindHold(document.getElementById("dt-minus"), -2);
+  djBindHold(document.getElementById("dt-plus"), +2);
+  document.getElementById("dt-reset").addEventListener("click",function(){
+    if(djLoopSongTitle) djSetLoopBpm(SONG_BPM[djLoopSongTitle]||100);
+  });
   /* bourdon : la tonique tenue (WebAudio), racine + octave douce */
   let djCtx=null, djDrone=null;
   function djDroneStart(){
