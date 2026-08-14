@@ -575,10 +575,9 @@
     #printarea .c-sub .tempo{border:none;background:none;padding:0;color:#000;font-weight:700}
     #printarea .p-toc{font-size:.92rem;line-height:1.7;margin:6px 0 0;page-break-after:always}
     #printarea .bar{border:1px solid #888;min-height:34px;font-size:1rem;font-weight:700}
-    #printarea .c-tip,#printarea .c-diags{display:none}
-    #printarea .solo-d>*,#printarea .riff-d>*,#printarea .bass-d>*{display:block !important}   /* déplie gammes, riff & basse dans le PDF */
-    #printarea .solo-d summary,#printarea .riff-d summary,#printarea .bass-d summary{list-style:none;color:#000;margin-bottom:4px}
-    #printarea .solo-scales{display:flex;flex-wrap:wrap;gap:12px}
+    #printarea .c-tip,#printarea .c-diags,#printarea .solo-d{display:none}   /* l'essentiel : grilles, riff, basse — pas les gammes ni les diagrammes */
+    #printarea .riff-d>*,#printarea .bass-d>*{display:block !important}   /* déplie riff & basse dans le PDF */
+    #printarea .riff-d summary,#printarea .bass-d summary{list-style:none;color:#000;margin-bottom:4px}
     #printarea .p-head{margin-bottom:14px}
     #printarea .p-head h1{font-family:Georgia,serif;font-style:italic;font-size:1.7rem}
     #printarea .p-head .p-sub{color:#333;font-size:.85rem;margin-top:2px}
@@ -5535,7 +5534,7 @@ function slug(t){ return "song-"+_norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-
     html+=`<div class="p-toc">${items.map(function(s,i){ return `<div>${esc(slLine(s,i))}</div>`; }).join("")}</div>`;
     l.songs.forEach(function(sl){ const s=bySlug[sl]; if(s) html+=`<section class="p-song">${concertHTML(s)}</section>`; });
     printarea.innerHTML=html;
-    // les <details> fermés ne s'impriment pas : tout déplier (gammes, riff, basse)
+    // les <details> fermés ne s'impriment pas : déplier riff et basse (les gammes, elles, sont exclues du PDF)
     printarea.querySelectorAll("details").forEach(function(d){ d.open=true; });
     document.body.classList.add("printing-setlist");
     window.print();
