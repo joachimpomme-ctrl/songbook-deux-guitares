@@ -943,10 +943,22 @@ const SONGS = [
   },
   {
     zone:"blues", title:"Stormy Monday", key:"Sol · lent, changes simplifiés (T-Bone / Allman)",
-    systems:[{bars:["G7","C9","G7","G7"]},{bars:["C9","C9","G7 · Am7","Bm7 · B♭m7"]},{bars:["Am7","Cm7","G7 · C9","G7 · D9"]}],
-    chords:["G7","C9","D9","Am7","Bm7","B♭m7","Cm7"],
-    tip:"Le pont entre blues et jazz : la montée Am7 → Bm7 → B♭m7 → Am7 fait tout le charme. Penta mineure de Sol comme base, écoute les accords passer.",
-    note:"Grille simplifiée, il existe plein de variantes de ce morceau.",
+    systems:[
+      {note:"« they call it stormy Monday, but Tuesday's just as bad »", bars:["G7","C9","G7","G7"]},
+      {note:"la montée F9 → F♯9 → G9 referme ces quatre mesures (voir riff)", bars:["C9","C9","G7","G7"]},
+      {note:"« Wednesday's worse... » — et le turnaround glissé du disque", bars:["D7","C9","G7","E♭7 · D7"]}
+    ],
+    chords:["G7","C9","D7","E♭7"],
+    riff:{tab:
+`e|-6--6--6--6--5~~--|------------------|
+B|-x--x--x--x--x----|-1--2--3~~--------|
+G|-6--6--6--6--5~~--|-2--3--4~~--------|
+D|-5--5--5--5--4~~--|-1--2--3~~--------|
+A|------------------|------------------|
+E|------------------|------------------|`,
+      note:"Les deux gestes de T-Bone, mesurés sur la tab officielle (12/8). <b>1. L'intro et le turnaround</b> : un accord de 9 en « drapeau » sur trois cordes (mi aiguë, sol, ré — la corde si étouffée, le x), martelé en croches ternaires sur <b>Mi♭9</b> puis glissé un demi-ton plus bas sur <b>Ré9</b>. <b>2. La montée</b> qui referme les mesures 7-8 : les mêmes accords de 9 sans fondamentale qui grimpent chromatiquement <b>F9 → F♯9 → G9</b> (cordes ré-sol-si). Deux formes, tout le vocabulaire du morceau — déplace-les, c'est du T-Bone partout."},
+    tip:"L'original de T-Bone Walker, en 12/8 lent : un blues de 12 mesures en Sol où tout se dit en <b>accords de 9</b> qui glissent d'un demi-ton — Mi♭9 → Ré9 à l'intro et au turnaround, F9 → F♯9 → G9 pour rentrer au bercail. Penta mineure de Sol + la sixte (mi) pour chanter dessus. La fin du disque est un clin d'œil : Cm7♭5 puis <b>Bm7♭5 — qui n'est autre qu'un Sol9 sans fondamentale</b>. Pour la variante Allman Brothers (la montée Am7 → Bm7 → B♭m7 → Am7 aux mesures 7-8), garde la même grille et remplace les deux mesures de Sol.",
+    note:"Grille et voicings relevés sur la tab et la feuille officielles (T-Bone Walker, 12/8, ♩≈66 pointée). Notre ancienne grille donnait la variante Allman Brothers ; l'originale de T-Bone reste sur Sol aux mesures 7-8, avec la montée chromatique en accords de 9.",
   },
   {
     zone:"jazz", title:"Minor Swing", key:"La mineur · swing manouche (Django)",
